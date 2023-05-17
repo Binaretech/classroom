@@ -1,0 +1,1034 @@
+basePath: /auth
+definitions:
+  auth.TokenDetails:
+    properties:
+      accessExpires:
+        description: AccessExpires Access token expiration
+        type: integer
+      accessToken:
+        type: string
+      accessUUID:
+        description: Unique identifier for access token
+        type: string
+      refreshExpires:
+        description: RefreshExpires Refresh token expiration
+        type: integer
+      refreshToken:
+        type: string
+      refreshUUID:
+        description: Unique identifier for refresh token
+        type: string
+    type: object
+  errors.BadRequest:
+    type: object
+  errors.Forbidden:
+    type: object
+  errors.InternalError:
+    type: object
+  errors.NotFound:
+    type: object
+  handler.AuthResponse:
+    properties:
+      token:
+        $ref: '#/definitions/auth.TokenDetails'
+      user:
+        $ref: '#/definitions/schema.User'
+    type: object
+  handler.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  handler.RegisterRequest:
+    properties:
+      email:
+        type: string
+      password:
+        minLength: 6
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  model.Comment:
+    properties:
+      content:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: integer
+      post:
+        $ref: '#/definitions/model.Post'
+      postId:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/model.User'
+      userId:
+        type: string
+    type: object
+  model.File:
+    properties:
+      bucket:
+        type: string
+      createdAt:
+        type: string
+      fileableId:
+        type: string
+      fileableType:
+        type: string
+      id:
+        type: integer
+      key:
+        type: string
+      mimeType:
+        type: string
+      type:
+        type: integer
+      updatedAt:
+        type: string
+      url:
+        type: string
+    type: object
+  model.Post:
+    properties:
+      comments:
+        items:
+          $ref: '#/definitions/model.Comment'
+        type: array
+      content:
+        type: string
+      createdAt:
+        type: string
+      files:
+        items:
+          $ref: '#/definitions/model.File'
+        type: array
+      id:
+        type: integer
+      sectionId:
+        type: integer
+      type:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/model.User'
+      userId:
+        type: string
+    type: object
+  model.User:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      email:
+        type: string
+      files:
+        items:
+          $ref: '#/definitions/model.File'
+        type: array
+      id:
+        type: string
+      lastname:
+        type: string
+      name:
+        type: string
+      profileImage:
+        $ref: '#/definitions/model.File'
+      updatedAt:
+        type: string
+    type: object
+  request.AddMemberRequest:
+    properties:
+      email:
+        type: string
+      sectionId:
+        type: integer
+    required:
+    - email
+    - sectionId
+    type: object
+  request.CommentPostRequest:
+    properties:
+      content:
+        type: string
+      post:
+        type: integer
+      userId:
+        type: string
+    required:
+    - content
+    - post
+    type: object
+  request.CreateClassRequest:
+    properties:
+      description:
+        maxLength: 255
+        type: string
+      name:
+        maxLength: 64
+        type: string
+    required:
+    - name
+    type: object
+  request.CreateSectionRequest:
+    properties:
+      classId:
+        type: integer
+      name:
+        maxLength: 64
+        type: string
+    required:
+    - classId
+    - name
+    type: object
+  request.RemoveMemberRequest:
+    properties:
+      sectionId:
+        type: integer
+      userId:
+        type: string
+    required:
+    - sectionId
+    - userId
+    type: object
+  request.StorePostRequest:
+    properties:
+      content:
+        type: string
+      section:
+        type: integer
+      userID:
+        type: string
+    required:
+    - content
+    - section
+    - userID
+    type: object
+  request.StoreUserRequest:
+    properties:
+      lastname:
+        maxLength: 64
+        type: string
+      name:
+        maxLength: 64
+        type: string
+    required:
+    - lastname
+    - name
+    type: object
+  request.UpdateClassRequest:
+    type: object
+  request.UpdateUserRequest:
+    properties:
+      lastname:
+        maxLength: 64
+        type: string
+      name:
+        maxLength: 64
+        type: string
+    type: object
+  resource.ClassResource:
+    properties:
+      createdAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      isStudent:
+        type: boolean
+      isTeacher:
+        type: boolean
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  resource.MessageResource:
+    properties:
+      message:
+        type: string
+    type: object
+  resource.MessageWithDataResource:
+    properties:
+      data: {}
+      message:
+        type: string
+    type: object
+  resource.PaginatedResource:
+    properties:
+      data: {}
+      limit:
+        type: integer
+      page:
+        type: integer
+      pages:
+        type: integer
+      total:
+        type: integer
+    type: object
+  resource.SectionResource:
+    properties:
+      class:
+        $ref: '#/definitions/resource.ClassResource'
+      classId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  resource.UserResource:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      lastname:
+        type: string
+      name:
+        type: string
+      profileImage:
+        items:
+          $ref: '#/definitions/model.File'
+        type: array
+      updatedAt:
+        type: string
+    type: object
+  schema.User:
+    properties:
+      email:
+        type: string
+      id:
+        type: string
+    type: object
+host: localhost
+info:
+  contact:
+    name: Binaretech
+  description: Auth Gateway API for the
+  license:
+    name: Apache 2.0
+  title: Classroom Auth Gateway API
+  version: "0.1"
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: Verify the auth status
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: Verify the auth status
+      tags:
+      - Auth
+  /classes:
+    get:
+      consumes:
+      - application/json
+      description: Get user classes
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Items per page
+        in: query
+        name: per_page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resource.PaginatedResource'
+            - properties:
+                data:
+                  $ref: '#/definitions/resource.ClassResource'
+              type: object
+      summary: Get user classes
+      tags:
+      - Classes
+    post:
+      consumes:
+      - application/json
+      description: Create a new class
+      parameters:
+      - description: Class data
+        in: body
+        name: class
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateClassRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/resource.MessageWithDataResource'
+            - properties:
+                data:
+                  $ref: '#/definitions/resource.ClassResource'
+              type: object
+      summary: Create a new class
+      tags:
+      - Classes
+  /classes/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a class
+      parameters:
+      - description: Class ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resource.MessageResource'
+        "404":
+          description: Not Found
+          schema:
+            allOf:
+            - $ref: '#/definitions/errors.NotFound'
+            - properties:
+                message:
+                  type: string
+              type: object
+      summary: Delete a class
+      tags:
+      - Classes
+    get:
+      consumes:
+      - application/json
+      description: Get class
+      parameters:
+      - description: Class ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resource.ClassResource'
+        "404":
+          description: Not Found
+          schema:
+            allOf:
+            - $ref: '#/definitions/errors.NotFound'
+            - properties:
+                message:
+                  type: string
+              type: object
+      summary: Get class
+      tags:
+      - Classes
+    put:
+      consumes:
+      - application/json
+      description: Update a class
+      parameters:
+      - description: Class ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Class data
+        in: body
+        name: class
+        required: true
+        schema:
+          allOf:
+          - $ref: '#/definitions/request.UpdateClassRequest'
+          - properties:
+              description:
+                type: string
+              name:
+                type: string
+            type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resource.MessageWithDataResource'
+            - properties:
+                data:
+                  $ref: '#/definitions/resource.ClassResource'
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            allOf:
+            - $ref: '#/definitions/errors.NotFound'
+            - properties:
+                message:
+                  type: string
+              type: object
+      summary: Update a class
+      tags:
+      - Classes
+  /classes/{id}/archive:
+    put:
+      consumes:
+      - application/json
+      description: Archive a class
+      parameters:
+      - description: Class ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resource.MessageResource'
+        "404":
+          description: Not Found
+          schema:
+            allOf:
+            - $ref: '#/definitions/errors.NotFound'
+            - properties:
+                message:
+                  type: string
+              type: object
+      summary: Archive a class
+      tags:
+      - Classes
+  /classes/{id}/sections:
+    get:
+      consumes:
+      - application/json
+      description: Get class sections
+      parameters:
+      - description: Class ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Items per page
+        in: query
+        name: per_page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resource.PaginatedResource'
+            - properties:
+                data:
+                  $ref: '#/definitions/resource.SectionResource'
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            allOf:
+            - $ref: '#/definitions/errors.NotFound'
+            - properties:
+                message:
+                  type: string
+              type: object
+      summary: Get class sections
+      tags:
+      - Classes
+  /classes/{id}/student:
+    get:
+      consumes:
+      - application/json
+      description: Get student class
+      parameters:
+      - description: Class ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resource.SectionResource'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errors.NotFound'
+      summary: Get student class
+      tags:
+      - Classes
+  /classes/{id}/unarchive:
+    put:
+      consumes:
+      - application/json
+      description: Unarchive a class
+      parameters:
+      - description: Class ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resource.MessageResource'
+        "404":
+          description: Not Found
+          schema:
+            allOf:
+            - $ref: '#/definitions/errors.NotFound'
+            - properties:
+                message:
+                  type: string
+              type: object
+      summary: Unarchive a class
+      tags:
+      - Classes
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Login the user
+      parameters:
+      - description: Login data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/handler.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.AuthResponse'
+      summary: Login
+      tags:
+      - Auth
+  /logout:
+    get:
+      consumes:
+      - application/json
+      description: Logout the user
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: Logout the user
+      tags:
+      - Auth
+  /posts/:id/comments:
+    post:
+      consumes:
+      - application/json
+      description: Comment a post
+      parameters:
+      - description: With the bearer started
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Post ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Comment
+        in: body
+        name: comment
+        required: true
+        schema:
+          $ref: '#/definitions/request.CommentPostRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Comment'
+      summary: Comment a post
+      tags:
+      - Posts
+  /register:
+    get:
+      consumes:
+      - application/json
+      description: Register a new user
+      parameters:
+      - description: Register data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/handler.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handler.AuthResponse'
+      summary: Register a new user
+      tags:
+      - Auth
+  /sections:
+    post:
+      consumes:
+      - application/json
+      description: Create a new section
+      parameters:
+      - description: Section
+        in: body
+        name: section
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateSectionRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/resource.MessageWithDataResource'
+            - properties:
+                data:
+                  $ref: '#/definitions/resource.SectionResource'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/errors.Forbidden'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errors.InternalError'
+      summary: Create a new section
+      tags:
+      - Sections
+  /sections/:id/posts:
+    post:
+      description: Store a post in the database
+      parameters:
+      - description: Post
+        in: body
+        name: post
+        required: true
+        schema:
+          $ref: '#/definitions/request.StorePostRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Post'
+      summary: Store a post
+      tags:
+      - Posts
+  /sections/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a section
+      parameters:
+      - description: Section ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resource.MessageResource'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/errors.Forbidden'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errors.NotFound'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errors.InternalError'
+      summary: Delete a section
+      tags:
+      - Sections
+  /sections/{id}/members:
+    get:
+      consumes:
+      - application/json
+      description: Get section members
+      parameters:
+      - description: Section ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: per_page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/resource.PaginatedResource'
+            - properties:
+                data:
+                  $ref: '#/definitions/resource.UserResource'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/errors.Forbidden'
+      summary: Get section members
+      tags:
+      - Sections
+  /sections/{id}/posts:
+    get:
+      consumes:
+      - application/json
+      description: Get section posts
+      parameters:
+      - description: Section ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: per_page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Post'
+      summary: Get section posts
+      tags:
+      - Sections
+  /sections/{id}/students:
+    delete:
+      consumes:
+      - application/json
+      description: Remove a user from a section
+      parameters:
+      - description: Section ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: User ID
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/request.RemoveMemberRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resource.MessageResource'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/errors.Forbidden'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errors.NotFound'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errors.InternalError'
+      summary: Remove a user from a section
+      tags:
+      - Sections
+    post:
+      consumes:
+      - application/json
+      description: Add a user to a section
+      parameters:
+      - description: Section ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: User ID
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/request.AddMemberRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resource.MessageResource'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/errors.Forbidden'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errors.NotFound'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errors.InternalError'
+      summary: Add a user to a section
+      tags:
+      - Sections
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Get authenticated user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
+      summary: Get user
+      tags:
+      - User
+    post:
+      consumes:
+      - application/json
+      description: Create a new user
+      parameters:
+      - description: User data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/request.StoreUserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.User'
+      summary: Create user
+      tags:
+      - User
+    put:
+      consumes:
+      - application/json
+      description: Update authenticated user
+      parameters:
+      - description: User data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/resource.MessageResource'
+      summary: Update user
+      tags:
+      - User
+  /users/search:
+    get:
+      consumes:
+      - application/json
+      description: Search users by email
+      parameters:
+      - description: Search
+        in: query
+        name: search
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Search users by email
+      tags:
+      - User
+swagger: "2.0"

@@ -17,18 +17,18 @@ func Connect() (*mongo.Client, error) {
 
 	return mongo.Connect(ctx,
 		options.Client().
-			SetHosts([]string{viper.GetString("DB_HOST")}).
+			SetHosts([]string{viper.GetString("MONGO_HOST")}).
 			SetAuth(
 				options.Credential{
-					Username: viper.GetString("DB_USERNAME"),
-					Password: viper.GetString("DB_PASSWORD"),
+					Username: viper.GetString("MONGO_USERNAME"),
+					Password: viper.GetString("MONGO_PASSWORD"),
 				},
 			),
 	)
 }
 
 func GetDatabase(client *mongo.Client) *mongo.Database {
-	return client.Database(viper.GetString("DB_NAME"), &options.DatabaseOptions{})
+	return client.Database(viper.GetString("MONGO_NAME"), &options.DatabaseOptions{})
 
 }
 

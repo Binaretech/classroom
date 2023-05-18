@@ -41,7 +41,7 @@ var rootCmd = &cobra.Command{
 
 		defer sentry.Flush(2 * time.Second)
 
-		defer log.Fatalln(server.App(database).Start(fmt.Sprintf(":%s", viper.GetString("main_service_port"))))
+		defer log.Fatalln(server.App(database).Start(fmt.Sprintf(":%s", viper.GetString("auth_port"))))
 	},
 }
 

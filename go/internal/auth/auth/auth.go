@@ -66,7 +66,7 @@ func Authenticate(userID string, email string) (token *TokenDetails, err error) 
 
 // VerifyToken Verify a token and return the auth state
 func VerifyToken(tokenString string) (*AccessDetails, bool) {
-	token, err := extractTokenMetadata(tokenString, viper.GetString("secret"))
+	token, err := extractTokenMetadata(tokenString, viper.GetString("auth_secret"))
 	if err != nil {
 		return nil, false
 	}
@@ -81,7 +81,7 @@ func Verify(c echo.Context) (*AccessDetails, bool) {
 }
 
 func VerifyRefreshToken(tokenString string) (string, bool) {
-	token, err := verifyToken(tokenString, viper.GetString("secret"))
+	token, err := verifyToken(tokenString, viper.GetString("auth_secret"))
 	if err != nil {
 		return "", false
 	}
@@ -129,11 +129,11 @@ func createToken(userID string, email string) (td *TokenDetails, err error) {
 		"email":        email,
 	})
 
-	if td.AccessToken, err = at.SignedString([]byte(viper.GetString("secret"))); err != nil {
+	if td.AccessToken, err = at.SignedString([]byte(viper.GetString("auth_secret"))); err != nil {
 		return
 	}
 
-	td.RefreshToken, err = rt.SignedString([]byte(viper.GetString("secret")))
+	td.RefreshToken, err = rt.SignedString([]byte(viper.GetString("auth_secret")))
 	return
 }
 

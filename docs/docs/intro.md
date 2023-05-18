@@ -2,46 +2,10 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Welcome to the Classroom
 
-Let's discover **Docusaurus in less than 5 minutes**.
+The Classroom is a project designed to help educators create and manage online courses. With a focus on simplicity and ease of use, the Classroom provides a powerful set of tools for creating engaging and interactive learning experiences.
 
-## Getting Started
+Whether you're a teacher, trainer, or subject matter expert, the Classroom makes it easy to create and deliver high-quality courses to your students. With support for multimedia content, quizzes, assignments, and more, you can create a rich and engaging learning environment that keeps your students motivated and on track.
 
-Get started by **creating a new site**.
-
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
-
-### What you'll need
-
-- [Node.js](https://nodejs.org/en/download/) version 16.14 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
-
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+In this guide, we'll walk you through the process of setting up and using the Classroom. We'll cover everything from creating your first course to managing student progress and grading assignments. By the end of this guide, you'll have all the knowledge you need to create and deliver your own online courses with the Classroom.

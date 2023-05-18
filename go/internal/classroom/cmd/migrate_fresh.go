@@ -24,7 +24,10 @@ var migrateFreshCmd = &cobra.Command{
 			return
 		}
 
-		database.Migrate(conn)
+		if err := database.Migrate(conn); err != nil {
+			logrus.Error(err.Error())
+			return
+		}
 
 		if viper.GetBool("seed") {
 			seeder.Run()

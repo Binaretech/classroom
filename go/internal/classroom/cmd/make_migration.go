@@ -5,7 +5,7 @@ import (
 	"path"
 
 	"github.com/Binaretech/classroom/internal/classroom/database"
-	"github.com/pressly/goose"
+	"github.com/pressly/goose/v3"
 	"github.com/spf13/cobra"
 )
 
@@ -20,9 +20,11 @@ var makeMigration = &cobra.Command{
 
 		dir, _ := os.Getwd()
 
-		path := path.Join(dir, "database", "migrations")
+		path := path.Join(dir, "internal/classroom/database", "migrations")
 
-		goose.Create(db, path, args[0], "sql")
+		if err := goose.Create(db, path, args[0], "sql"); err != nil {
+			panic(err)
+		}
 	},
 }
 

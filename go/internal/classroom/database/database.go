@@ -1,12 +1,14 @@
 package database
 
 import (
+	"embed"
 	"fmt"
 	"log"
 	"os"
 	"time"
 
 	_ "github.com/Binaretech/classroom/config"
+	"github.com/pressly/goose/v3"
 
 	"github.com/Binaretech/classroom/internal/classroom/database/model"
 
@@ -21,6 +23,9 @@ const (
 	DESC = "DESC"
 	ASC  = "ASC"
 )
+
+//go:embed migrations/*.sql
+var migrations embed.FS
 
 func Connect() (*gorm.DB, error) {
 	if db, err := OpenDatabase(); err != nil {
@@ -59,8 +64,11 @@ func Models() []interface{} {
 }
 
 // Migrate run migrations to update the database
-func Migrate(db *gorm.DB) {
-	db.AutoMigrate(Models()...)
+func Migrate(db *gorm.DB) error {
+	goose.SetBaseFS(migrations)
+
+	conn, _ := db.DB()
+	return goose.Up(conn, "migrations")
 }
 
 // Drop and recreate the database

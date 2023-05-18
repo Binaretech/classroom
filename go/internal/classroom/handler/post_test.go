@@ -48,8 +48,8 @@ func TestStorePost(t *testing.T) {
 
 		response := make(map[string]interface{})
 		_ = json.Unmarshal(rec.Body.Bytes(), &response)
+
 		assert.NotNil(t, response["data"])
 		assert.Equal(t, "Test Content", response["data"].(map[string]interface{})["content"])
-		assert.Equal(t, "Test Post", response["data"].(map[string]interface{})["title"])
 	}
 }

@@ -1,7 +1,7 @@
 -- +goose Up
 -- +goose StatementBegin
 CREATE TABLE users (
-    id VARCHAR(32) PRIMARY KEY NOT NULL,
+    id VARCHAR(36) PRIMARY KEY NOT NULL,
     email VARCHAR(255) NOT NULL,
     name VARCHAR(64) NOT NULL,
     lastname VARCHAR(64) NOT NULL,

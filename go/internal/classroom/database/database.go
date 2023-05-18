@@ -1,7 +1,6 @@
 package database
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -24,17 +23,12 @@ const (
 )
 
 func Connect() (*gorm.DB, error) {
-	for i := 0; i < 5; i++ {
-		if db, err := OpenDatabase(); err != nil {
-			logrus.Errorln("Error connecting to database", err)
-			time.Sleep(5 * time.Second)
-		} else {
-			Migrate(db)
-			return db, nil
-		}
+	if db, err := OpenDatabase(); err != nil {
+		logrus.Errorln("Error connecting to database", err)
+		return nil, err
+	} else {
+		return db, nil
 	}
-
-	return nil, errors.New("error connecting to database")
 }
 
 func OrderByString(value string) string {
@@ -83,18 +77,18 @@ func Drop(db *gorm.DB) error {
 // connectionString returns the connection string based on the environment
 func connectionString() string {
 	return fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=UTC",
-		viper.GetString("DB_HOST"),
-		viper.GetString("DB_USER"),
-		viper.GetString("DB_PASS"),
-		viper.GetString("DB_NAME"),
-		viper.GetString("DB_PORT"),
+		viper.GetString("POSTGRES_HOST"),
+		viper.GetString("POSTGRES_USER"),
+		viper.GetString("POSTGRES_PASS"),
+		viper.GetString("POSTGRES_NAME"),
+		viper.GetString("POSTGRES_PORT"),
 	)
 }
 
 // CreateDatabase create a new database based on DATABASE_NAME config
 func CreateDatabase() error {
-	originalName := viper.GetString("DB_NAME")
-	viper.Set("DB_NAME", "postgres")
+	originalName := viper.GetString("POSTGRES_NAME")
+	viper.Set("POSTGRES_NAME", "postgres")
 
 	conn, err := gorm.Open(postgres.Open(connectionString()), &gorm.Config{})
 	if err != nil {
@@ -105,7 +99,7 @@ func CreateDatabase() error {
 		return err
 	}
 
-	viper.Set("DB_NAME", originalName)
+	viper.Set("POSTGRES_NAME", originalName)
 
 	return nil
 }

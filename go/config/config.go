@@ -27,6 +27,7 @@ func Initialize() {
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("..")
 	viper.AddConfigPath("../../")
+	viper.AddConfigPath("../../../")
 
 	if path, err := os.Getwd(); err == nil {
 		viper.AddConfigPath(path)

@@ -3,11 +3,9 @@ version: '3'
 services:
   auth:
     image: classroom-go
-    build:
-      dockerfile: docker/development/go/Dockerfile
-      context: .
+    build: docker/development/go
     volumes:
-      - .:/app/
+      - ./go:/app/
     expose:
       - "${AUTH_SERVICE_PORT}"
     labels:
@@ -19,11 +17,9 @@ services:
 
   main:
     image: classroom-go
-    build:
-      dockerfile: docker/development/go/Dockerfile
-      context: .
+    build: docker/development/go
     volumes:
-      - .:/app/
+      - ./go:/app/
     expose:
       - "${MAIN_SERVICE_PORT}"
     labels:
@@ -78,31 +74,13 @@ services:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: secret123
 
-  auth-docs:
+  generate-docs:
     image: classroom-go
-    build:
-      dockerfile: docker/development/go/Dockerfile
-      context: .
+    build: docker/development/go
     volumes:
-      - ./:/app/
-    expose:
-      - 80
-    labels:
-      - traefik.http.routers.auth-docs.rule=PathPrefix(`/docs/auth`)
-    command: [ "air", "-c", "./config/.air.auth.toml", "--", "docs:serve" ]
-
-  main-docs:
-    image: classroom-go
-    build:
-      dockerfile: docker/development/go/Dockerfile
-      context: .
-    volumes:
-      - ./:/app/
-    expose:
-      - 80
-    labels:
-      - traefik.http.routers.main-docs.rule=PathPrefix(`/docs/main`)
-    command: [ "air", "-c", "./config/.air.classroom.toml", "--", "docs:serve" ]
+      - .:/app/
+    working_dir: /app/go
+    command: ["go", "run", "./cmd/auth", "docs:generate", "&&", "go", "run", "./cmd/classroom", "docs:generate"] 
 
 volumes:
   classroom-postgres:

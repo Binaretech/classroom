@@ -7,7 +7,7 @@ services:
     volumes:
       - ./go:/app/
     expose:
-      - "${AUTH_SERVICE_PORT}"
+      - "${AUTH_PORT}"
     labels:
       - traefik.http.middlewares.auth.forwardauth.address=http://localhost/auth/
       - traefik.http.middlewares.auth.forwardauth.trustForwardHeader=true
@@ -21,11 +21,22 @@ services:
     volumes:
       - ./go:/app/
     expose:
-      - "${MAIN_SERVICE_PORT}"
+      - "${CLASSROOM_PORT}"
     labels:
       - traefik.http.routers.main.rule=PathPrefix(`/api`)
       - traefik.http.routers.main.middlewares=auth
     command: ["air", "-c", "./config/.air.classroom.toml"] 
+
+  docs:
+    image: node:20
+    volumes:
+      - .:/app
+    working_dir: /app/docs
+    expose:
+      - 3000
+    command: ["npm", "start"]
+    labels:
+      - traefik.http.routers.docs-en.rule=Host(`docs.localhost`) 
 
   postgres:
     image: postgres:12

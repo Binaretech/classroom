@@ -1,0 +1,14 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.developers": {
+    "message": "Desarrolladores",
+    "description": "The label for category Developers in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.reference": {
+    "message": "Referencia",
+    "description": "The label for category Reference in sidebar tutorialSidebar"
+  }
+}

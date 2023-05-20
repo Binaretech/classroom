@@ -1,7 +1,12 @@
 package server
 
 import (
+	"context"
 	"fmt"
+	"log"
+	"os"
+	"os/signal"
+	"time"
 
 	"github.com/Binaretech/classroom/internal/classroom/handler"
 	"github.com/Binaretech/classroom/pkg/errors"
@@ -39,5 +44,20 @@ func Listen(db *gorm.DB) error {
 	handler := handler.New(db)
 	handler.Routes(api)
 
-	return app.Start(fmt.Sprintf(":%s", viper.GetString("port")))
+	go func() {
+		if err := app.Start(fmt.Sprintf(":%s", viper.GetString("classroom_port"))); err != nil {
+			log.Fatalln(err.Error())
+
+			os.Exit(1)
+		}
+	}()
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, os.Interrupt)
+	<-quit
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	return app.Shutdown(ctx)
 }

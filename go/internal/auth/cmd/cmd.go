@@ -1,9 +1,11 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
+	"os/signal"
 	"time"
 
 	"github.com/Binaretech/classroom/config"
@@ -41,7 +43,27 @@ var rootCmd = &cobra.Command{
 
 		defer sentry.Flush(2 * time.Second)
 
-		defer log.Fatalln(server.App(database).Start(fmt.Sprintf(":%s", viper.GetString("auth_port"))))
+		e := server.App(database)
+
+		go func() {
+			if err := e.Start(fmt.Sprintf(":%s", viper.GetString("auth_port"))); err != nil {
+				log.Fatalln(err.Error())
+
+				os.Exit(1)
+			}
+		}()
+
+		quit := make(chan os.Signal, 1)
+		signal.Notify(quit, os.Interrupt)
+		<-quit
+
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancel()
+
+		if err := e.Shutdown(ctx); err != nil {
+			log.Fatalln(err.Error())
+		}
+
 	},
 }
 

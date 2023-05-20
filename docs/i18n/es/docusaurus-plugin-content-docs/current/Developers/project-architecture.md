@@ -1,31 +1,29 @@
----
-sidebar_position: 2
----
+# Arquitectura del Proyecto
 
-# Project Architecture
+El proyecto Classroom está diseñado siguiendo una arquitectura distribuida y utiliza varios servicios interconectados para brindar una experiencia de aprendizaje en línea completa y dinámica. A continuación, se describe la arquitectura general del proyecto y cómo se relacionan los diferentes componentes.
 
-The Classroom project is designed following a distributed architecture and utilizes multiple interconnected services to provide a comprehensive and dynamic online learning experience. Below is an overview of the general architecture of the project and how the different components relate to each other.
+![architecture](/img/clasroom-diagram.png)
 
-### Routing with Traefik
+### Enrutamiento con Traefik
 
-The entire system is connected through Traefik, an application-level router and reverse proxy. Traefik is used to route incoming requests to the various applications and services of the project. Additionally, Traefik's "forwardAuth" middleware is employed to perform authentication verification with the Auth service before forwarding requests to the respective services.
+Todo el sistema está conectado a través de Traefik, un enrutador de nivel de aplicación y balanceador de carga inverso. Traefik se utiliza para dirigir las solicitudes entrantes a las diferentes aplicaciones y servicios del proyecto. Además, se utiliza el middleware de Traefik, "forwardAuth", para realizar la verificación de autenticación con el servicio Auth antes de redirigir las solicitudes a los servicios correspondientes.
 
-### Authentication Service (Auth)
+### Servicio de Autenticación (Auth)
 
-The Authentication service is responsible for handling user authentication and authorization. It utilizes MongoDB as the database for storing user information and Redis for storing sessions and active tokens. The Auth service manages token generation and validation, allowing users to authenticate within the system and access the different services.
+El servicio de autenticación se encarga de manejar la autenticación y autorización de los usuarios. Utiliza MongoDB como base de datos para almacenar información de usuarios y Redis para almacenar sesiones y tokens activos. El servicio Auth gestiona la generación y validación de tokens de acceso, permitiendo a los usuarios autenticarse en el sistema y acceder a los diferentes servicios.
 
-### Main Service (API Service)
+### Servicio Principal (Classroom Service)
 
-The Main service, also known as the API Service, serves as the core of the Classroom project. It is built using the Go programming language and employs a PostgreSQL database for data storage. This service handles the main logic of the system, such as course management, user management, assignments, and student progress tracking. It provides an interface for the various modules and applications to access data and perform relevant operations.
+El servicio principal, también conocido como Classroom Service, es el núcleo del proyecto Classroom. Está construido utilizando el lenguaje de programación Go y utiliza una base de datos PostgreSQL para almacenar datos. Este servicio maneja la lógica principal del sistema, como la gestión de cursos, usuarios, asignaciones y seguimiento del progreso de los estudiantes. Proporciona una interfaz para que los diferentes módulos y aplicaciones accedan a los datos y realicen operaciones relevantes.
 
-### Exams Service (Exams Module)
+### Servicio de Exámenes
 
-The Exams service is responsible for managing the creation, administration, and completion of exams within the Classroom system. It utilizes MongoDB as the database for storing exam-related data, including questions, answers, and student results. This service provides an interface for teachers to create exams, for students to take exams, and for automated grading.
+El servicio de exámenes se encarga de gestionar la creación, administración y realización de exámenes en el sistema Classroom. Utiliza MongoDB como base de datos para almacenar los datos relacionados con los exámenes, como las preguntas, las respuestas y los resultados de los estudiantes. Este servicio proporciona una interfaz para que los profesores creen exámenes, los estudiantes realicen los exámenes y se califiquen automáticamente.
 
-### Notifications Service (Messaging Module)
+### Servicio de Notificaciones
 
-The Notifications service, also known as the Messaging Module, handles the management and sending of notifications to users within the Classroom system. It utilizes Redis as the database for listening to various events and sending real-time notifications. This service enables the sending of messages, reminders, and updates to users, keeping them informed about relevant news and events within the Classroom system.
+El servicio de notificaciones se encarga de gestionar y enviar notificaciones a los usuarios del sistema. Utiliza Redis como base de datos para escuchar los diferentes eventos y enviar notificaciones en tiempo real. Este servicio permite enviar mensajes, recordatorios y actualizaciones a los usuarios, manteniéndolos informados sobre las novedades y eventos relevantes en el sistema Classroom.
 
-The architecture of the Classroom project is based on the distribution of responsibilities and communication between the different services using standard protocols. This modular structure allows for proper scalability, maintainability, and the ability to add new services and functionalities in the future.
+La arquitectura del proyecto Classroom se basa en la distribución de responsabilidades y la comunicación entre los diferentes servicios a través de protocolos estándar. Esta estructura modular permite una escalabilidad y mantenibilidad adecuadas, así como la capacidad de agregar nuevos servicios y funcionalidades en el futuro.
 
-In the following sections, more details will be provided about the configuration and operation of each of the aforementioned services and components.
+En las siguientes secciones, se proporcionarán más detalles sobre la configuración y el funcionamiento de cada uno de los servicios y componentes mencionados anteriormente.

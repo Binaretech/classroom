@@ -85,8 +85,8 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
+                label: 'Documentation',
+                to: '/intro',
               },
             ],
           },
@@ -100,7 +100,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Binaretech. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Binaretech. Built with ❤️ and Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,

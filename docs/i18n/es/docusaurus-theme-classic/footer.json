@@ -18,5 +18,9 @@
   "copyright": {
     "message": "Copyright © 2023 Binaretech. Built with Docusaurus.",
     "description": "The footer copyright"
+  },
+  "link.item.label.Documentation": {
+    "message": "Documentación",
+    "description": "The label of footer link with label=Documentation linking to /intro"
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:classroom_mobile/models/user.dart';
 import 'package:classroom_mobile/widgets/user_avatar.dart';
 import 'package:equatable/equatable.dart';

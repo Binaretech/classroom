@@ -1,75 +1,90 @@
 ---
 sidebar_position: 3
 ---
+# Setting up Development Environment
 
-# Setting up Development Environment with Docker
+Before you start contributing to the Classroom project, it's important to properly set up your development environment. Follow these steps to configure your development environment and run the Classroom project.
 
-Before you start contributing to the Classroom project, it's important to properly set up your development environment. Using Docker and Docker Compose will simplify the configuration process and ensure a consistent development environment for all project components. Follow these steps to configure your development environment with Docker.
-
-### Software Requirements
+## Software Requirements
 
 Make sure you have the following software installed on your system:
 
+- Node.js (not strictly required)
+- npm (not strictly required)
+- Flutter
 - Docker
 - Docker Compose
 
-### Configuring Docker and Docker Compose
+## Configuring the Classroom Project
 
-Docker and Docker Compose are key tools for running the Classroom project locally. Follow these steps to configure Docker and Docker Compose:
-
-1. Step 1: Download and install Docker according to the specific instructions for your operating system. You can find installation instructions on the official Docker website.
-
-2. Step 2: Download and install Docker Compose following the specific instructions for your operating system. You can find installation instructions on the official Docker Compose website.
-
-3. Step 3: Verify that Docker and Docker Compose are installed correctly by running the following commands in your terminal:
-
-```
-docker --version
-docker-compose --version
-```
-
-### Configuring the Classroom Project with Docker Compose
-
-Once you have Docker and Docker Compose set up, you can proceed to configure the Classroom project using Docker Compose. Follow these steps:
-
-1. Step 1: Clone the Classroom project repository from GitHub:
+1. Clone the Classroom project repository from GitHub:
 
 ```
 git clone https://github.com/Binaretech/classroom.git
 ```
 
-2. Step 2: Navigate to the Classroom project directory:
+2. Navigate to the Classroom project directory:
 
 ```
 cd classroom
 ```
 
-3. Step 3: Copy the example environment variables file:
+3. Copy the example environment variables files located at the root of the project and in the mobile app directory:
 
 ```
 cp .env.example .env
+cp mobile/.env.example mobile/.env
 ```
 
-4. Step 4: Open the `.env` file and configure the environment variables according to your needs. Make sure to adjust the settings based on your development environment.
+4. Open the `.env` file and configure the environment variables according to your needs. Adjust the settings based on your development environment.
 
-5. Step 5: Run the Docker Compose command to build and run the project containers:
+5. Install the required dependencies by running the following command:
 
 ```
-docker-compose up --build
+npm install
 ```
 
-This command will build and run all the services of the Classroom project, including the Auth Gateway, API Service, exams module, web frontend, and mobile app.
+If you don't have Node.js and npm installed, you can use the following Docker command to install the dependencies:
 
-6. Step 6: Once the containers are built and running, you can access the Classroom project in your web browser by entering the following URL:
+```
+docker-compose run --rm docs npm install
+```
+
+6. Run the Docker Compose command to build and run the project containers:
+
+```
+docker-compose up -d --build
+```
+
+This command will build and run all the services of the Classroom project, including the Auth Gateway, Main API Service, Notifications, Exams, Docs, and Web.
+
+7. Once the containers are built and running, you can access the Classroom project in your web browser by entering the following URL:
 
 ```
 http://localhost:3000
 ```
 
-That's it! Now you have your development environment configured with Docker, and the Classroom project running locally. Docker containers ensure consistency and easy replication of the development environment across different systems.
+## Configuring Flutter and Firebase
 
-Remember, you can make modifications and contributions to the code in the respective project directories within the cloned repository.
+Before running the Flutter mobile application, you need to configure Firebase. Follow these steps to set up Firebase:
 
-If you want to stop the containers at any time, simply press `Ctrl + C` in the terminal where the containers are running, and then you can use the `docker-compose down` command to stop and remove the containers.
+1. Install the Flutter SDK by following the specific instructions for your operating system. You can find installation instructions on the official Flutter website.
 
-Now you're ready to start contributing to the Classroom project!
+2. Set up a Firebase project and obtain the Firebase configuration details, including the Firebase project ID, API key, and other necessary credentials.
+
+3. Configure the Flutter project with Firebase by adding the Firebase configuration details to the appropriate files. Refer to the Flutter and Firebase documentation for detailed instructions on how to configure Firebase for your Flutter project.
+
+8. For the Flutter mobile application, configure your emulator or connected device and use the following command from the project's root directory:
+
+```
+cd mobile
+flutter run
+```
+
+This will compile and run the Flutter mobile application.
+
+## Additional Resources
+
+For more information on working with the Classroom project, refer to the project's documentation and relevant resources. The documentation provides in-depth information on different aspects of the Classroom project and how to work with its various components.
+
+Now you're ready to make modifications and contributions to the Classroom project!

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io' as io;
 import 'package:http/http.dart' as http;
 import 'package:mime/mime.dart';
@@ -8,7 +7,6 @@ import 'package:classroom_mobile/http/request.dart';
 import 'package:classroom_mobile/models/paginated_data.dart';
 import 'package:classroom_mobile/models/post.dart';
 import 'package:classroom_mobile/repository/repository.dart';
-import 'package:flutter_quill/flutter_quill.dart' show Operation;
 import 'package:path/path.dart';
 
 class DeltaReplace {

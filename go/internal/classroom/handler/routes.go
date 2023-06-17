@@ -34,4 +34,6 @@ func (h *Handler) Routes(api *echo.Group) {
 	api.DELETE("/sections/:id/members/:userId", h.RemoveMember)
 	api.GET("/sections/:id/posts", h.SectionPosts)
 	api.POST("/sections/:id/posts", h.StoreSectionPost)
+
+	api.GET("/posts/recent", h.GetRecentPosts)
 }

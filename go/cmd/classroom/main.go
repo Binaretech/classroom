@@ -4,7 +4,7 @@ import "github.com/Binaretech/classroom/internal/classroom/cmd"
 
 // @title Classroom API
 // @version 0.1
-// @description Main API for the classroom. Full source code at https://github.com/Binaretech/classroom
+// @description Main API for the classroom app
 // @host localhost
 // @basePath /api
 // @contact.name Binaretech

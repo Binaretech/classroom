@@ -30,7 +30,7 @@ func classSeeder(db *gorm.DB) {
 		db.Model(&model.User{}).Pluck("id", &usersID)
 
 		classes = append(classes, model.Class{
-			Name:     gofakeit.HipsterSentence(5),
+			Name:     gofakeit.HipsterSentence(2),
 			OwnerID:  teacher.ID,
 			Sections: sections,
 		})

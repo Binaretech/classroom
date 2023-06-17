@@ -20,4 +20,8 @@ final _messages = {
     'title': "Log out",
     'content': 'Are you sure you want to log out?',
   },
+  'retry': 'Retry',
+  'badges': {
+    'teacher': 'Teacher',
+  }
 };

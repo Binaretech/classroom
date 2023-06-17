@@ -184,7 +184,8 @@ func TestSectionPosts(t *testing.T) {
 	db.Create(&section)
 
 	db.Create(&model.Post{
-		SectionID: section.ID,
+		PosteableID: section.ID,
+		PosteableType: "section",
 		UserID:    user.ID,
 		Content:   "Hello world",
 	})

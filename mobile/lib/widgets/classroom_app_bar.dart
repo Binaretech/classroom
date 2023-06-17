@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ClassroomAppBar extends ConsumerWidget implements PreferredSizeWidget {
-  const ClassroomAppBar({Key? key}) : super(key: key);
+  final String? title;
+
+  const ClassroomAppBar({Key? key, this.title}) : super(key: key);
 
   @override
   Size get preferredSize => AppBar().preferredSize;
@@ -28,7 +30,7 @@ class ClassroomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   AppBar build(BuildContext context, WidgetRef ref) {
     return AppBar(
-      title: const Text('Classroom'),
+      title: title != null ? Text(title!) : null,
       actions: [
         userInfo(ref),
       ],

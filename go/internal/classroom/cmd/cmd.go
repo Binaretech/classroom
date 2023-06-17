@@ -2,12 +2,13 @@ package cmd
 
 import (
 	"fmt"
+	"log"
+	"net/http"
 	"os"
 
 	"github.com/Binaretech/classroom/internal/classroom/database"
 	"github.com/Binaretech/classroom/internal/classroom/server"
 	"github.com/Binaretech/classroom/internal/classroom/storage"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
@@ -17,10 +18,16 @@ var rootCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		storage.OpenStorage()
 
-		if db, err := database.Connect(); err != nil {
-			logrus.Fatal(err)
-		} else {
-			logrus.Fatalln(server.Listen(db))
+		db, err := database.Connect()
+
+		if err != nil {
+			log.Fatalln(err.Error())
+		}
+
+		app := server.App(db)
+
+		if err := app.Start(":80"); err != nil && err != http.ErrServerClosed {
+			app.Logger.Fatal("shutting down the server")
 		}
 	},
 }

@@ -27,7 +27,8 @@ func postSeeder(db *gorm.DB) {
 
 		for i := 0; i < 10; i++ {
 			post = append(post, model.Post{
-				SectionID: id,
+				PosteableID: id,
+				PosteableType: model.POSTEABLE_TYPE_SECTION,
 				Type:      model.POST_TYPE_USER_POST,
 				Content:   "hello world",
 				UserID:    gofakeit.RandomString(usersIds),

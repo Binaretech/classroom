@@ -1,3 +1,5 @@
+import 'package:classroom_mobile/models/class.dart';
+import 'package:classroom_mobile/models/section.dart';
 import 'package:classroom_mobile/models/user.dart';
 import 'package:classroom_mobile/widgets/user_avatar.dart';
 import 'package:equatable/equatable.dart';
@@ -18,7 +20,11 @@ class Post extends Equatable {
   final int id;
   final String content;
   final PostType type;
-  final int sectionId;
+  final int posteableId;
+  final String posteableType;
+  final bool authorIsTeacher;
+  final Section? section;
+  final Class? cls;
   final String userId;
   final User? user;
   final DateTime createdAt;
@@ -27,7 +33,11 @@ class Post extends Equatable {
   const Post({
     required this.id,
     required this.content,
-    required this.sectionId,
+    required this.posteableId,
+    required this.posteableType,
+    required this.authorIsTeacher,
+    this.section,
+    this.cls,
     required this.userId,
     required this.createdAt,
     required this.updatedAt,
@@ -38,7 +48,15 @@ class Post extends Equatable {
   Post.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         content = json['content'],
-        sectionId = json['sectionId'],
+        posteableId = json['posteableId'],
+        authorIsTeacher = json['authorIsTeacher'],
+        posteableType = json['posteableType'],
+        section = json['section'] != null
+            ? Section.fromMap(Map.from(json['section']))
+            : null,
+        cls = json['class'] != null
+            ? Class.fromMap(Map.from(json['class']))
+            : null,
         userId = json['userId'],
         type = PostType.getByValue(json['type']),
         createdAt = DateTime.parse(json['createdAt']).toLocal(),
@@ -53,6 +71,8 @@ class Post extends Equatable {
   String get titleByType =>
       type == PostType.user ? user?.fullName ?? '' : 'post';
 
+  String get className => section?.clss?.name ?? cls?.name ?? '';
+
   Widget avatarByType([double radius = 30]) => type == PostType.user
       ? UserAvatar(user: user!, radius: radius)
       : Container();
@@ -62,7 +82,8 @@ class Post extends Equatable {
         id,
         type,
         content,
-        sectionId,
+        posteableId,
+        posteableType,
         userId,
         user,
         createdAt,

@@ -1,11 +1,9 @@
 package cmd
 
 import (
-	"context"
 	"fmt"
 	"log"
 	"os"
-	"os/signal"
 	"time"
 
 	"github.com/Binaretech/classroom/config"
@@ -45,25 +43,9 @@ var rootCmd = &cobra.Command{
 
 		e := server.App(database)
 
-		go func() {
-			if err := e.Start(fmt.Sprintf(":%s", viper.GetString("auth_port"))); err != nil {
-				log.Fatalln(err.Error())
-
-				os.Exit(1)
-			}
-		}()
-
-		quit := make(chan os.Signal, 1)
-		signal.Notify(quit, os.Interrupt)
-		<-quit
-
-		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-		defer cancel()
-
-		if err := e.Shutdown(ctx); err != nil {
+		if err := e.Start(":80"); err != nil {
 			log.Fatalln(err.Error())
 		}
-
 	},
 }
 

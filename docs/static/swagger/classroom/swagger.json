@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "Main API for the classroom. Full source code at https://github.com/Binaretech/classroom",
+        "description": "Main API for the classroom app",
         "title": "Classroom API",
         "contact": {
             "name": "Binaretech"
@@ -14,26 +14,6 @@
     "host": "localhost",
     "basePath": "/api",
     "paths": {
-        "/": {
-            "get": {
-                "description": "Verify the auth status",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Auth"
-                ],
-                "summary": "Verify the auth status",
-                "responses": {
-                    "204": {
-                        "description": "No Content"
-                    }
-                }
-            }
-        },
         "/classes": {
             "get": {
                 "description": "Get user classes",
@@ -525,60 +505,6 @@
                 }
             }
         },
-        "/login": {
-            "post": {
-                "description": "Login the user",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Auth"
-                ],
-                "summary": "Login",
-                "parameters": [
-                    {
-                        "description": "Login data",
-                        "name": "user",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/handler.LoginRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/handler.AuthResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/logout": {
-            "get": {
-                "description": "Logout the user",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Auth"
-                ],
-                "summary": "Logout the user",
-                "responses": {
-                    "204": {
-                        "description": "No Content"
-                    }
-                }
-            }
-        },
         "/posts/:id/comments": {
             "post": {
                 "description": "Comment a post",
@@ -627,9 +553,9 @@
                 }
             }
         },
-        "/register": {
+        "/posts/recent": {
             "get": {
-                "description": "Register a new user",
+                "description": "Get recent posts ordered by date",
                 "consumes": [
                     "application/json"
                 ],
@@ -637,28 +563,10 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Auth"
+                    "Posts"
                 ],
-                "summary": "Register a new user",
-                "parameters": [
-                    {
-                        "description": "Register data",
-                        "name": "user",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/handler.RegisterRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/handler.AuthResponse"
-                        }
-                    }
-                }
+                "summary": "Get recent posts",
+                "responses": {}
             }
         },
         "/sections": {
@@ -1136,33 +1044,6 @@
         }
     },
     "definitions": {
-        "auth.TokenDetails": {
-            "type": "object",
-            "properties": {
-                "accessExpires": {
-                    "description": "AccessExpires Access token expiration",
-                    "type": "integer"
-                },
-                "accessToken": {
-                    "type": "string"
-                },
-                "accessUUID": {
-                    "description": "Unique identifier for access token",
-                    "type": "string"
-                },
-                "refreshExpires": {
-                    "description": "RefreshExpires Refresh token expiration",
-                    "type": "integer"
-                },
-                "refreshToken": {
-                    "type": "string"
-                },
-                "refreshUUID": {
-                    "description": "Unique identifier for refresh token",
-                    "type": "string"
-                }
-            }
-        },
         "errors.BadRequest": {
             "type": "object"
         },
@@ -1174,48 +1055,6 @@
         },
         "errors.NotFound": {
             "type": "object"
-        },
-        "handler.AuthResponse": {
-            "type": "object",
-            "properties": {
-                "token": {
-                    "$ref": "#/definitions/auth.TokenDetails"
-                },
-                "user": {
-                    "$ref": "#/definitions/schema.User"
-                }
-            }
-        },
-        "handler.LoginRequest": {
-            "type": "object",
-            "required": [
-                "email",
-                "password"
-            ],
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
-            }
-        },
-        "handler.RegisterRequest": {
-            "type": "object",
-            "required": [
-                "email",
-                "password"
-            ],
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string",
-                    "minLength": 6
-                }
-            }
         },
         "model.Comment": {
             "type": "object",
@@ -1305,8 +1144,11 @@
                 "id": {
                     "type": "integer"
                 },
-                "sectionId": {
+                "posteableId": {
                     "type": "integer"
+                },
+                "posteableType": {
+                    "type": "string"
                 },
                 "type": {
                     "type": "integer"
@@ -1601,17 +1443,6 @@
                     }
                 },
                 "updatedAt": {
-                    "type": "string"
-                }
-            }
-        },
-        "schema.User": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "id": {
                     "type": "string"
                 }
             }

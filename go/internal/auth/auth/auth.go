@@ -42,6 +42,7 @@ func (td *TokenDetails) StoreCookie(c echo.Context) echo.Context {
 		Expires:  time.Unix(td.AccessExpires, 0),
 		Secure:   viper.GetString("env") == "production",
 		HttpOnly: true,
+		SameSite: http.SameSiteStrictMode,
 	})
 
 	return c

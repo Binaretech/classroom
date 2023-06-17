@@ -10,10 +10,10 @@ class PlaceholderList extends StatelessWidget {
     return Shimmer.fromColors(
         baseColor: Colors.grey[300]!,
         highlightColor: Colors.grey[100]!,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+        child: const Padding(
+          padding: EdgeInsets.all(16.0),
           child: Column(
-            children: const [
+            children: [
               PlaceholderListTile(),
               PlaceholderListTile(),
               PlaceholderListTile(),

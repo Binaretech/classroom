@@ -14,7 +14,7 @@ func App(db *mongo.Database) *echo.Echo {
 	app := echo.New()
 
 	app.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins:     []string{"http://localhost", "http://docs.main.localhost"},
+		AllowOrigins:     []string{"http://localhost", "http://docs.localhost"},
 		AllowMethods:     []string{echo.GET, echo.PUT, echo.POST, echo.DELETE},
 		AllowCredentials: true,
 		AllowHeaders:     []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization},

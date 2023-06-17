@@ -37,7 +37,7 @@ var docsGenerateCmd = &cobra.Command{
 			exec.Command("go", "install", "github.com/swaggo/swag/cmd/swag@latest").Run()
 		}
 
-		if err := exec.Command("swag", "init", "--parseInternal", "-g", "./cmd/classroom/main.go", "-o", "../docs/static/swagger/classroom","--ot", "json").Run(); err != nil {
+		if err := exec.Command("swag", "init", "--parseInternal", "-g", "./cmd/classroom/main.go", "-o", "../docs/static/swagger/classroom", "--ot", "json", "--exclude", "./internal/auth/").Run(); err != nil {
 			log.Fatal(err)
 		}
 	},

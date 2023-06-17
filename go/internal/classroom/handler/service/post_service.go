@@ -11,6 +11,30 @@ import (
 	"gorm.io/gorm"
 )
 
+func GetPostByClassId(db *gorm.DB, ids ...uint) *gorm.DB {
+	return db.Model(&model.Post{}).
+		Joins("User").
+		Where("posts.id IN ?", ids).
+		Where("posts.posteable_type = ?", model.POSTEABLE_TYPE_CLASS)
+}
+
+func GetPostBySectionId(db *gorm.DB, ids ...uint) *gorm.DB {
+	return db.Model(&model.Post{}).
+		Joins("User").
+		Where("posts.id IN ?", ids).
+		Where("posts.posteable_type = ?", model.POSTEABLE_TYPE_SECTION)
+}
+
+func GetRecentPosts(db *gorm.DB, userId string) *gorm.DB {
+	sectionIds := []uint{}
+	classesIds := []uint{}
+
+	GetVisibleSections(db, userId).Where("classes.archived = FALSE").Pluck("sections.id", &sectionIds)
+	GetVisibleClasses(db, userId).Where("classes.archived = FALSE").Pluck("classes.id", &classesIds)
+
+	return db.Table("(? UNION ?) as posts", GetPostByClassId(db, classesIds...), GetPostBySectionId(db, sectionIds...))
+}
+
 // GetSectionPosts returns the posts of a section
 func GetSectionPosts(db *gorm.DB, userId string, id string) *gorm.DB {
 	usersQuery := db.Table(

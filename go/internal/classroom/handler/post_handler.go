@@ -10,6 +10,20 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// GetRecentPost returns a paginated list of class and section posts that the user can see ordered by date.
+// @Summary Get recent posts
+// @Description Get recent posts ordered by date
+// @Tags Posts
+// @Accept  json
+// @Success 200 {object} resource.PaginatedResource{data=model.Post}
+// @Produce  json
+// @Router /posts/recent [get]
+func (h *Handler) GetRecentPosts(c echo.Context) error {
+	request := request.NewGetRecentPostsRequest(c)
+
+	return request.SendPaginatedResource(c, service.GetRecentPosts(h.DB, request.UserId))
+}
+
 // StoreSectionPost is the handler to store a post in the database
 // @Summary Store a post
 // @Description Store a post in the database
@@ -58,7 +72,7 @@ func (h *Handler) CommentPost(c echo.Context) error {
 
 	post := service.FindPost(h.DB, req.Post)
 
-	if !service.BelongsToSection(h.DB, req.UserID, post.SectionID) {
+	if !service.BelongsToSection(h.DB, req.UserID, post.PosteableID) {
 		return errors.NewDefaultForbiddenCtx(c)
 	}
 

@@ -6,7 +6,7 @@ import (
 
 // @title Classroom Auth Gateway API
 // @version 0.1
-// @description Auth Gateway API for the
+// @description Auth Gateway API for the classroom app
 // @host localhost
 // @contact.name Binaretech
 // @basePath /auth

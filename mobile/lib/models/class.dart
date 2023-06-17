@@ -6,6 +6,7 @@ class Class extends Equatable {
   final int id;
   final String name;
   final String? description;
+  final String ownerId;
   final bool isTeacher;
   final bool isStudent;
   final DateTime createdAt;
@@ -15,6 +16,7 @@ class Class extends Equatable {
     required this.id,
     required this.name,
     required this.createdAt,
+    required this.ownerId,
     required this.updatedAt,
     this.isTeacher = false,
     this.isStudent = false,
@@ -25,8 +27,11 @@ class Class extends Equatable {
       : id = data['id'],
         name = data['name'] as String,
         description = data['description'] as String?,
-        isTeacher = data['isTeacher'] as bool,
-        isStudent = data['isStudent'] as bool,
+        ownerId = data['ownerId'] as String,
+        isTeacher =
+            data['isTeacher'] != null ? data['isTeacher'] as bool : false,
+        isStudent =
+            data['isStudent'] != null ? data['isStudent'] as bool : false,
         createdAt = DateTime.parse(data['createdAt'] as String).toLocal(),
         updatedAt = DateTime.parse(data['updatedAt'] as String).toLocal();
 

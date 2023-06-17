@@ -14,6 +14,7 @@ services:
       - "traefik.http.middlewares.auth.forwardauth.authResponseHeaders=X-Auth-User,X-Auth-User-Email"
       - traefik.http.routers.auth.rule=PathPrefix(`/auth`)
     command: ["air", "-c", "./config/.air.auth.toml"] 
+    env_file: .env
 
   main:
     image: classroom-go
@@ -26,6 +27,7 @@ services:
       - traefik.http.routers.main.rule=PathPrefix(`/api`)
       - traefik.http.routers.main.middlewares=auth
     command: ["air", "-c", "./config/.air.classroom.toml"] 
+    env_file: .env
 
   docs:
     image: node:20

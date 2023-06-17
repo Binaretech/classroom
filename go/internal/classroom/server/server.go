@@ -1,26 +1,23 @@
 package server
 
 import (
-	"context"
-	"fmt"
-	"log"
-	"os"
-	"os/signal"
-	"time"
-
 	"github.com/Binaretech/classroom/internal/classroom/handler"
 	"github.com/Binaretech/classroom/pkg/errors"
 	"github.com/Binaretech/classroom/pkg/validation"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/spf13/viper"
 	"gorm.io/gorm"
 )
 
-func Listen(db *gorm.DB) error {
+func App(db *gorm.DB) *echo.Echo {
 	app := echo.New()
 
-	app.Use(middleware.CORS())
+	app.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins:     []string{"http://localhost", "http://docs.localhost"},
+		AllowMethods:     []string{echo.GET, echo.PUT, echo.POST, echo.DELETE},
+		AllowCredentials: true,
+		AllowHeaders:     []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization},
+	}))
 
 	app.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: `Method: ${method}, URI: ${uri}, Status: ${status}, Error: ${error}, Latency: ${latency_human}`,
@@ -44,20 +41,5 @@ func Listen(db *gorm.DB) error {
 	handler := handler.New(db)
 	handler.Routes(api)
 
-	go func() {
-		if err := app.Start(fmt.Sprintf(":%s", viper.GetString("classroom_port"))); err != nil {
-			log.Fatalln(err.Error())
-
-			os.Exit(1)
-		}
-	}()
-
-	quit := make(chan os.Signal, 1)
-	signal.Notify(quit, os.Interrupt)
-	<-quit
-
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-
-	return app.Shutdown(ctx)
+	return app
 }

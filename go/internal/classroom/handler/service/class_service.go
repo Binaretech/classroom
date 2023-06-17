@@ -8,6 +8,16 @@ import (
 	"gorm.io/gorm"
 )
 
+func GetVisibleClasses(db *gorm.DB, userId string) *gorm.DB {
+	return db.Model(&model.Class{}).
+		Joins("LEFT JOIN sections ON sections.class_id = classes.id").
+		Joins("LEFT JOIN teachers ON teachers.section_id = sections.id").
+		Joins("LEFT JOIN students ON students.section_id = sections.id").
+		Where("teachers.user_id = @user_id OR students.user_id = @user_id OR classes.owner_id = @user_id", map[string]any{
+			"user_id": userId,
+		})
+}
+
 // GetClasses returns a query to get all classes of the user.
 func GetClasses(db *gorm.DB, userID string) *gorm.DB {
 	ownClasses := db.Model(&model.Class{}).

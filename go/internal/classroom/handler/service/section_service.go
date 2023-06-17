@@ -10,6 +10,17 @@ import (
 	"gorm.io/gorm"
 )
 
+func GetVisibleSections(db *gorm.DB, userId string) *gorm.DB {
+	return db.Model(&model.Section{}).
+		Joins("LEFT JOIN classes ON classes.id = sections.class_id").
+		Joins("LEFT JOIN teachers ON teachers.section_id = sections.id").
+		Joins("LEFT JOIN students ON students.section_id = sections.id").
+		Where("teachers.user_id = @user_id OR students.user_id = @user_id OR classes.owner_id = @user_id", map[string]any{
+			"user_id": userId,
+		}).
+		Select("sections.id")
+}
+
 func CreateSection(db *gorm.DB, name string, classID uint) (uint, error) {
 	section := &model.Section{
 		Name:    name,

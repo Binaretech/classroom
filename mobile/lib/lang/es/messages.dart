@@ -20,4 +20,8 @@ final _messages = {
     'title': "Cerrar sesión",
     'content': '¿Está seguro de que desea cerrar sesión?',
   },
+  'retry': 'Reintentar',
+  'badges': {
+    'teacher': 'Prof',
+  }
 };

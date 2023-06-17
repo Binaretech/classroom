@@ -43,3 +43,28 @@ final postsProvider = FutureProvider.autoDispose
 
   return response;
 });
+
+final recentPostsPaginationProvider =
+    FutureProvider.autoDispose<PaginationParams>((ref) async {
+  final repository = GetIt.I<PostRepository>();
+
+  final response = await repository.recent(page: 1);
+
+  ref.keepAlive();
+
+  return PaginationParams(
+    limit: response.limit,
+    total: response.total,
+  );
+});
+
+final recentPostsProvider = FutureProvider.autoDispose
+    .family<PaginatedData<Post>, int>((ref, page) async {
+  final repository = GetIt.I<PostRepository>();
+
+  final response = await repository.recent(page: page);
+
+  ref.keepAlive();
+
+  return response;
+});

@@ -9,6 +9,18 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+type GetRecentPostsRequest struct {
+	PaginationRequest[model.Post]
+	UserId string
+}
+
+func NewGetRecentPostsRequest(c echo.Context) GetRecentPostsRequest {
+	return GetRecentPostsRequest{
+		PaginationRequest: NewPaginatedRequest[model.Post](c),
+		UserId: auth.UserID(c),
+	}
+}
+
 type SectionPostRequest struct {
 	PaginationRequest[model.Post]
 	ID string `validate:"required,exists=sections"`
@@ -62,7 +74,8 @@ func NewStorePostRequest(c echo.Context) *StorePostRequest {
 func (req *StorePostRequest) Post() model.Post {
 
 	return model.Post{
-		SectionID: req.Section,
+		PosteableID: req.Section,
+		PosteableType: model.POSTEABLE_TYPE_SECTION,
 		Content:   req.Content,
 		UserID:    req.UserID,
 		Type:      model.POST_TYPE_USER_POST,

@@ -1,8 +1,11 @@
 {
-  "extends": "tsconfig/react-native-library",
-  "include": ["."],
-  "exclude": ["dist", "build", "node_modules"],
+  "extends": "../../tsconfig.base",
+  "include": [
+    "src"
+  ],
   "compilerOptions": {
-    "strict": true
-  }
+    "composite": true,
+    "jsx": "react-jsx"
+  },
+  "references": []
 }

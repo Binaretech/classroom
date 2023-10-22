@@ -1,8 +1,8 @@
-import IndexScreen from 'app/features/index/screen'
+import RegisterScreen from 'app/features/register/screen'
 import { Stack } from 'expo-router'
 import { ScrollView } from 'react-native'
 
-export default function Screen() {
+export default function Register() {
   return (
     <>
       <Stack.Screen
@@ -11,7 +11,7 @@ export default function Screen() {
         }}
       />
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <IndexScreen />
+        <RegisterScreen />
       </ScrollView>
     </>
   )

@@ -3,4 +3,8 @@ export default {
     title: 'Login',
     button: 'Login',
   },
+  register: {
+    title: 'Register',
+    button: 'Register',
+  },
 }

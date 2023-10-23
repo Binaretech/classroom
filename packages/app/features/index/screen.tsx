@@ -1,7 +1,16 @@
 import React from 'react'
-import { Card } from 'tamagui'
+import { Card, Button } from 'tamagui'
+import { useLink } from 'solito/navigation'
 
 export default function Index() {
+  const login = useLink({
+    href: '/login',
+  })
+
+  const register = useLink({
+    href: '/register',
+  })
+
   return (
     <Card
       elevate
@@ -13,6 +22,9 @@ export default function Index() {
         width: '80%',
         maxWidth: '500px',
       }}
-    ></Card>
+    >
+      <Button {...login}>login</Button>
+      <Button {...register}>register</Button>
+    </Card>
   )
 }

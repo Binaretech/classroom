@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Form, H2, Button, Input, Card } from 'tamagui'
+import { Form, H2, Button, Input, Card, Text } from 'tamagui'
 import auth from '@react-native-firebase/auth'
 import { useForm, SubmitHandler, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -21,7 +21,11 @@ export default function RegisterScreen() {
     passwordConfirmation: yup.string().oneOf([yup.ref('password')], 'Passwords must match'),
   })
 
-  const { handleSubmit, control } = useForm<Inputs>({
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<Inputs>({
     resolver: yupResolver(schema),
   })
 
@@ -74,6 +78,7 @@ export default function RegisterScreen() {
               my="$2"
               onBlur={onBlur}
               onChangeText={(value) => onChange(value)}
+              secureTextEntry
               value={value}
             />
           )}
@@ -88,12 +93,15 @@ export default function RegisterScreen() {
               my="$2"
               onBlur={onBlur}
               onChangeText={(value) => onChange(value)}
+              secureTextEntry
               value={value}
             />
           )}
           name="passwordConfirmation"
           rules={{ required: true }}
         />
+
+        {errors.email && <Text>{errors.email.message}</Text>}
 
         <Card.Footer jc="center" ai="center" py="$4">
           <Form.Trigger asChild>

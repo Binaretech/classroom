@@ -9,6 +9,9 @@ export function initializeLang() {
       en: {
         translation: en,
       },
+      es: {
+        translation: en,
+      },
     },
     lng: 'en',
     fallbackLng: 'en',

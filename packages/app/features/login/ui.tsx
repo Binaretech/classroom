@@ -1,17 +1,20 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Form, H2, Button, Input, Card } from 'tamagui'
-import auth from '@react-native-firebase/auth'
+import { Form, H2, Button, Input, Card, YStack, Text } from 'tamagui'
 import { useForm, SubmitHandler, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
-type Inputs = {
+export type Inputs = {
   email: string
   password: string
 }
 
-export default function LoginScreen() {
+export type LoginScreenProps = {
+  onSubmit: (data: Inputs) => void
+}
+
+export default function LoginScreen({ onSubmit }: LoginScreenProps) {
   const { t } = useTranslation()
 
   const schema = yup.object().shape({
@@ -22,17 +25,6 @@ export default function LoginScreen() {
   const { handleSubmit, control } = useForm<Inputs>({
     resolver: yupResolver(schema),
   })
-
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    auth()
-      .signInWithEmailAndPassword(data.email, data.password)
-      .then((response) => {
-        console.log(response)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} mt="$20" px="$4" jc="center" ai="center">
@@ -73,11 +65,17 @@ export default function LoginScreen() {
               onBlur={onBlur}
               onChangeText={(value) => onChange(value)}
               value={value}
+              secureTextEntry
             />
           )}
           name="password"
           rules={{ required: true }}
         />
+
+        <YStack my="$4">
+          <Text>{t('views.login.forgotPassword')}</Text>
+          <Text>{t('views.login.noAccount')}</Text>
+        </YStack>
 
         <Card.Footer jc="center" ai="center" py="$4">
           <Form.Trigger asChild>

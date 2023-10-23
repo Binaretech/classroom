@@ -1,5 +1,5 @@
 'use client'
 
-import LoginScreen from 'app/features/login/screen'
+import IndexScreen from 'app/features/index/screen'
 
-export default LoginScreen
+export default IndexScreen

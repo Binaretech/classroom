@@ -1,4 +1,4 @@
-package com.classroom;
+package com.binaretech.classroom;
 
 import android.os.Build;
 import android.os.Bundle;

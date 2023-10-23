@@ -1,4 +1,4 @@
-package com.classroom;
+package com.binaretech.classroom;
 
 import android.app.Application;
 import android.content.res.Configuration;

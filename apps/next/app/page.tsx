@@ -1,5 +1,5 @@
-'use client'
+'use client';
 
-import IndexScreen from 'app/features/index/screen'
+import LandingScreen from 'app/features/landing/screen';
 
-export default IndexScreen
+export default LandingScreen;

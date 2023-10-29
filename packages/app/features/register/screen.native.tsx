@@ -1,11 +1,12 @@
+import UI from './ui'
 import { SubmitHandler } from 'react-hook-form'
-import UI, { Inputs } from './ui'
-import { auth } from 'app/utils/firebase/firebase.web'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { Inputs } from './ui'
+import auth from '@react-native-firebase/auth'
 
-export default function Screen() {
+export default function RegisterScreen() {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    signInWithEmailAndPassword(auth, data.email, data.password)
+    auth()
+      .createUserWithEmailAndPassword(data.email, data.password)
       .then((response) => {
         console.log(response)
       })

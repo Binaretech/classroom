@@ -1,6 +1,6 @@
-import IndexScreen from 'app/features/index/screen'
-import { Stack } from 'expo-router'
-import { ScrollView } from 'react-native'
+import LandingScreen from 'app/features/landing/screen';
+import { Stack } from 'expo-router';
+import { ScrollView } from 'react-native';
 
 export default function Screen() {
   return (
@@ -11,8 +11,8 @@ export default function Screen() {
         }}
       />
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <IndexScreen />
+        <LandingScreen />
       </ScrollView>
     </>
-  )
+  );
 }

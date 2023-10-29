@@ -7,7 +7,8 @@
     "dev": "expo start --dev-client",
     "android": "npx expo run:android",
     "ios": "npx expo run:ios",
-    "eject": "npx expo eject"
+    "eject": "npx expo eject",
+    "start": "expo start --dev-client"
   },
   "dependencies": {
     "@babel/runtime": "^7.18.9",
@@ -31,7 +32,7 @@
     "expo-status-bar": "^1.4.4",
     "expo-updates": "^0.16.3",
     "i18next": "^23.6.0",
-    "react": "^18.2.0",
+    "react": "18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^13.3.1",
     "react-native": "0.71.14",

@@ -8,5 +8,6 @@ export default {
   register: {
     title: 'Register',
     button: 'Register',
+    haveAccount: 'Already have an account?',
   },
-}
+};

@@ -1,8 +1,8 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Form, H2, Button, Input, Card, YStack, Text } from 'tamagui'
-import { useForm, SubmitHandler, Controller } from 'react-hook-form'
+import { Form, H2, Button, Input, Card, YStack, Text, Anchor } from 'tamagui'
+import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useLink } from 'solito/navigation'
 import * as yup from 'yup'
 
 export type Inputs = {
@@ -14,7 +14,7 @@ export type LoginScreenProps = {
   onSubmit: (data: Inputs) => void
 }
 
-export default function LoginScreen({ onSubmit }: LoginScreenProps) {
+export default function LoginScreenUI({ onSubmit }: LoginScreenProps) {
   const { t } = useTranslation()
 
   const schema = yup.object().shape({
@@ -24,6 +24,10 @@ export default function LoginScreen({ onSubmit }: LoginScreenProps) {
 
   const { handleSubmit, control } = useForm<Inputs>({
     resolver: yupResolver(schema),
+  })
+
+  const register = useLink({
+    href: '/register',
   })
 
   return (
@@ -74,7 +78,14 @@ export default function LoginScreen({ onSubmit }: LoginScreenProps) {
 
         <YStack my="$4">
           <Text>{t('views.login.forgotPassword')}</Text>
-          <Text>{t('views.login.noAccount')}</Text>
+          <Text
+            {...register}
+            $platform-web={{
+              cursor: 'pointer',
+            }}
+          >
+            {t('views.login.noAccount')}
+          </Text>
         </YStack>
 
         <Card.Footer jc="center" ai="center" py="$4">

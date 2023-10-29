@@ -7025,6 +7025,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-core@npm:5.4.3":
+  version: 5.4.3
+  resolution: "@tanstack/query-core@npm:5.4.3"
+  checksum: 961701ed2978da4fc7862896bdd75a3333f71fdae568809896d6578a88609e6f5527eea363d68893110654f47a2876d3f0f54f1f594a64271eea4e37f2325f03
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^5.4.3":
+  version: 5.4.3
+  resolution: "@tanstack/react-query@npm:5.4.3"
+  dependencies:
+    "@tanstack/query-core": 5.4.3
+  peerDependencies:
+    react: ^18.0.0
+    react-dom: ^18.0.0
+    react-native: "*"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: a1a656d51df3a2f6c1596b14aba22f6ce46a4cb740efd8d799700c8daadc0c1444d6f9e5f77300973846bf57404583850c7ed48d91b94dc3415f72590ec6a321
+  languageName: node
+  linkType: hard
+
 "@tootallnate/once@npm:1":
   version: 1.1.2
   resolution: "@tootallnate/once@npm:1.1.2"
@@ -8613,8 +8638,10 @@ __metadata:
     "@tamagui/lucide-icons": latest
     "@tamagui/shorthands": latest
     "@tamagui/themes": latest
+    "@tanstack/react-query": ^5.4.3
     "@types/react": ^18.0.27
     "@types/react-native": ^0.71.3
+    axios: ^1.6.0
     burnt: ^0.12.1
     expo-constants: ^14.2.1
     expo-linking: ^4.0.1
@@ -8928,6 +8955,17 @@ __metadata:
   version: 4.7.0
   resolution: "axe-core@npm:4.7.0"
   checksum: f086bcab42be1761ba2b0b127dec350087f4c3a853bba8dd58f69d898cefaac31a1561da23146f6f3c07954c76171d1f2ce460e555e052d2b02cd79af628fa4a
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "axios@npm:1.6.0"
+  dependencies:
+    follow-redirects: ^1.15.0
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: c7c9f2ae9e0b9bad7d6f9a4dff030930b12ee667dedf54c3c776714f91681feb743c509ac0796ae5c01e12c4ab4a2bee74905068dd200fbc1ab86f9814578fb0
   languageName: node
   linkType: hard
 
@@ -12573,7 +12611,7 @@ __metadata:
     expo-updates: ^0.16.3
     i18next: ^23.6.0
     metro-minify-terser: ^0.74.1
-    react: ^18.2.0
+    react: 18.2.0
     react-dom: ^18.2.0
     react-i18next: ^13.3.1
     react-native: 0.71.14
@@ -13384,6 +13422,16 @@ __metadata:
   version: 0.185.2
   resolution: "flow-parser@npm:0.185.2"
   checksum: 6c8cee6ef2a2f0e5a5dd29698dfc493c8148263ce52b061804c812877ef68b1d0747d8f17256f2ed36e105550eab27a37377be32f1fed4b72c434dda6e0c053c
+  languageName: node
+  linkType: hard
+
+"follow-redirects@npm:^1.15.0":
+  version: 1.15.3
+  resolution: "follow-redirects@npm:1.15.3"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: 584da22ec5420c837bd096559ebfb8fe69d82512d5585004e36a3b4a6ef6d5905780e0c74508c7b72f907d1fa2b7bd339e613859e9c304d0dc96af2027fd0231
   languageName: node
   linkType: hard
 
@@ -18122,29 +18170,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-app@workspace:apps/next":
-  version: 0.0.0-use.local
-  resolution: "next-app@workspace:apps/next"
-  dependencies:
-    "@tamagui/config": latest
-    "@tamagui/next-plugin": latest
-    "@tamagui/next-theme": latest
-    "@types/node": ^20.3.1
-    app: 0.0.0
-    eslint-config-next: ^13.0.4
-    firebase: ^10.5.0
-    next: ^13.5.2
-    raf: ^3.4.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    react-i18next: ^13.3.1
-    react-native: 0.71.14
-    react-native-web: ^0.18.12
-    react-native-web-lite: latest
-    vercel: latest
-  languageName: unknown
-  linkType: soft
-
 "next@npm:^13.5.2":
   version: 13.5.2
   resolution: "next@npm:13.5.2"
@@ -18200,6 +18225,29 @@ __metadata:
   checksum: cc0635ad5aaab9fc1f4315b9506361b1abf1a12146542d6054b9434e2e892e967f19fbabd3f3763ba5e227306aa91627c1d73af089e9b853b84c74e20bb0be00
   languageName: node
   linkType: hard
+
+"next@workspace:apps/next":
+  version: 0.0.0-use.local
+  resolution: "next@workspace:apps/next"
+  dependencies:
+    "@tamagui/config": latest
+    "@tamagui/next-plugin": latest
+    "@tamagui/next-theme": latest
+    "@types/node": ^20.3.1
+    app: 0.0.0
+    eslint-config-next: ^13.0.4
+    firebase: ^10.5.0
+    next: ^13.5.2
+    raf: ^3.4.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    react-i18next: ^13.3.1
+    react-native: 0.71.14
+    react-native-web: ^0.18.12
+    react-native-web-lite: latest
+    vercel: latest
+  languageName: unknown
+  linkType: soft
 
 "nice-try@npm:^1.0.4":
   version: 1.0.5
@@ -19663,7 +19711,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"proxy-from-env@npm:^1.0.0":
+"proxy-from-env@npm:^1.0.0, proxy-from-env@npm:^1.1.0":
   version: 1.1.0
   resolution: "proxy-from-env@npm:1.1.0"
   checksum: ed7fcc2ba0a33404958e34d95d18638249a68c430e30fcb6c478497d72739ba64ce9810a24f53a7d921d0c065e5b78e3822759800698167256b04659366ca4d4

@@ -6,6 +6,7 @@
     "packages/*"
   ],
   "scripts": {
+    "dev": "turbo dev",
     "native": "cd apps/expo && yarn start",
     "ios": "cd apps/expo && yarn ios",
     "watch": "yarn workspaces foreach -pi run watch",

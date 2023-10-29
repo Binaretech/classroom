@@ -1,4 +1,4 @@
-import LoginScreen from 'app/features/login/screen';
+import Dashboard from 'app/features/dashboard/screen';
 import { Stack } from 'expo-router';
 import { ScrollView } from 'react-native';
 
@@ -7,7 +7,7 @@ export default function Login() {
     <>
       <Stack.Screen />
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <LoginScreen />
+        <Dashboard />
       </ScrollView>
     </>
   );

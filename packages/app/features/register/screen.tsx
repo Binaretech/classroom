@@ -1,14 +1,15 @@
+import UI from './ui';
 import { SubmitHandler } from 'react-hook-form';
-import UI, { Inputs } from './ui';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from 'app/utils/firebase/firebase';
+import { Inputs } from './ui';
+import auth from '@react-native-firebase/auth';
 import { useRouter } from 'solito/navigation';
 
 export default function RegisterScreen() {
   const { replace } = useRouter();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    createUserWithEmailAndPassword(auth, data.email, data.password)
+    auth()
+      .createUserWithEmailAndPassword(data.email, data.password)
       .then((response) => {
         replace('/dashboard');
       })

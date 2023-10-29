@@ -1,7 +1,11 @@
 import { Card, Button } from 'tamagui';
-import { useLink } from 'solito/navigation';
+import { useLink, useRouter } from 'solito/navigation';
+import useIsAuth from 'app/hooks/isAuth';
+import { useEffect } from 'react';
 
 export default function LandingScreen() {
+  const isAuth = useIsAuth();
+
   const login = useLink({
     href: '/login',
   });
@@ -9,6 +13,13 @@ export default function LandingScreen() {
   const register = useLink({
     href: '/register',
   });
+
+  const { replace } = useRouter();
+
+  useEffect(() => {
+    console.log(isAuth);
+    if (isAuth) replace('/dashboard');
+  }, [isAuth]);
 
   return (
     <Card

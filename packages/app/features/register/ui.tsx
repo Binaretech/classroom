@@ -53,7 +53,7 @@ export default function RegisterScreenUI({ onSubmit }: RegisterScreenUIProps) {
           maxWidth: '500px',
         }}
       >
-        <Card.Header padded>
+        <Card.Header padded jc="center" ai="center">
           <H2>{t('views.register.title')}</H2>
         </Card.Header>
         <Controller

@@ -1,95 +1,26 @@
-# Tamagui + Solito + Next + Expo Monorepo
+# CLASSROOM SERVICE WITHOUT NAME FOR NOW
 
-```sh
-npm create tamagui
-```
+# Classroom Service
 
-## 🔦 About
+Welcome to Classroom Service! This project is built using the Next.js and Expo stack for the frontend, with Tamagui and Solito for UI components, and NestJS for the backend.
 
-This monorepo is a starter for an Expo + Next.js + Tamagui + Solito app.
+## Getting Started
 
-Many thanks to [@FernandoTheRojo](https://twitter.com/fernandotherojo) for the Solito starter monorepo which this was forked from. Check out his [talk about using expo + next together at Next.js Conf 2021](https://www.youtube.com/watch?v=0lnbdRweJtA).
+To get started with this project, you'll need to have Node.js and Yarn installed on your machine. Once you have those installed, you can clone this repository and run the following commands:
 
-## 📦 Included packages
-
-- [Tamagui](https://tamagui.dev) 🪄
-- [solito](https://solito.dev) for cross-platform navigation
-- Expo SDK
-- Next.js
-- Expo Router
-
-## 🗂 Folder layout
-
-The main apps are:
-
-- `expo` (native)
-- `next` (web)
-
-- `packages` shared packages across apps
-  - `ui` includes your custom UI kit that will be optimized by Tamagui
-  - `app` you'll be importing most files from `app/`
-    - `features` (don't use a `screens` folder. organize by feature.)
-    - `provider` (all the providers that wrap the app, and some no-ops for Web.)
-
-You can add other folders inside of `packages/` if you know what you're doing and have a good reason to.
-
-## 🏁 Start the app
-
-- Install dependencies: `yarn`
-
-- Next.js local dev: `yarn web`
-
-To run with optimizer on in dev mode (just for testing, it's faster to leave it off): `yarn web:extract`. To build for production `yarn web:prod`.
-
-To see debug output to verify the compiler, add `// debug` as a comment to the top of any file.
-
-- Expo local dev: `yarn native`
-
-## UI Kit
-
-Note we're following the [design systems guide](https://tamagui.dev/docs/guides/design-systems) and creating our own package for components.
-
-See `packages/ui` named `ui` for how this works.
-
-## 🆕 Add new dependencies
-
-### Pure JS dependencies
-
-If you're installing a JavaScript-only dependency that will be used across platforms, install it in `packages/app`:
-
-```sh
-cd packages/app
-yarn add date-fns
-cd ../..
+```bash
+# Install dependencies
 yarn
 ```
 
-### Native dependencies
+## Frontend Stack
 
-If you're installing a library with any native code, you must install it in `expo`:
+The frontend of this project is built using the Next.js and Expo stack. Next.js is a React framework that allows for server-side rendering, while Expo is a set of tools and libraries for building native iOS and Android apps with React Native. Tamagui and Solito are UI component libraries that are used to build the user interface of the application.
 
-```sh
-cd apps/expo
-yarn add react-native-reanimated
-cd ..
-yarn
-```
+## Backend Stack
 
-## Update new dependencies
+The backend of this project is built using NestJS, a progressive Node.js framework for building efficient, scalable, and enterprise-grade server-side applications. NestJS provides a modular architecture that allows for easy organization of code and scalability of the application.
 
-### Pure JS dependencies
+## Contributing
 
-```sh
-yarn upgrade-interactive
-```
-
-You can also install the native library inside of `packages/app` if you want to get autoimport for that package inside of the `app` folder. However, you need to be careful and install the _exact_ same version in both packages. If the versions mismatch at all, you'll potentially get terrible bugs. This is a classic monorepo issue. I use `lerna-update-wizard` to help with this (you don't need to use Lerna to use that lib).
-
-You may potentially want to have the native module transpiled for the next app. If you get error messages with `Cannot use import statement outside a module`, you may need to use `transpilePackages` in your `next.config.js` and add the module to the array there.
-
-### Deploying to Vercel
-
-- Root: `apps/next`
-- Install command to be `yarn set version stable && yarn install`
-- Build command: leave default setting
-- Output dir: leave default setting
+If you'd like to contribute to this project, please fork the repository and create a pull request with your changes. We welcome all contributions!

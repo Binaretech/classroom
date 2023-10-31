@@ -2643,6 +2643,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@faker-js/faker@npm:7.6.0":
+  version: 7.6.0
+  resolution: "@faker-js/faker@npm:7.6.0"
+  checksum: 942af6221774e8c98a0eb6bc75265e05fb81a941170377666c3439aab9495dd321d6beedc5406f07e6ad44262b3e43c20961f666d116ad150b78e7437dd1bb2b
+  languageName: node
+  linkType: hard
+
 "@fastify/busboy@npm:^1.2.1":
   version: 1.2.1
   resolution: "@fastify/busboy@npm:1.2.1"
@@ -3461,6 +3468,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jercle/yargonaut@npm:1.1.5":
+  version: 1.1.5
+  resolution: "@jercle/yargonaut@npm:1.1.5"
+  dependencies:
+    chalk: ^4.1.2
+    figlet: ^1.5.2
+    parent-require: ^1.0.0
+  checksum: 3941cda4aa12043a3beb51499fe0a7741500e884cf1039de779eed5964abc00dd379ef47e9a8f75959440d6d41fe55dff18c247a69d48e422bf091e801cc3afc
+  languageName: node
+  linkType: hard
+
 "@jest/console@npm:^29.7.0":
   version: 29.7.0
   resolution: "@jest/console@npm:29.7.0"
@@ -3873,7 +3891,56 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mikro-orm/core@npm:^5.9.0":
+"@mikro-orm/cli@npm:^5.9.0":
+  version: 5.9.0
+  resolution: "@mikro-orm/cli@npm:5.9.0"
+  dependencies:
+    "@jercle/yargonaut": 1.1.5
+    "@mikro-orm/core": 5.9.0
+    "@mikro-orm/knex": 5.9.0
+    fs-extra: 11.1.1
+    tsconfig-paths: 4.2.0
+    yargs: 17.7.2
+  peerDependencies:
+    "@mikro-orm/better-sqlite": ^5.0.0
+    "@mikro-orm/entity-generator": ^5.0.0
+    "@mikro-orm/mariadb": ^5.0.0
+    "@mikro-orm/migrations": ^5.0.0
+    "@mikro-orm/migrations-mongodb": ^5.0.0
+    "@mikro-orm/mongodb": ^5.0.0
+    "@mikro-orm/mysql": ^5.0.0
+    "@mikro-orm/postgresql": ^5.0.0
+    "@mikro-orm/seeder": ^5.0.0
+    "@mikro-orm/sqlite": ^5.0.0
+  peerDependenciesMeta:
+    "@mikro-orm/better-sqlite":
+      optional: true
+    "@mikro-orm/entity-generator":
+      optional: true
+    "@mikro-orm/mariadb":
+      optional: true
+    "@mikro-orm/migrations":
+      optional: true
+    "@mikro-orm/migrations-mongodb":
+      optional: true
+    "@mikro-orm/mongodb":
+      optional: true
+    "@mikro-orm/mysql":
+      optional: true
+    "@mikro-orm/postgresql":
+      optional: true
+    "@mikro-orm/seeder":
+      optional: true
+    "@mikro-orm/sqlite":
+      optional: true
+  bin:
+    mikro-orm: cli.js
+    mikro-orm-esm: esm.js
+  checksum: f5278696749fcbaac8b0b87cc8192757852dd0c498e65ad78ef4a4d7adc989124086e467351114f0fecfd79fac616c0189c6a21d5ad8a11d2a72b0b354929aba
+  languageName: node
+  linkType: hard
+
+"@mikro-orm/core@npm:5.9.0, @mikro-orm/core@npm:^5.9.0":
   version: 5.9.0
   resolution: "@mikro-orm/core@npm:5.9.0"
   dependencies:
@@ -3920,6 +3987,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mikro-orm/entity-generator@npm:^5.9.0":
+  version: 5.9.0
+  resolution: "@mikro-orm/entity-generator@npm:5.9.0"
+  dependencies:
+    "@mikro-orm/knex": 5.9.0
+    fs-extra: 11.1.1
+  peerDependencies:
+    "@mikro-orm/core": ^5.0.0
+  checksum: 471b8033ca60bd466feecc265038e252d1f69bd13c4f32463af9b2d8372406fbd50ca913cb9153dc6a4975001b60c37edd0503897ad6ca5e7370c9d93c5c68a7
+  languageName: node
+  linkType: hard
+
 "@mikro-orm/knex@npm:5.9.0":
   version: 5.9.0
   resolution: "@mikro-orm/knex@npm:5.9.0"
@@ -3958,6 +4037,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mikro-orm/migrations@npm:^5.9.0":
+  version: 5.9.0
+  resolution: "@mikro-orm/migrations@npm:5.9.0"
+  dependencies:
+    "@mikro-orm/knex": 5.9.0
+    fs-extra: 11.1.1
+    knex: 2.5.1
+    umzug: 3.3.1
+  peerDependencies:
+    "@mikro-orm/core": ^5.0.0
+  checksum: e1792ef081ab463a49c88942496fb2b0c7874ac2c3da9e6b24167140a43a2ccb6b989b20716d7ca0d1550c1802df7a2fdbd347a4a084a28c63ae855a0d9fafd6
+  languageName: node
+  linkType: hard
+
 "@mikro-orm/nestjs@npm:^5.2.2":
   version: 5.2.2
   resolution: "@mikro-orm/nestjs@npm:5.2.2"
@@ -3988,6 +4081,40 @@ __metadata:
     "@mikro-orm/seeder":
       optional: true
   checksum: fa5928aa86987bffcfbba8615cca36d74875878da089b1bc7caafc24290f68c6e59f2d90fa8e5ca9fe494cb2cb02dfad9528bd82b280431296b05fbcc03a412c
+  languageName: node
+  linkType: hard
+
+"@mikro-orm/reflection@npm:^5.9.0":
+  version: 5.9.0
+  resolution: "@mikro-orm/reflection@npm:5.9.0"
+  dependencies:
+    globby: 11.1.0
+    ts-morph: 20.0.0
+  peerDependencies:
+    "@mikro-orm/core": ^5.0.0
+  checksum: 11c1e09993cfde2fe4ba7eafaa94a72b4bf48d6c749a3695f92dac95bf3f5fd55d92d1ef9fe2d9f673280579889c0a9afac1ac902ea2cb5e692861e8892a75fe
+  languageName: node
+  linkType: hard
+
+"@mikro-orm/seeder@npm:^5.9.0":
+  version: 5.9.0
+  resolution: "@mikro-orm/seeder@npm:5.9.0"
+  dependencies:
+    "@faker-js/faker": 7.6.0
+    fs-extra: 11.1.1
+    globby: 11.1.0
+  peerDependencies:
+    "@mikro-orm/core": ^5.0.0
+  checksum: 7d4272f84c1f8f5e596284c014a4176fd400ea6fe29ebc0c44e56543f08399dc712d090ce0106fab3090892d0075878a94a07678cae2a84179887a6063231ab8
+  languageName: node
+  linkType: hard
+
+"@mikro-orm/sql-highlighter@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@mikro-orm/sql-highlighter@npm:1.0.1"
+  dependencies:
+    ansi-colors: ^4.1.1
+  checksum: a5bb30ed9e46014213bb039e8eb4eeb023a4d96f16a9738e60ff073ab93fb6a5bded1fb4cdab8275f8f8912f6194ac572009fb66f6e65b70e4da60448cbb35fe
   languageName: node
   linkType: hard
 
@@ -4881,6 +5008,18 @@ __metadata:
   version: 1.5.1
   resolution: "@rushstack/eslint-patch@npm:1.5.1"
   checksum: e4c25322312dbaa29e835a7ab4fbac53c8731dd0da65e46646e38945e296429e7fb91c2ef3da5af5d5938d44b0cde1d5290438ebb3dcb015e02b80b5e2530d24
+  languageName: node
+  linkType: hard
+
+"@rushstack/ts-command-line@npm:^4.12.2":
+  version: 4.17.0
+  resolution: "@rushstack/ts-command-line@npm:4.17.0"
+  dependencies:
+    "@types/argparse": 1.0.38
+    argparse: ~1.0.9
+    colors: ~1.2.1
+    string-argv: ~0.3.1
+  checksum: 0ce3f6aef72e164e38134174b654cc7c4265cbe2c3d6af0782813d9182bc23e6116f153c64fbdaf89c6b41b02fe54a3416259f0ce0e2729a806ff6b06c9d953d
   languageName: node
   linkType: hard
 
@@ -6388,6 +6527,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ts-morph/common@npm:~0.21.0":
+  version: 0.21.0
+  resolution: "@ts-morph/common@npm:0.21.0"
+  dependencies:
+    fast-glob: ^3.2.12
+    minimatch: ^7.4.3
+    mkdirp: ^2.1.6
+    path-browserify: ^1.0.1
+  checksum: c322e2a58608d7d924646b10ba9ad432b03e7b119788c9f0f270550bd5aca22947fcaa1c63f27e80898a50de3ed99fc8d9c23569c6a2f3f36c9307e35ceba3ed
+  languageName: node
+  linkType: hard
+
 "@tsconfig/node10@npm:^1.0.7":
   version: 1.0.9
   resolution: "@tsconfig/node10@npm:1.0.9"
@@ -6413,6 +6564,13 @@ __metadata:
   version: 1.0.4
   resolution: "@tsconfig/node16@npm:1.0.4"
   checksum: 202319785901f942a6e1e476b872d421baec20cf09f4b266a1854060efbf78cde16a4d256e8bc949d31e6cd9a90f1e8ef8fb06af96a65e98338a2b6b0de0a0ff
+  languageName: node
+  linkType: hard
+
+"@types/argparse@npm:1.0.38":
+  version: 1.0.38
+  resolution: "@types/argparse@npm:1.0.38"
+  checksum: 26ed7e3f1e3595efdb883a852f5205f971b798e4c28b7e30a32c5298eee596e8b45834ce831f014d250b9730819ab05acff5b31229666d3af4ba465b4697d0eb
   languageName: node
   linkType: hard
 
@@ -7681,7 +7839,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ansi-colors@npm:4.1.3":
+"ansi-colors@npm:4.1.3, ansi-colors@npm:^4.1.1":
   version: 4.1.3
   resolution: "ansi-colors@npm:4.1.3"
   checksum: a9c2ec842038a1fabc7db9ece7d3177e2fe1c5dc6f0c51ecfbf5f39911427b89c00b5dc6b8bd95f82a26e9b16aaae2e83d45f060e98070ce4d1333038edceb0e
@@ -7869,7 +8027,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"argparse@npm:^1.0.7":
+"argparse@npm:^1.0.7, argparse@npm:~1.0.9":
   version: 1.0.10
   resolution: "argparse@npm:1.0.10"
   dependencies:
@@ -8401,9 +8559,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "backend@workspace:apps/backend"
   dependencies:
+    "@mikro-orm/cli": ^5.9.0
     "@mikro-orm/core": ^5.9.0
+    "@mikro-orm/entity-generator": ^5.9.0
+    "@mikro-orm/migrations": ^5.9.0
     "@mikro-orm/nestjs": ^5.2.2
     "@mikro-orm/postgresql": ^5.9.0
+    "@mikro-orm/reflection": ^5.9.0
+    "@mikro-orm/seeder": ^5.9.0
+    "@mikro-orm/sql-highlighter": ^1.0.1
     "@nestjs/cli": ^10.0.0
     "@nestjs/common": ^10.0.0
     "@nestjs/config": ^3.1.1
@@ -9273,6 +9437,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"code-block-writer@npm:^12.0.0":
+  version: 12.0.0
+  resolution: "code-block-writer@npm:12.0.0"
+  checksum: 9f6505a4d668c9131c6f3f686359079439e66d5f50c236614d52fcfa53aeb0bc615b2c6c64ef05b5511e3b0433ccfd9f7756ad40eb3b9298af6a7d791ab1981d
+  languageName: node
+  linkType: hard
+
 "collect-v8-coverage@npm:^1.0.0":
   version: 1.0.2
   resolution: "collect-v8-coverage@npm:1.0.2"
@@ -9352,6 +9523,13 @@ __metadata:
   version: 1.4.0
   resolution: "colorette@npm:1.4.0"
   checksum: 01c3c16058b182a4ab4c126a65a75faa4d38a20fa7c845090b25453acec6c371bb2c5dceb0a2338511f17902b9d1a9af0cadd8509c9403894b79311032c256c3
+  languageName: node
+  linkType: hard
+
+"colors@npm:~1.2.1":
+  version: 1.2.5
+  resolution: "colors@npm:1.2.5"
+  checksum: b6e23de735f68b72d5cdf6fd854ca43d1b66d82dcf54bda0b788083b910164a040f2c4edf23c670d36a7a2d8f1b7d6e62e3292703e4642691e6ccaa1c62d8f74
   languageName: node
   linkType: hard
 
@@ -10387,7 +10565,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"emittery@npm:^0.13.1":
+"emittery@npm:^0.13.0, emittery@npm:^0.13.1":
   version: 0.13.1
   resolution: "emittery@npm:0.13.1"
   checksum: 2b089ab6306f38feaabf4f6f02792f9ec85fc054fda79f44f6790e61bbf6bc4e1616afb9b232e0c5ec5289a8a452f79bfa6d905a6fd64e94b49981f0934001c6
@@ -12047,7 +12225,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.5, fast-glob@npm:^3.2.7, fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.0, fast-glob@npm:^3.3.1":
+"fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.12, fast-glob@npm:^3.2.5, fast-glob@npm:^3.2.7, fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.0, fast-glob@npm:^3.3.1":
   version: 3.3.1
   resolution: "fast-glob@npm:3.3.1"
   dependencies:
@@ -12177,6 +12355,15 @@ __metadata:
   version: 4.1.1
   resolution: "fetch-retry@npm:4.1.1"
   checksum: a06b6a0201efeb5082794713bcdc8dd2c8f1fd4ad5660de860b9c4e51738aa369be58ba7cfa67aa7aa4a3bf9d9b5a4cd2d2fdea88868856483fb81bacd70455b
+  languageName: node
+  linkType: hard
+
+"figlet@npm:^1.5.2":
+  version: 1.7.0
+  resolution: "figlet@npm:1.7.0"
+  bin:
+    figlet: bin/index.js
+  checksum: 3f61c2aeb13e48185a1b23598c005a6cd42cffcb01dd1ed0da80d692e14af5bfef774b99df6a840a6e4daa985b35d5ca0f085c471309bcdd6c06d6be58434ccf
   languageName: node
   linkType: hard
 
@@ -13065,7 +13252,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^8.0.0, glob@npm:^8.0.1":
+"glob@npm:^8.0.0, glob@npm:^8.0.1, glob@npm:^8.0.3":
   version: 8.1.0
   resolution: "glob@npm:8.1.0"
   dependencies:
@@ -16575,6 +16762,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"minimatch@npm:^7.4.3":
+  version: 7.4.6
+  resolution: "minimatch@npm:7.4.6"
+  dependencies:
+    brace-expansion: ^2.0.1
+  checksum: 1a6c8d22618df9d2a88aabeef1de5622eb7b558e9f8010be791cb6b0fa6e102d39b11c28d75b855a1e377b12edc7db8ff12a99c20353441caa6a05e78deb5da9
+  languageName: node
+  linkType: hard
+
 "minimatch@npm:^8.0.2":
   version: 8.0.4
   resolution: "minimatch@npm:8.0.4"
@@ -16761,6 +16957,15 @@ __metadata:
   bin:
     mkdirp: bin/cmd.js
   checksum: a96865108c6c3b1b8e1d5e9f11843de1e077e57737602de1b82030815f311be11f96f09cce59bd5b903d0b29834733e5313f9301e3ed6d6f6fba2eae0df4298f
+  languageName: node
+  linkType: hard
+
+"mkdirp@npm:^2.1.6":
+  version: 2.1.6
+  resolution: "mkdirp@npm:2.1.6"
+  bin:
+    mkdirp: dist/cjs/src/bin.js
+  checksum: 8a1d09ffac585e55f41c54f445051f5bc33a7de99b952bb04c576cafdf1a67bb4bae8cb93736f7da6838771fbf75bc630430a3a59e1252047d2278690bd150ee
   languageName: node
   linkType: hard
 
@@ -17710,6 +17915,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"parent-require@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "parent-require@npm:1.0.0"
+  checksum: 91ecef2c8e0ecc06a7d68ebdfccec9cb8b34a7144cccda0141273c8871d4dd05856fe13b17ae1e1a32bfd769143671a6dbd2ad7ee72f55d1cb8e588dc60a8f4c
+  languageName: node
+  linkType: hard
+
 "parse-github-url@npm:^1.0.2":
   version: 1.0.2
   resolution: "parse-github-url@npm:1.0.2"
@@ -18159,6 +18371,13 @@ __metadata:
   version: 5.0.0
   resolution: "pngjs@npm:5.0.0"
   checksum: 04e912cc45fb9601564e2284efaf0c5d20d131d9b596244f8a6789fc6cdb6b18d2975a6bbf7a001858d7e159d5c5c5dd7b11592e97629b7137f7f5cef05904c8
+  languageName: node
+  linkType: hard
+
+"pony-cause@npm:^2.1.4":
+  version: 2.1.10
+  resolution: "pony-cause@npm:2.1.10"
+  checksum: 8b61378f213e61056312dc274a1c79980154e9d864f6ad86e0c8b91a50d3ce900d430995ee24147c9f3caa440dfe7d51c274b488d7f033b65b206522536d7217
   languageName: node
   linkType: hard
 
@@ -20409,6 +20628,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"string-argv@npm:~0.3.1":
+  version: 0.3.2
+  resolution: "string-argv@npm:0.3.2"
+  checksum: 8703ad3f3db0b2641ed2adbb15cf24d3945070d9a751f9e74a924966db9f325ac755169007233e8985a39a6a292f14d4fee20482989b89b96e473c4221508a0f
+  languageName: node
+  linkType: hard
+
 "string-length@npm:^4.0.1":
   version: 4.0.2
   resolution: "string-length@npm:4.0.2"
@@ -21310,6 +21536,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ts-morph@npm:20.0.0":
+  version: 20.0.0
+  resolution: "ts-morph@npm:20.0.0"
+  dependencies:
+    "@ts-morph/common": ~0.21.0
+    code-block-writer: ^12.0.0
+  checksum: 8a96d72a26e4e3c4139c581834364a97207f78a5878f70aa6f58787c0f4003a9386a64f43b814bac7bf028e572ef8660939f56844641b05bfaf7ae7437be9011
+  languageName: node
+  linkType: hard
+
 "ts-node@npm:10.9.1, ts-node@npm:^10.9.1":
   version: 10.9.1
   resolution: "ts-node@npm:10.9.1"
@@ -21541,6 +21777,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"type-fest@npm:^3.0.0":
+  version: 3.13.1
+  resolution: "type-fest@npm:3.13.1"
+  checksum: c06b0901d54391dc46de3802375f5579868949d71f93b425ce564e19a428a0d411ae8d8cb0e300d330071d86152c3ea86e744c3f2860a42a79585b6ec2fdae8e
+  languageName: node
+  linkType: hard
+
 "type-is@npm:^1.6.4, type-is@npm:~1.6.18":
   version: 1.6.18
   resolution: "type-is@npm:1.6.18"
@@ -21708,6 +21951,19 @@ __metadata:
   dependencies:
     "@lukeed/csprng": ^1.0.0
   checksum: 98aabddcd6fe46f9b331b0378a93ee9cc51474348ada02006df9d10b4abc783ed596748ed9f20d7f6c5ff395dbcd1e764a65a68db6f39a31c95ae85ef13fe979
+  languageName: node
+  linkType: hard
+
+"umzug@npm:3.3.1":
+  version: 3.3.1
+  resolution: "umzug@npm:3.3.1"
+  dependencies:
+    "@rushstack/ts-command-line": ^4.12.2
+    emittery: ^0.13.0
+    glob: ^8.0.3
+    pony-cause: ^2.1.4
+    type-fest: ^3.0.0
+  checksum: 3a6ce3dca1de1178e46484641cd306fc06bfa8c1313bd2b8e475458c69e11782fd1ea1974b363563ce09af2deca32ac29055949fd1a66713db8222ea490cdf62
   languageName: node
   linkType: hard
 
@@ -22720,6 +22976,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"yargs@npm:17.7.2, yargs@npm:^17.3.1, yargs@npm:^17.5.1, yargs@npm:^17.7.2":
+  version: 17.7.2
+  resolution: "yargs@npm:17.7.2"
+  dependencies:
+    cliui: ^8.0.1
+    escalade: ^3.1.1
+    get-caller-file: ^2.0.5
+    require-directory: ^2.1.1
+    string-width: ^4.2.3
+    y18n: ^5.0.5
+    yargs-parser: ^21.1.1
+  checksum: 73b572e863aa4a8cbef323dd911d79d193b772defd5a51aab0aca2d446655216f5002c42c5306033968193bdbf892a7a4c110b0d77954a7fdf563e653967b56a
+  languageName: node
+  linkType: hard
+
 "yargs@npm:^15.1.0":
   version: 15.4.1
   resolution: "yargs@npm:15.4.1"
@@ -22736,21 +23007,6 @@ __metadata:
     y18n: ^4.0.0
     yargs-parser: ^18.1.2
   checksum: 40b974f508d8aed28598087720e086ecd32a5fd3e945e95ea4457da04ee9bdb8bdd17fd91acff36dc5b7f0595a735929c514c40c402416bbb87c03f6fb782373
-  languageName: node
-  linkType: hard
-
-"yargs@npm:^17.3.1, yargs@npm:^17.5.1, yargs@npm:^17.7.2":
-  version: 17.7.2
-  resolution: "yargs@npm:17.7.2"
-  dependencies:
-    cliui: ^8.0.1
-    escalade: ^3.1.1
-    get-caller-file: ^2.0.5
-    require-directory: ^2.1.1
-    string-width: ^4.2.3
-    y18n: ^5.0.5
-    yargs-parser: ^21.1.1
-  checksum: 73b572e863aa4a8cbef323dd911d79d193b772defd5a51aab0aca2d446655216f5002c42c5306033968193bdbf892a7a4c110b0d77954a7fdf563e653967b56a
   languageName: node
   linkType: hard
 

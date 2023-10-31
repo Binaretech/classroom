@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AuthStrategy } from './auth/auth.strategy';
-import { DatabaseModule } from './database/database.module';
+import { DatabaseModule } from './modules/database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import configuration, { validationSchema } from './configuration';
-import { FirebaseModule } from './firebase/firebase.module';
+import { FirebaseModule } from './modules/firebase/firebase.module';
+import { ClassModule } from './modules/class/class.module';
 
 @Module({
   imports: [
@@ -16,6 +17,8 @@ import { FirebaseModule } from './firebase/firebase.module';
     DatabaseModule,
 
     FirebaseModule,
+
+    ClassModule,
   ],
   providers: [AuthStrategy],
 })

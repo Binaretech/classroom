@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { ExtractJwt, Strategy } from 'passport-jwt';
+import { Strategy, ExtractJwt } from 'passport-firebase-jwt';
+import { auth } from 'firebase-admin';
 
 @Injectable()
 export class AuthStrategy extends PassportStrategy(Strategy) {
@@ -10,7 +11,11 @@ export class AuthStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any) {
-    return { userId: payload.sub, username: payload.username };
+  async validate(token) {
+    try {
+      return await auth().verifyIdToken(token, true);
+    } catch (err) {
+      throw new UnauthorizedException();
+    }
   }
 }

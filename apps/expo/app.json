@@ -22,23 +22,18 @@
       "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
-      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.binaretech.classroom"
+      "package": "com.binaretech.classroom",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "extra": {
-      "eas": {
-        "projectId": "[your_project_id]"
-      }
-    },
     "plugins": [
-      "expo-localization",
+      "expo-router",
       "@react-native-firebase/app",
       "@react-native-firebase/auth",
       [

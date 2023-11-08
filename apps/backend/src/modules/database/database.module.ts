@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import * as path from 'path';
 
 @Module({
   imports: [
@@ -9,8 +8,8 @@ import * as path from 'path';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        autoLoadEntities: true,
-        entities: [path.join(__dirname, 'entities')],
+        entities: ['./dist/src/modules/database/entities'],
+        entitiesTs: ['./src/modules/database/entities'],
         type: 'postgresql',
         host: configService.get('database.host'),
         dbName: configService.get('database.name'),
@@ -18,8 +17,8 @@ import * as path from 'path';
         password: configService.get('database.password'),
         user: configService.get('database.user'),
         migrations: {
-          path: path.join('dist', 'src', 'database', 'migrations'),
-          pathTs: path.join('src', 'database', 'migrations'),
+          path: './dist/src/database/migrations',
+          pathTs: './src/database/migrations',
           transactional: true,
           allOrNothing: true,
         },

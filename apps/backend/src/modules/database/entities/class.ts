@@ -1,6 +1,12 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
+import {
+  Entity,
+  EntityRepositoryType,
+  PrimaryKey,
+  Property,
+} from '@mikro-orm/core';
+import ClassRepository from '../repository/class.repository';
 
-@Entity()
+@Entity({ customRepository: () => ClassRepository })
 export class Class {
   @PrimaryKey({ type: 'bigint', autoincrement: true })
   id!: number;
@@ -12,7 +18,7 @@ export class Class {
   description?: string;
 
   @Property()
-  ownerId!: number;
+  ownerId!: string;
 
   @Property({ default: false })
   archived: boolean = false;
@@ -22,4 +28,6 @@ export class Class {
 
   @Property({ onUpdate: () => new Date() })
   updatedAt: Date = new Date();
+
+  [EntityRepositoryType]?: ClassRepository;
 }

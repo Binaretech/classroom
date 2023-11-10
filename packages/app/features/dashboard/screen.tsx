@@ -1,4 +1,4 @@
-import { Text, View } from 'ui';
+import { Text, View } from 'tamagui';
 
 export default function DashboardScreen() {
   return (

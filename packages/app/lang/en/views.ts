@@ -10,4 +10,9 @@ export default {
     button: 'Register',
     haveAccount: 'Already have an account?',
   },
+  UserInformationModal: {
+    title: 'User Information',
+    body: 'Complete the following information to continue',
+    button: 'Save',
+  },
 };

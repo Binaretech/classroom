@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.base",
   "include": [
     "src"
-  ],
+, "animations.ts", "global.ts", "index.tsx", "src/tamagui.config.ts"  ],
   "compilerOptions": {
     "composite": true,
     "jsx": "react-jsx"

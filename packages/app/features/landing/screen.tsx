@@ -1,24 +1,30 @@
-import { Card, Button } from 'tamagui'
-import { useLink, useRouter } from 'solito/navigation'
-import useIsAuth from 'app/hooks/isAuth'
-import { useEffect } from 'react'
+import { Card, Button } from 'tamagui';
+import { useLink, useRouter } from 'solito/navigation';
+import useIsAuth from 'app/hooks/isAuth';
+import { useEffect } from 'react';
 
 export default function LandingScreen() {
-  const isAuth = useIsAuth()
+  const isAuth = useIsAuth();
 
   const login = useLink({
     href: '/login',
-  })
+  });
 
   const register = useLink({
     href: '/register',
-  })
+  });
 
-  const { replace } = useRouter()
+  const { replace } = useRouter();
 
   useEffect(() => {
-    if (isAuth) replace('/dashboard')
-  }, [isAuth])
+    if (isAuth)
+      replace('/dashboard', {
+        experimental: {
+          nativeBehavior: 'stack-replace',
+          isNestedNavigator: true,
+        },
+      });
+  }, [isAuth]);
 
   return (
     <Card
@@ -35,5 +41,5 @@ export default function LandingScreen() {
       <Button {...login}>login</Button>
       <Button {...register}>register</Button>
     </Card>
-  )
+  );
 }

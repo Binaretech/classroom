@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Form, H2, Button, Input, Card, YStack, Text } from 'tamagui';
+import { Form, H2, Button, Input, Card, YStack, Text, Spinner } from 'tamagui';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useLink } from 'solito/navigation';
@@ -12,9 +12,10 @@ export type Inputs = {
 
 export type LoginScreenProps = {
   onSubmit: (data: Inputs) => void;
+  loading?: boolean;
 };
 
-export default function LoginScreenUI({ onSubmit }: LoginScreenProps) {
+export default function LoginScreenUI({ onSubmit, loading }: LoginScreenProps) {
   const { t } = useTranslation();
 
   const schema = yup.object().shape({
@@ -49,6 +50,7 @@ export default function LoginScreenUI({ onSubmit }: LoginScreenProps) {
         <YStack py="$4">
           <Controller
             control={control}
+            disabled={loading}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
                 placeholder={t('fields.email')}
@@ -63,6 +65,7 @@ export default function LoginScreenUI({ onSubmit }: LoginScreenProps) {
           />
           <Controller
             control={control}
+            disabled={loading}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
                 placeholder={t('fields.password')}
@@ -92,7 +95,7 @@ export default function LoginScreenUI({ onSubmit }: LoginScreenProps) {
 
         <Card.Footer jc="center" ai="center" py="$4">
           <Form.Trigger asChild>
-            <Button>{t('views.login.button')}</Button>
+            <Button disabled={loading}>{loading ? <Spinner /> : t('views.login.button')}</Button>
           </Form.Trigger>
         </Card.Footer>
       </Card>

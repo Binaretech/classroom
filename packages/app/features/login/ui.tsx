@@ -1,38 +1,27 @@
 import { useTranslation } from 'react-i18next';
 import { Form, H2, Button, Input, Card, YStack, Text, Spinner } from 'tamagui';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { Controller, Control, useFormState } from 'react-hook-form';
 import { useLink } from 'solito/navigation';
-import * as yup from 'yup';
-
-export type Inputs = {
-  email: string;
-  password: string;
-};
+import { BaseSyntheticEvent } from 'react';
+import { Inputs } from './hook';
 
 export type LoginScreenProps = {
-  onSubmit: (data: Inputs) => void;
+  onSubmit: (e?: BaseSyntheticEvent<object, any, any> | undefined) => void;
   loading?: boolean;
+  control: Control<Inputs>;
 };
 
-export default function LoginScreenUI({ onSubmit, loading }: LoginScreenProps) {
+export default function LoginScreenUI({ onSubmit, loading, control }: LoginScreenProps) {
   const { t } = useTranslation();
 
-  const schema = yup.object().shape({
-    email: yup.string().email().required(),
-    password: yup.string().min(8).required(),
-  });
-
-  const { handleSubmit, control } = useForm<Inputs>({
-    resolver: yupResolver(schema),
-  });
+  const { errors } = useFormState({ control });
 
   const register = useLink({
     href: '/register',
   });
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} mt="$20" px="$4" jc="center" ai="center">
+    <Form onSubmit={onSubmit} mt="$20" px="$4" jc="center" ai="center">
       <Card
         elevate
         size="$4"
@@ -80,6 +69,13 @@ export default function LoginScreenUI({ onSubmit, loading }: LoginScreenProps) {
             rules={{ required: true }}
           />
         </YStack>
+
+        {(errors.email || errors.password) && (
+          <YStack my="$4">
+            <Text color="red.500">{t(errors.email?.message ?? '')}</Text>
+            <Text color="red.500">{t(errors.password?.message ?? '')}</Text>
+          </YStack>
+        )}
 
         <YStack my="$4">
           <Text>{t('views.login.forgotPassword')}</Text>

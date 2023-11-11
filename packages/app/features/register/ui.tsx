@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { BaseSyntheticEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, H2, Button, Input, Card, Text, YStack } from 'ui';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { Form, H2, Button, Input, Card, Text, YStack, Spinner } from 'ui';
+import { Controller, useFormState, Control } from 'react-hook-form';
 import { useLink } from 'solito/navigation';
 
 export type Inputs = {
@@ -12,36 +10,23 @@ export type Inputs = {
   passwordConfirmation: string;
 };
 
-const schema = yup.object().shape({
-  email: yup.string().email().required('validation.required'),
-  password: yup.string().min(8).required('validation.required'),
-  passwordConfirmation: yup
-    .string()
-    .oneOf([yup.ref('password')], 'validation.matchPassword')
-    .required('validation.required'),
-});
-
 export type RegisterScreenUIProps = {
-  onSubmit: SubmitHandler<Inputs>;
+  onSubmit: (e?: BaseSyntheticEvent<object, any, any> | undefined) => void;
+  loading?: boolean;
+  control: Control<Inputs>;
 };
 
-export default function RegisterScreenUI({ onSubmit }: RegisterScreenUIProps) {
+export default function RegisterScreenUI({ onSubmit, loading, control }: RegisterScreenUIProps) {
   const { t } = useTranslation();
 
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<Inputs>({
-    resolver: yupResolver(schema),
-  });
+  const { errors } = useFormState({ control });
 
   const login = useLink({
     href: '/login',
   });
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} mt="$20" px="$4" jc="center" ai="center">
+    <Form onSubmit={onSubmit} mt="$20" px="$4" jc="center" ai="center">
       <Card
         elevate
         size="$4"
@@ -116,7 +101,7 @@ export default function RegisterScreenUI({ onSubmit }: RegisterScreenUIProps) {
 
         <Card.Footer jc="center" ai="center" py="$4">
           <Form.Trigger asChild>
-            <Button>{t('views.register.button')}</Button>
+            <Button disabled={loading}>{loading ? <Spinner /> : t('views.register.button')}</Button>
           </Form.Trigger>
         </Card.Footer>
       </Card>

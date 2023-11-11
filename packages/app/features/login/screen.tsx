@@ -1,12 +1,15 @@
 import { SubmitHandler } from 'react-hook-form';
 import auth from '@react-native-firebase/auth';
-import UI, { Inputs } from './ui';
+import UI from './ui';
 import { useRouter } from 'solito/navigation';
 import { useState } from 'react';
+import { Inputs, useLoginForm } from './hook';
 
 export default function Screen() {
   const { replace } = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+
+  const { control, handleSubmit } = useLoginForm();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setIsLoading(true);
@@ -23,5 +26,5 @@ export default function Screen() {
     }
   };
 
-  return <UI onSubmit={onSubmit} loading={isLoading} />;
+  return <UI onSubmit={handleSubmit(onSubmit)} loading={isLoading} control={control} />;
 }

@@ -1,9 +1,10 @@
-import { Text, View } from 'tamagui';
+import { YStack } from 'tamagui';
+import ClassList from './ClassList';
 
 export default function DashboardScreen() {
   return (
-    <View>
-      <Text>hello dashboard</Text>
-    </View>
+    <YStack>
+      <ClassList />
+    </YStack>
   );
 }

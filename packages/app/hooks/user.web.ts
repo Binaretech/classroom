@@ -1,16 +1,18 @@
 import { auth } from 'app/utils/firebase/firebase';
+import { User } from 'firebase/auth';
 import { useEffect, useState } from 'react';
+import useIsAuth from './isAuth';
 
-export default function useIsAuth() {
-  const [isAuth, setIsAuth] = useState(auth.currentUser?.email);
+export default function useUser() {
+  const [hasData, setHasData] = useState<User | null>(auth.currentUser);
+
+  const isAuth = useIsAuth();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setIsAuth(user?.email);
-    });
+    if (isAuth) {
+      setHasData(auth.currentUser);
+    }
+  }, [isAuth]);
 
-    return () => unsubscribe();
-  }, []);
-
-  return isAuth;
+  return hasData;
 }

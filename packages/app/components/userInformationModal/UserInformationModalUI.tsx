@@ -14,14 +14,14 @@ export type UserInformationInputs = {
 export type UserInformationModalProps = {
   onSubmit: (data: UserInformationInputs) => void;
   loading?: boolean;
+  open: boolean;
 };
 
 export default function UserInformationModalUI({
   onSubmit,
   loading = false,
+  open,
 }: UserInformationModalProps) {
-  const [open, setOpen] = useState(false);
-
   const user = useUser();
 
   const { control, handleSubmit } = useForm<UserInformationInputs>({
@@ -32,18 +32,8 @@ export default function UserInformationModalUI({
 
   const { t } = useTranslation();
 
-  useEffect(() => {
-    setOpen(!user?.displayName);
-  }, [user]);
-
   return (
-    <Dialog
-      modal
-      open={open}
-      onOpenChange={(open) => {
-        setOpen(open);
-      }}
-    >
+    <Dialog modal open={open}>
       <Adapt when="sm" platform="touch">
         <Sheet animation="bouncy" zIndex={200000} modal dismissOnSnapToBottom>
           <Sheet.Frame padding="$4" gap="$4">

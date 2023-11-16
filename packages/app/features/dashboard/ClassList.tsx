@@ -2,7 +2,9 @@ import useClassList from 'app/services/classService';
 import { Text, YStack } from 'ui';
 
 export default function ClassList() {
-  const { isLoading } = useClassList();
+  const { isLoading, data } = useClassList();
+
+  console.log(data);
 
   return (
     <YStack>

@@ -8,7 +8,7 @@ import { SeedManager } from '@mikro-orm/seeder';
 import * as path from 'path';
 
 export default defineConfig({
-  host: 'localhost',
+  host: process.env.DB_HOST,
   port: parseInt(process.env.DB_PORT),
   user: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
@@ -19,8 +19,8 @@ export default defineConfig({
   loadStrategy: LoadStrategy.JOINED,
   highlighter: new SqlHighlighter(),
   migrations: {
-    path: path.join('dist', 'src', 'database', 'migrations'),
-    pathTs: path.join('src', 'database', 'migrations'),
+    path: path.join('dist', 'src', 'modules', 'database', 'migrations'),
+    pathTs: path.join('src', 'database', 'modules', 'migrations'),
   },
   metadataProvider: TsMorphMetadataProvider,
 

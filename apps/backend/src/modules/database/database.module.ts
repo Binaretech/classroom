@@ -17,8 +17,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         password: configService.get('database.password'),
         user: configService.get('database.user'),
         migrations: {
-          path: './dist/src/database/migrations',
-          pathTs: './src/database/migrations',
+          path: './dist/src/modules/database/migrations',
+          pathTs: './src/modules/database/migrations',
           transactional: true,
           allOrNothing: true,
         },

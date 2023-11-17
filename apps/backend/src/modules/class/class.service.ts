@@ -6,6 +6,21 @@ import { CreateClassDTO } from './dto/create-class.dto';
 export class ClassService {
   constructor(private readonly classRepository: ClassRepository) {}
 
+  async list(userId: string, page: number = 1) {
+    const limit = 10;
+    const offset = (page - 1) * limit;
+    const [classes, count] = await this.classRepository.findAndCount(
+      {
+        ownerId: userId,
+      },
+      {
+        limit: limit,
+        offset: offset,
+      },
+    );
+    return { classes, count };
+  }
+
   create(request: CreateClassDTO, userId: string) {
     return this.classRepository.insert({
       name: request.name,

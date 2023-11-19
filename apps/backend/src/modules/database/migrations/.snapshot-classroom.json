@@ -35,14 +35,24 @@
           "length": 255,
           "mappedType": "string"
         },
-        "owner_id": {
-          "name": "owner_id",
-          "type": "int",
+        "code": {
+          "name": "code",
+          "type": "varchar(64)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "integer"
+          "length": 64,
+          "mappedType": "string"
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
         },
         "archived": {
           "name": "archived",

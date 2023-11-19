@@ -17,7 +17,10 @@ export class Class {
   @Property({ length: 255, nullable: true })
   description?: string;
 
-  @Property()
+  @Property({ length: 64, unique: true })
+  code!: string;
+
+  @Property({ type: 'varchar' })
   ownerId!: string;
 
   @Property({ default: false })

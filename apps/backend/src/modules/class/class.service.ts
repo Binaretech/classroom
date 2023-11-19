@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import ClassRepository from '../database/repository/class.repository';
+import JoinClassDTO from './dto/join-class.dto';
 import { CreateClassDTO } from './dto/create-class.dto';
 
 @Injectable()
@@ -21,10 +22,18 @@ export class ClassService {
   }
 
   create(request: CreateClassDTO, userId: string) {
+    const code = Math.random().toString(36).slice(2, 13).toUpperCase();
+
     return this.classRepository.insert({
       name: request.name,
       description: request.description,
       ownerId: userId,
+      code,
     });
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  join(request: JoinClassDTO, userId: string) {
+    // TODO
   }
 }

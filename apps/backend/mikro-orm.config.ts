@@ -20,7 +20,7 @@ export default defineConfig({
   highlighter: new SqlHighlighter(),
   migrations: {
     path: path.join('dist', 'src', 'modules', 'database', 'migrations'),
-    pathTs: path.join('src', 'database', 'modules', 'migrations'),
+    pathTs: path.join('src', 'modules', 'database', 'migrations'),
   },
   metadataProvider: TsMorphMetadataProvider,
 

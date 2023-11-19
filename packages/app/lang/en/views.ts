@@ -15,4 +15,18 @@ export default {
     body: 'Complete the following information to continue',
     button: 'Save',
   },
+  dashboard: {
+    joinClass: 'Join Class',
+    createClass: 'Create Class',
+  },
+  createClassModal: {
+    title: 'Create Class',
+    body: 'Complete the following information to create a class',
+    button: 'Create',
+  },
+  joinClassModal: {
+    title: 'Join Class',
+    body: 'Complete the following information to join a class',
+    button: 'Join',
+  },
 };

@@ -11,6 +11,7 @@ import { ClassService } from './class.service';
 import { CreateClassDTO } from './dto/create-class.dto';
 import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { FirebaseGuard } from 'src/guards/firebase/firebase.guard';
+import JoinClassDTO from './dto/join-class.dto';
 
 @ApiTags('Class')
 @UseGuards(FirebaseGuard)
@@ -34,8 +35,15 @@ export class ClassController {
 
   @Post()
   create(@Request() req: AuthRequest, @Body() dto: CreateClassDTO) {
-    const userId = req.user.id;
+    const userId = req.user.uid;
 
     return this.classService.create(dto, userId);
+  }
+
+  @Post('join')
+  join(@Request() req: AuthRequest, @Body() dto: JoinClassDTO) {
+    const userId = req.user.uid;
+
+    return this.classService.join(dto, userId);
   }
 }

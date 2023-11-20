@@ -8,6 +8,9 @@ export class Section {
   @Property({ length: 64 })
   name!: string;
 
+  @Property({ length: 64, unique: true })
+  code!: string;
+
   @Property()
   createdAt: Date = new Date();
 

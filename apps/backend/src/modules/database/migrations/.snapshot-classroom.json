@@ -89,6 +89,15 @@
       "schema": "public",
       "indexes": [
         {
+          "columnNames": [
+            "code"
+          ],
+          "composite": false,
+          "keyName": "class_code_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
           "keyName": "class_pkey",
           "columnNames": [
             "id"
@@ -122,6 +131,16 @@
           "length": 64,
           "mappedType": "string"
         },
+        "code": {
+          "name": "code",
+          "type": "varchar(64)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 64,
+          "mappedType": "string"
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamptz(0)",
@@ -146,6 +165,15 @@
       "name": "section",
       "schema": "public",
       "indexes": [
+        {
+          "columnNames": [
+            "code"
+          ],
+          "composite": false,
+          "keyName": "section_code_unique",
+          "primary": false,
+          "unique": true
+        },
         {
           "keyName": "section_pkey",
           "columnNames": [

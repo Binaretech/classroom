@@ -1,8 +1,7 @@
-import { YStack, H2, XStack, Button } from 'ui';
-import ClassList from './ClassList';
+import { YStack, H2, XStack } from 'ui';
+import ClassList from './classlist/ClassList';
 import CreateClassModal from './CreateClassModal';
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
 import JoinClassModal from './JoinClassModal';
 
 export default function DashboardScreen() {

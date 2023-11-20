@@ -4,8 +4,12 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 
 import axios from 'axios';
 
+export type ClassesResponse = {
+  classes: Class[];
+};
+
 export type ClassResponse = {
-  data: Class[];
+  class: Class;
 };
 
 export function useClassList() {
@@ -14,10 +18,12 @@ export function useClassList() {
   return query;
 }
 
-function fetchClassList() {
+async function fetchClassList() {
   const url = UrlFormatter.formatUrl('class');
 
-  return axios.get<ClassResponse>(url);
+  const response = await axios.get<ClassesResponse>(url);
+
+  return response.data;
 }
 
 export function useCreateClass() {
@@ -31,10 +37,12 @@ export type CreateClassBody = {
   description: string;
 };
 
-function createClass(body: CreateClassBody) {
+async function createClass(body: CreateClassBody) {
   const url = UrlFormatter.formatUrl('class');
 
-  return axios.post<ClassResponse>(url, body);
+  const response = await axios.post<ClassResponse>(url, body);
+
+  return response.data;
 }
 
 export function useJoinClass() {
@@ -47,8 +55,10 @@ export type JoinClassBody = {
   code: string;
 };
 
-function joinClass(body: JoinClassBody) {
+async function joinClass(body: JoinClassBody) {
   const url = UrlFormatter.formatUrl('class/join');
 
-  return axios.post<ClassResponse>(url, body);
+  const response = await axios.post<ClassResponse>(url, body);
+
+  return response.data;
 }

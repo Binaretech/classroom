@@ -1,10 +1,13 @@
-import { useClassList } from 'app/services/classService';
+import { ClassesResponse } from 'app/services/classService';
 import { Spinner, YStack } from 'ui';
 import ClassItem from './ClassItem';
 
-export default function ClassList() {
-  const { isLoading, data } = useClassList();
+export type ClassListProps = {
+  isLoading?: boolean;
+  data?: ClassesResponse['classes'];
+};
 
+export default function ClassList({ isLoading, data = [] }: ClassListProps) {
   if (isLoading) {
     return (
       <YStack>
@@ -13,11 +16,9 @@ export default function ClassList() {
     );
   }
 
-  const classes = data?.classes ?? [];
-
   return (
     <YStack flexWrap="wrap">
-      {classes.map((item) => (
+      {data.map((item) => (
         <ClassItem key={item.id} data={item} />
       ))}
     </YStack>

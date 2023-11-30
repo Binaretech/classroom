@@ -5,10 +5,17 @@ import { Adapt, Dialog, Fieldset, Sheet, Form, XStack, Button, Spinner, Unspaced
 import { useCreateClassForm } from './hooks';
 import { useEffect, useState } from 'react';
 
-export default function CreateClassModal() {
+export type CreateClassModalProps = {
+  onCreate?: () => void;
+};
+
+export default function CreateClassModal({ onCreate }: CreateClassModalProps) {
   const [open, setOpen] = useState(false);
 
-  const { isPending, control, onSubmit, reset } = useCreateClassForm(() => setOpen(false));
+  const { isPending, control, onSubmit, reset } = useCreateClassForm(() => {
+    setOpen(false);
+    onCreate?.();
+  });
 
   const { t } = useTranslation();
 

@@ -6,4 +6,5 @@ export default {
   name: 'Name',
   description: 'Description',
   code: 'Code',
+  section: 'Section',
 };

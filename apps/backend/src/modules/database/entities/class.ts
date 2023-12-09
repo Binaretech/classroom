@@ -1,13 +1,20 @@
 import {
+  Collection,
   Entity,
   EntityRepositoryType,
+  OneToMany,
   PrimaryKey,
   Property,
 } from '@mikro-orm/core';
 import ClassRepository from '../repository/class.repository';
+import { Post } from './post';
 
 @Entity({ customRepository: () => ClassRepository })
 export class Class {
+  constructor(data: Partial<Class>) {
+    Object.assign(this, data);
+  }
+
   @PrimaryKey({ type: 'bigint', autoincrement: true })
   id!: number;
 
@@ -17,8 +24,14 @@ export class Class {
   @Property({ length: 255, nullable: true })
   description?: string;
 
-  @Property({ length: 64, unique: true })
-  code!: string;
+  @Property()
+  section?: string;
+
+  @Property({
+    length: 6,
+    default: Math.random().toString(36).substring(2, 8),
+  })
+  code?: string;
 
   @Property({ type: 'varchar' })
   ownerId!: string;
@@ -31,6 +44,9 @@ export class Class {
 
   @Property({ onUpdate: () => new Date() })
   updatedAt: Date = new Date();
+
+  @OneToMany(() => Post, (post) => post.class)
+  posts = new Collection<Post>(this);
 
   [EntityRepositoryType]?: ClassRepository;
 }

@@ -68,7 +68,7 @@ export default function CreateClassModal({ onCreate }: CreateClassModalProps) {
 
           <Dialog.Description>{t('views.createClassModal.body')}</Dialog.Description>
           <Form onSubmit={onSubmit} jc="center" ai="center">
-            <Fieldset gap="$4" horizontal>
+            <Fieldset gap="$4" horizontal w="100%">
               <Controller
                 control={control}
                 disabled={isPending}
@@ -87,7 +87,7 @@ export default function CreateClassModal({ onCreate }: CreateClassModalProps) {
               />
             </Fieldset>
 
-            <Fieldset gap="$4" horizontal>
+            <Fieldset gap="$4" horizontal w="100%">
               <Controller
                 control={control}
                 disabled={isPending}
@@ -103,6 +103,24 @@ export default function CreateClassModal({ onCreate }: CreateClassModalProps) {
                 )}
                 name="description"
                 rules={{ required: true }}
+              />
+            </Fieldset>
+
+            <Fieldset gap="$4" horizontal w="100%">
+              <Controller
+                control={control}
+                disabled={isPending}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <Input
+                    w="100%"
+                    placeholder={t('fields.section')}
+                    my="$2"
+                    onBlur={onBlur}
+                    onChangeText={(value) => onChange(value)}
+                    value={value}
+                  />
+                )}
+                name="section"
               />
             </Fieldset>
 

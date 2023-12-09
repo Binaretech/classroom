@@ -6,13 +6,10 @@ export default class ClassRepository extends EntityRepository<Class> {
     this.findOne(id);
   }
 
-  async insert(cls: Pick<Class, 'name' | 'description' | 'ownerId' | 'code'>) {
-    const record = new Class();
-
-    record.name = cls.name;
-    record.description = cls.description;
-    record.ownerId = cls.ownerId;
-    record.code = cls.code;
+  async insert(
+    data: Pick<Class, 'name' | 'description' | 'section' | 'ownerId'>,
+  ) {
+    const record = new Class(data);
 
     await this.em.persistAndFlush(record);
 

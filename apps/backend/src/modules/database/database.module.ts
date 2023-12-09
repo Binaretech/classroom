@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 
 @Module({
   imports: [
@@ -9,6 +10,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         entities: ['./dist/src/modules/database/entities'],
+        metadataProvider: TsMorphMetadataProvider,
         entitiesTs: ['./src/modules/database/entities'],
         type: 'postgresql',
         host: configService.get('database.host'),

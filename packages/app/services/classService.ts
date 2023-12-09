@@ -26,6 +26,20 @@ async function fetchClassList() {
   return response.data;
 }
 
+export function useClass(id: number | string) {
+  const query = useQuery({ queryKey: ['class', id], queryFn: () => fetchClass(id) });
+
+  return query;
+}
+
+async function fetchClass(id: number | string) {
+  const url = UrlFormatter.formatUrl(`class/${id}`);
+
+  const response = await axios.get<Class>(url);
+
+  return response.data;
+}
+
 export function useCreateClass() {
   const mutation = useMutation({ mutationFn: createClass });
 
@@ -35,6 +49,7 @@ export function useCreateClass() {
 export type CreateClassBody = {
   name: string;
   description: string;
+  section?: string;
 };
 
 async function createClass(body: CreateClassBody) {

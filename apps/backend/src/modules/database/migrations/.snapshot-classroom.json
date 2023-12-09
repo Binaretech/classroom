@@ -35,14 +35,24 @@
           "length": 255,
           "mappedType": "string"
         },
-        "code": {
-          "name": "code",
-          "type": "varchar(64)",
+        "section": {
+          "name": "section",
+          "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
-          "length": 64,
+          "nullable": true,
+          "mappedType": "string"
+        },
+        "code": {
+          "name": "code",
+          "type": "varchar(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 6,
+          "default": "'0l8g3w'",
           "mappedType": "string"
         },
         "owner_id": {
@@ -89,15 +99,6 @@
       "schema": "public",
       "indexes": [
         {
-          "columnNames": [
-            "code"
-          ],
-          "composite": false,
-          "keyName": "class_code_unique",
-          "primary": false,
-          "unique": true
-        },
-        {
           "keyName": "class_pkey",
           "columnNames": [
             "id"
@@ -114,32 +115,40 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "bigserial",
+          "type": "serial",
           "unsigned": true,
           "autoincrement": true,
           "primary": true,
           "nullable": false,
-          "mappedType": "bigint"
+          "mappedType": "integer"
         },
-        "name": {
-          "name": "name",
-          "type": "varchar(64)",
+        "content": {
+          "name": "content",
+          "type": "text",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "length": 64,
-          "mappedType": "string"
+          "mappedType": "text"
         },
-        "code": {
-          "name": "code",
-          "type": "varchar(64)",
+        "author": {
+          "name": "author",
+          "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "length": 64,
           "mappedType": "string"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 0,
+          "mappedType": "datetime"
         },
         "created_at": {
           "name": "created_at",
@@ -151,31 +160,21 @@
           "length": 0,
           "mappedType": "datetime"
         },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamptz(0)",
+        "class_id": {
+          "name": "class_id",
+          "type": "bigint",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "length": 0,
-          "mappedType": "datetime"
+          "mappedType": "bigint"
         }
       },
-      "name": "section",
+      "name": "post",
       "schema": "public",
       "indexes": [
         {
-          "columnNames": [
-            "code"
-          ],
-          "composite": false,
-          "keyName": "section_code_unique",
-          "primary": false,
-          "unique": true
-        },
-        {
-          "keyName": "section_pkey",
+          "keyName": "post_pkey",
           "columnNames": [
             "id"
           ],
@@ -185,7 +184,20 @@
         }
       ],
       "checks": [],
-      "foreignKeys": {}
+      "foreignKeys": {
+        "post_class_id_foreign": {
+          "constraintName": "post_class_id_foreign",
+          "columnNames": [
+            "class_id"
+          ],
+          "localTableName": "public.post",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "public.class",
+          "updateRule": "cascade"
+        }
+      }
     }
   ]
 }

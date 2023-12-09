@@ -11,6 +11,7 @@ import * as yup from 'yup';
 const createClassSchema = yup.object().shape({
   name: yup.string().required('validation.required'),
   description: yup.string().required('validation.required'),
+  section: yup.string(),
 });
 
 export function useCreateClassForm(onSuccess: () => void) {

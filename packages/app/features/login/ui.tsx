@@ -44,6 +44,7 @@ export default function LoginScreenUI({ onSubmit, loading, control }: LoginScree
               <Input
                 placeholder={t('fields.email')}
                 my="$2"
+                autoCapitalize="none"
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
                 value={value}
@@ -60,6 +61,7 @@ export default function LoginScreenUI({ onSubmit, loading, control }: LoginScree
                 placeholder={t('fields.password')}
                 my="$2"
                 onBlur={onBlur}
+                autoCapitalize="none"
                 onChangeText={(value) => onChange(value)}
                 value={value}
                 secureTextEntry

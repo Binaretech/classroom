@@ -1,12 +1,15 @@
-// don't import from here, that's handled already
-// instead this is just setting types for this folder
+import { config as configBase } from '@tamagui/config/v2';
+import { createTamagui } from 'tamagui';
 
-import { config } from 'ui'
+const config = createTamagui({
+  ...configBase,
+  themeClassNameOnRoot: false,
+});
 
-type Conf = typeof config
+export type Conf = typeof config;
 
 declare module 'tamagui' {
   interface TamaguiCustomConfig extends Conf {}
 }
 
-export default config
+export default config;

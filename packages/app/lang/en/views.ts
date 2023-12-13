@@ -18,6 +18,7 @@ export default {
   dashboard: {
     joinClass: 'Join Class',
     createClass: 'Create Class',
+    myClasses: 'My Classes',
   },
   createClassModal: {
     title: 'Create Class',
@@ -29,4 +30,11 @@ export default {
     body: 'Complete the following information to join a class',
     button: 'Join',
   },
+  class: {
+    tabs: {
+      posts: 'Posts',
+    },
+    createPost: 'Create Post',
+  },
+  loadMore: 'Load More',
 };

@@ -2,8 +2,12 @@
 
 import { TamaguiProvider } from './TamaguiProvider';
 import { initializeLang } from 'app/lang';
-import UserInformationModal from 'app/components/userInformationModal/UserInformationModal';
 import QueryProvider from 'app/provider/QueryProvider';
+
+import '@tamagui/core/reset.css';
+import '@tamagui/polyfill-dev';
+
+import './global.css';
 
 initializeLang();
 
@@ -12,10 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <QueryProvider>
-          <TamaguiProvider>
-            {children}
-            <UserInformationModal />
-          </TamaguiProvider>
+          <TamaguiProvider>{children}</TamaguiProvider>
         </QueryProvider>
       </body>
     </html>

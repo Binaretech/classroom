@@ -1,7 +1,10 @@
+import { Class } from './class';
+
 export type Post = {
-  id: string;
+  id: number;
   content: string;
   author: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
+  class?: Class;
 };

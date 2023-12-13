@@ -5,7 +5,6 @@ import { Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 import { initializeLang } from 'app/lang';
-import UserInformationModal from 'app/components/userInformationModal/UserInformationModal';
 
 export default function HomeLayout() {
   const [loaded] = useFonts({
@@ -31,7 +30,6 @@ export default function HomeLayout() {
             headerShown: false,
           }}
         />
-        <UserInformationModal />
       </ThemeProvider>
     </Provider>
   );

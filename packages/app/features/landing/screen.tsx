@@ -17,13 +17,14 @@ export default function LandingScreen() {
   const { replace } = useRouter();
 
   useEffect(() => {
-    if (isAuth)
+    if (isAuth) {
       replace('/dashboard', {
         experimental: {
           nativeBehavior: 'stack-replace',
           isNestedNavigator: true,
         },
       });
+    }
   }, [isAuth]);
 
   return (

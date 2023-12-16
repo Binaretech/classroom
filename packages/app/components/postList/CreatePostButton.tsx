@@ -8,10 +8,17 @@ export default function CreatePostButton() {
   const user = useUser();
 
   return (
-    <YStack px="$6" py="$4" bc="$color3" w="100">
+    <YStack px="$6" py="$4" bc="$color3" w="100%">
       <XStack ai="center">
         <Avatar circular>
-          <Avatar.Fallback backgroundColor={emailToHexColor(user?.email ?? '')} />
+          <Avatar.Image src={user?.photoURL ?? undefined} />
+          <Avatar.Fallback
+            backgroundColor={emailToHexColor(user?.email ?? '')}
+            jc="center"
+            ai="center"
+          >
+            <Text>{user?.displayName?.[0] ?? ''}</Text>
+          </Avatar.Fallback>
         </Avatar>
 
         <Text px="$4">{t('views.class.createPost')}</Text>

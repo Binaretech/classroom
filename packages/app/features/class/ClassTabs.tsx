@@ -1,6 +1,7 @@
 import PostList from 'app/components/postList/PostList';
 import { useTranslation } from 'react-i18next';
-import { Separator, SizableText, Tabs, TabsContentProps, YStack } from 'ui';
+import { FlatList } from 'react-native';
+import { Separator, SizableText, Tabs } from 'ui';
 
 const tabs = [
   {
@@ -18,12 +19,7 @@ export default function ClassTabs({ classId }: ClassTabsProps) {
   const { t } = useTranslation();
 
   return (
-    <Tabs
-      defaultValue={tabs[0]?.value}
-      orientation="horizontal"
-      flexDirection="column"
-      overflow="hidden"
-    >
+    <Tabs defaultValue={tabs[0]?.value} orientation="horizontal" flexDirection="column" w="100%">
       <Tabs.List>
         {tabs.map((tab) => (
           <Tabs.Tab br="$0" key={tab.value} value={tab.value}>
@@ -34,18 +30,8 @@ export default function ClassTabs({ classId }: ClassTabsProps) {
       <Separator />
 
       {tabs.map((tab) => (
-        <TabsContent key={tab.value} value={tab.value}>
-          {tab.render(classId)}
-        </TabsContent>
+        <Tabs.Content value={'posts'}>{tab.render(classId)}</Tabs.Content>
       ))}
     </Tabs>
   );
 }
-
-const TabsContent = (props: TabsContentProps) => {
-  return (
-    <Tabs.Content key="tab3" alignItems="center" justifyContent="center" flex={1} {...props}>
-      {props.children}
-    </Tabs.Content>
-  );
-};

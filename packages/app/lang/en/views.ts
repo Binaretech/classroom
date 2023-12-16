@@ -34,6 +34,7 @@ export default {
     tabs: {
       posts: 'Posts',
     },
+    noPosts: 'There are no posts yet',
     createPost: 'Create Post',
   },
   loadMore: 'Load More',

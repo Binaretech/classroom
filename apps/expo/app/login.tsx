@@ -6,7 +6,7 @@ import { ScrollView } from 'react-native';
 export default function Login() {
   const isAuth = useIsAuth();
 
-  // if (isAuth) return <Redirect href="/dashboard" />;
+  if (isAuth) return <Redirect href="/dashboard" />;
 
   return (
     <>

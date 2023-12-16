@@ -1,29 +1,21 @@
 import { useClass } from 'app/services/classService';
-import { YStack, Spinner, Text, XStack, ScrollView } from 'ui';
-import ClassCover from './ClassCover';
+import { YStack, Spinner, Text } from 'ui';
 import ClassTabs from './ClassTabs';
+import AppBar from 'app/components/AppBar';
+import { FlatList } from 'react-native';
 
 export default function ClassScreen({ id }: { id: string }) {
   const { isLoading, data, refetch } = useClass(id);
 
   return (
-    <ScrollView>
-      <YStack>
-        {isLoading && <Spinner />}
-        {data && (
-          <YStack>
-            <XStack p="$4">
-              <Text fontSize="$6" fontWeight="bold">
-                {data.name}
-              </Text>
-            </XStack>
-
-            <ClassCover />
-
-            <ClassTabs classId={id} />
-          </YStack>
-        )}
-      </YStack>
-    </ScrollView>
+    <YStack w="100%">
+      {isLoading && <Spinner />}
+      {data && (
+        <YStack w="100%">
+          <AppBar title={data.name} />
+          <ClassTabs classId={id} />
+        </YStack>
+      )}
+    </YStack>
   );
 }

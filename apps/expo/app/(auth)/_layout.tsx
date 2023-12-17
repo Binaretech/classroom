@@ -16,7 +16,7 @@ export default function AuthLayout() {
 
   return (
     <DrawerProvider>
-      <XStack>
+      <XStack flex={1}>
         <Drawer />
         <Slot />
       </XStack>

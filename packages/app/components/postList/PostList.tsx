@@ -1,8 +1,8 @@
-import { FlatList } from 'react-native';
+import { FlatList, Platform, SafeAreaView } from 'react-native';
 import { Button, Spinner, Text, YStack } from 'ui';
 import { useTranslation } from 'react-i18next';
 import CreatePostButton from './CreatePostButton';
-import { usePostList } from 'app/services/postService';
+import { PostsResponse, usePostList } from 'app/services/postService';
 import PostItem from './PostItem';
 import ClassCover from 'app/features/class/ClassCover';
 
@@ -11,31 +11,61 @@ export type PostListProps = {
 };
 
 export default function PostList({ classId }: PostListProps) {
-  const { isLoading, data, fetchNextPage, hasNextPage } = usePostList(classId);
+  const { isLoading, data, fetchNextPage, hasNextPage, refetch, isRefetching, isFetchingNextPage } =
+    usePostList(classId);
 
   const { t } = useTranslation();
 
+  const posts = flatPosts(data?.pages ?? []);
+
+  const loading = isLoading || isFetchingNextPage;
+
   return (
     <FlatList
-      style={{ width: '100%' }}
-      data={data?.pages.map((page) => page.posts).flat() ?? []}
+      data={posts}
+      onRefresh={refetch}
+      refreshing={isRefetching}
       renderItem={({ item }) => <PostItem post={item} />}
-      ListEmptyComponent={ListEmptyComponent}
+      onEndReached={() => !loading && fetchNextPage()}
+      ItemSeparatorComponent={() => <YStack h="$0.75" />}
+      ListEmptyComponent={() => !loading && <ListEmptyComponent />}
       ListHeaderComponent={
-        <YStack w="100%">
+        <YStack w="100%" pb="$4">
           <ClassCover />
-          <CreatePostButton />
+          <CreatePostButton classId={classId} />
         </YStack>
       }
       ListFooterComponent={
         <YStack>
-          {isLoading && <Spinner />}
-          {hasNextPage && <Button onPress={() => fetchNextPage()}>{t('views.loadMore')}</Button>}
+          {loading && <Spinner />}
+          {hasNextPage && Platform.OS === 'web' && (
+            <Button onPress={() => fetchNextPage()}>{t('views.loadMore')}</Button>
+          )}
         </YStack>
       }
       keyExtractor={(item) => item.id.toString()}
     />
   );
+}
+
+function flatPosts(data: PostsResponse[]) {
+  const { ids, posts } = data.reduce(
+    (acc, curr) => {
+      acc.ids.push(...curr.posts.map((post) => post.id));
+
+      const map = curr.posts.reduce((acc, curr) => {
+        acc[curr.id] = curr;
+        return acc;
+      }, {});
+
+      acc.posts = { ...acc.posts, ...map };
+
+      return acc;
+    },
+    { ids: [] as number[], posts: {} }
+  );
+
+  return Array.from(new Set(ids)).map((id: number) => posts[id]);
 }
 
 function ListEmptyComponent() {

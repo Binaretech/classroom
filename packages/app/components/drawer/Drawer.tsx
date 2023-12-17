@@ -49,5 +49,5 @@ export default function Drawer() {
 export function DrawerButton() {
   const { toggleDrawer } = useDrawer();
 
-  return <Button icon={Menu} onPress={toggleDrawer} />;
+  return <Button icon={Menu} chromeless onPress={toggleDrawer} />;
 }

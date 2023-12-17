@@ -21,13 +21,16 @@ export class Post {
   content!: string;
 
   @Property()
-  author!: string;
+  authorId!: string;
 
   @Property()
   createdAt: Date = new Date();
 
   @Property({ onUpdate: () => new Date() })
   updatedAt: Date = new Date();
+
+  @Property({ persist: false })
+  author?: User;
 
   @ManyToOne()
   class!: Class;

@@ -9,10 +9,12 @@ export class UrlFormatter {
     let url = `${baseUrl}/${path}`;
 
     if (options?.queryParams) {
-      const params = new URLSearchParams(
-        Object.entries(options.queryParams).map(([key, value]) => [key, String(value)])
-      ).toString();
-      url += `?${params}`;
+      const params = Object.keys(options.queryParams).map((key) => {
+        const value = options.queryParams![key];
+        return `${encodeURIComponent(key)}=${encodeURIComponent(`${value}`)}`;
+      });
+
+      url += `?${params.join('&')}`;
     }
 
     return url;

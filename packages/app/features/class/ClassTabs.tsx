@@ -30,7 +30,9 @@ export default function ClassTabs({ classId }: ClassTabsProps) {
       <Separator />
 
       {tabs.map((tab) => (
-        <Tabs.Content value={'posts'}>{tab.render(classId)}</Tabs.Content>
+        <Tabs.Content key={tab.value} value={'posts'}>
+          {tab.render(classId)}
+        </Tabs.Content>
       ))}
     </Tabs>
   );

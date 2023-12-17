@@ -2,9 +2,13 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { Provider } from 'app/provider';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
-import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 import { initializeLang } from 'app/lang';
+import { initializeDayjsPlugins } from 'app/utils/date';
+
+initializeDayjsPlugins();
+
+initializeLang();
 
 export default function HomeLayout() {
   const [loaded] = useFonts({
@@ -13,10 +17,6 @@ export default function HomeLayout() {
   });
 
   const scheme = useColorScheme();
-
-  useEffect(() => {
-    initializeLang();
-  }, []);
 
   if (!loaded) {
     return null;

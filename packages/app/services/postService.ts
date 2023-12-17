@@ -1,5 +1,11 @@
 import { UrlFormatter } from 'app/utils/http';
-import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
+import {
+  InfiniteData,
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import axios from 'axios';
 import { Post } from 'app/entities/post';
 
@@ -32,6 +38,66 @@ async function fetchPostList(id: number | string, page = 1) {
   });
 
   const response = await axios.get<PostsResponse>(url);
+
+  return response.data;
+}
+
+export function usePost(id: number | string) {
+  const query = useQuery({
+    queryKey: ['post', id],
+    queryFn: () => fetchPost(id),
+  });
+
+  return query;
+}
+
+async function fetchPost(id: number | string) {
+  const url = UrlFormatter.formatUrl(`post/${id}`);
+
+  const response = await axios.get<PostResponse>(url);
+
+  return response.data;
+}
+
+export type CreatePostData = {
+  content: string;
+};
+
+export function useCreatePost(classId: number | string) {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (data: CreatePostData) => createPost(data, classId),
+    onSuccess: (data) => {
+      queryClient.setQueryData(
+        ['posts', classId],
+        (oldData: InfiniteData<PostsResponse, unknown>) => {
+          const [page = [], ...rest] = oldData.pages;
+
+          const firstPage = (page as PostsResponse) ?? { posts: [], count: 0 };
+
+          return {
+            pages: [
+              {
+                posts: [data, ...firstPage.posts],
+                count: firstPage.count + 1,
+              },
+              ...rest,
+            ],
+            pageParams: [...oldData.pageParams],
+          };
+        }
+      );
+    },
+  });
+
+  return mutation;
+}
+
+async function createPost(data: CreatePostData, classId: number | string) {
+  const url = UrlFormatter.formatUrl(`class/${classId}/posts`);
+
+  const response = await axios.post<PostResponse>(url, data);
 
   return response.data;
 }

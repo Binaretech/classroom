@@ -3,6 +3,7 @@ import ClassRepository from '../database/repository/class.repository';
 import JoinClassDTO from './dto/join-class.dto';
 import { CreateClassDTO } from './dto/create-class.dto';
 import PostRepository from '../database/repository/post.repository';
+import admin from 'firebase-admin';
 
 @Injectable()
 export class ClassService {
@@ -53,8 +54,27 @@ export class ClassService {
 
     const [posts, count] = await this.postRepository.findAndCount(
       { class: classId },
-      { limit: limit, offset: offset },
+      { limit: limit, offset: offset, orderBy: { createdAt: 'DESC' } },
     );
+
+    const authorIds = posts.map((post) => ({ uid: post.authorId }));
+
+    const users = await admin.auth().getUsers(authorIds);
+
+    const userMap = users.users.reduce((acc, user) => {
+      acc[user.uid] = user;
+      return acc;
+    }, {});
+
+    posts.forEach((post) => {
+      const author = userMap[post.authorId];
+      post.author = {
+        uid: author.uid,
+        displayName: author.displayName,
+        photoURL: author.photoURL,
+        email: author.email,
+      };
+    });
 
     return { posts, count };
   }
@@ -69,11 +89,22 @@ export class ClassService {
       throw new Error('Class not found');
     }
 
-    return this.postRepository.insert({
+    const post = await this.postRepository.insert({
       content: content,
-      author: userId,
+      authorId: userId,
       class: classEntity,
     });
+
+    const author = await admin.auth().getUser(userId);
+
+    post.author = {
+      uid: author.uid,
+      displayName: author.displayName,
+      photoURL: author.photoURL,
+      email: author.email,
+    };
+
+    return post;
   }
 
   async isClassOwner(id: number, userId: string) {

@@ -82,7 +82,7 @@ export default function JoinClassModal() {
 
             <XStack width="100%" pt="$4" jc="center">
               <Form.Trigger asChild>
-                <Button disabled={isPending} theme="alt1" aria-label="Close" px="$5">
+                <Button disabled={isPending} theme="alt1" aria-label="submit" px="$5">
                   {isPending ? <Spinner /> : t('views.joinClassModal.button')}
                 </Button>
               </Form.Trigger>

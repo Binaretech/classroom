@@ -52,7 +52,6 @@
           "primary": false,
           "nullable": true,
           "length": 6,
-          "default": "'0l8g3w'",
           "mappedType": "string"
         },
         "owner_id": {
@@ -131,8 +130,8 @@
           "nullable": false,
           "mappedType": "text"
         },
-        "author": {
-          "name": "author",
+        "author_id": {
+          "name": "author_id",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
@@ -140,8 +139,8 @@
           "nullable": false,
           "mappedType": "string"
         },
-        "updated_at": {
-          "name": "updated_at",
+        "created_at": {
+          "name": "created_at",
           "type": "timestamptz(0)",
           "unsigned": false,
           "autoincrement": false,
@@ -150,8 +149,8 @@
           "length": 0,
           "mappedType": "datetime"
         },
-        "created_at": {
-          "name": "created_at",
+        "updated_at": {
+          "name": "updated_at",
           "type": "timestamptz(0)",
           "unsigned": false,
           "autoincrement": false,

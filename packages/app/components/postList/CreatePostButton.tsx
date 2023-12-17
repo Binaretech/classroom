@@ -1,37 +1,75 @@
 import useUser from 'app/hooks/user';
+import { useCreatePost } from 'app/services/postService';
+import { stringToHexColor } from 'app/utils/functions';
+import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Avatar, Text, XStack, YStack } from 'ui';
+import { Avatar, Button, Form, Spinner, Text, TextArea, XStack, YStack } from 'ui';
+import UserAvatar from '../UserAvatar';
 
-export default function CreatePostButton() {
+export type CreatePostButtonProps = {
+  classId: string | number;
+};
+
+export default function CreatePostButton({ classId }: CreatePostButtonProps) {
   const { t } = useTranslation();
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const user = useUser();
 
-  return (
-    <YStack px="$6" py="$4" bc="$color3" w="100%">
-      <XStack ai="center">
-        <Avatar circular>
-          <Avatar.Image src={user?.photoURL ?? undefined} />
-          <Avatar.Fallback
-            backgroundColor={emailToHexColor(user?.email ?? '')}
-            jc="center"
-            ai="center"
-          >
-            <Text>{user?.displayName?.[0] ?? ''}</Text>
-          </Avatar.Fallback>
-        </Avatar>
+  if (isOpen) {
+    return <CreatePostForm classId={classId} onCreate={() => setIsOpen(false)} />;
+  }
 
+  return (
+    <YStack pl="$4" py="$4" bc="$color3" w="100%" onPress={() => setIsOpen(true)}>
+      <XStack ai="center">
+        <UserAvatar user={user} size="$3" />
         <Text px="$4">{t('views.class.createPost')}</Text>
       </XStack>
     </YStack>
   );
 }
 
-function emailToHexColor(email: string) {
-  const hash = email
-    .split('')
-    .reduce((hash, char) => char.charCodeAt(0) + ((hash << 5) - hash), 0)
-    .toString(16);
+type CreatePostFormProps = {
+  classId: string | number;
+  onCreate: () => void;
+};
 
-  return `#${hash.slice(0, 6)}`;
+type Inputs = {
+  content: string;
+};
+
+function CreatePostForm({ classId, onCreate }: CreatePostFormProps) {
+  const { control, handleSubmit } = useForm<Inputs>();
+
+  const { mutateAsync, isPending } = useCreatePost(classId);
+
+  const { t } = useTranslation();
+
+  const onSubmit = handleSubmit(async (data) => {
+    await mutateAsync(data);
+    onCreate();
+  });
+
+  return (
+    <YStack elevation="$4" bc="$color3">
+      <Form onSubmit={onSubmit} px="$6" py="$4" w="100%">
+        <Controller
+          control={control}
+          name="content"
+          disabled={isPending}
+          render={({ field }) => (
+            <TextArea {...field} placeholder={t('views.class.posts.create')} size="$4" autoFocus />
+          )}
+        />
+        <Form.Trigger asChild>
+          <Button disabled={isPending} aria-label="submit" mt="$4" px="$5">
+            {isPending ? <Spinner /> : t('views.class.posts.button')}
+          </Button>
+        </Form.Trigger>
+      </Form>
+    </YStack>
+  );
 }

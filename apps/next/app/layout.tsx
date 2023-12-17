@@ -3,11 +3,14 @@
 import { TamaguiProvider } from './TamaguiProvider';
 import { initializeLang } from 'app/lang';
 import QueryProvider from 'app/provider/QueryProvider';
+import { initializeDayjsPlugins } from 'app/utils/date';
 
 import '@tamagui/core/reset.css';
 import '@tamagui/polyfill-dev';
 
 import './global.css';
+
+initializeDayjsPlugins();
 
 initializeLang();
 

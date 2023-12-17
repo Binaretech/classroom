@@ -27,10 +27,7 @@ export class Class {
   @Property()
   section?: string;
 
-  @Property({
-    length: 6,
-    default: Math.random().toString(36).substring(2, 8),
-  })
+  @Property({ length: 6 })
   code?: string;
 
   @Property({ type: 'varchar' })

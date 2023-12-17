@@ -36,6 +36,10 @@ export default {
     },
     noPosts: 'There are no posts yet',
     createPost: 'Create Post',
+    posts: {
+      create: 'Create a new post',
+      button: 'Create',
+    },
   },
   loadMore: 'Load More',
 };

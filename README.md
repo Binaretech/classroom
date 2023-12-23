@@ -24,3 +24,41 @@ The backend of this project is built using NestJS, a progressive Node.js framewo
 ## Contributing
 
 If you'd like to contribute to this project, please fork the repository and create a pull request with your changes. We welcome all contributions!
+
+## Project Setup
+
+To set up this project, follow these steps:
+
+1. Create a project in Firebase and download the service account JSON file. This file should be saved as `serviceAccount.json`.
+
+2. Copy the `.env.example` files as `.env` in the `apps/backend`, `apps/next`, and `apps/expo` directories, and fill in the necessary values.
+
+3. Create a web application in Firebase and place the values in `apps/next/.env`.
+
+4. Create Android and iOS applications in Firebase and place the files within `apps/expo`.
+
+5. Install the dependencies with Yarn using the command `yarn`.
+
+6. Within `packages/ui`, run `yarn build` to compile the components.## Project Setup
+
+To set up this project, follow these steps:
+
+1. Create a project in Firebase and download the service account JSON file. This file should be saved as `serviceAccount.json`.
+
+2. Copy the `.env.example` files as `.env` in the `apps/backend`, `apps/next`, and `apps/expo` directories, and fill in the necessary values.
+
+3. Create a web application in Firebase and place the values in `apps/next/.env`.
+
+4. Create Android and iOS applications in Firebase and place the files within `apps/expo`.
+
+5. Install the dependencies with Yarn using the command `yarn`.
+
+6. Within `packages/ui`, run `yarn build` to compile the components.
+
+7. Run `docker compose up -d` to start the backend with the database.
+
+Follow these steps to correctly set up the project.
+
+7. Run `docker compose up -d` to start the backend with the database.
+
+Follow these steps to correctly set up the project.

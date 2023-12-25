@@ -15,8 +15,7 @@ export default function ClassLayout() {
     <ClassIdProvider classId={route.params.id}>
       <Tabs
         screenOptions={{
-          headerShown: true,
-          title: data?.name ?? '',
+          headerShown: false,
         }}
       >
         <Tabs.Screen

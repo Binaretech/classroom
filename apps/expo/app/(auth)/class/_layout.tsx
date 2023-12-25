@@ -4,12 +4,9 @@ import { useClassList } from 'app/services/classService';
 import { ListItem, YGroup, YStack } from 'ui';
 import { Link } from 'expo-router';
 import { Home } from '@tamagui/lucide-icons';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function ClassLayout() {
   const { data } = useClassList();
-
-  const { top } = useSafeAreaInsets();
 
   return (
     <Drawer
@@ -35,8 +32,7 @@ export default function ClassLayout() {
       <Drawer.Screen
         name="[id]"
         options={{
-          title: 'Class',
-          headerShown: true,
+          headerShown: false,
         }}
       />
     </Drawer>

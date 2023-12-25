@@ -1,6 +1,7 @@
 import { ClassesResponse } from 'app/services/classService';
 import { Spinner, YStack } from 'ui';
 import ClassItem from './ClassItem';
+import { FlatList } from 'react-native';
 
 export type ClassListProps = {
   isLoading?: boolean;
@@ -17,10 +18,11 @@ export default function ClassList({ isLoading, data = [] }: ClassListProps) {
   }
 
   return (
-    <YStack flexWrap="wrap">
-      {data.map((item) => (
-        <ClassItem key={item.id} data={item} />
-      ))}
-    </YStack>
+    <FlatList
+      data={data}
+      renderItem={({ item }) => <ClassItem data={item} />}
+      keyExtractor={(item) => item.id}
+      numColumns={2}
+    />
   );
 }

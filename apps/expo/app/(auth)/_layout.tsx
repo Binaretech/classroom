@@ -1,6 +1,7 @@
+import { useRoute } from '@react-navigation/native';
 import UserInformationModal from 'app/components/userInformationModal/UserInformationModal';
 import useIsAuth from 'app/hooks/isAuth';
-import { Slot, useRouter } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { XStack } from 'ui';
 
 export default function AuthLayout() {
@@ -13,8 +14,15 @@ export default function AuthLayout() {
   }
 
   return (
-    <XStack flex={1}>
-      <Slot />
+    <XStack flex={1} w="100%">
+      <Stack>
+        <Stack.Screen
+          name="dashboard"
+          options={{
+            title: 'Dashboard',
+          }}
+        />
+      </Stack>
       <UserInformationModal />
     </XStack>
   );

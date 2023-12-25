@@ -12,15 +12,12 @@ export default function DashboardScreen() {
   const { t } = useTranslation();
 
   return (
-    <>
-      <YStack p="$4">
-        <AppBar title={t('views.dashboard.myClasses')} />
-        <XStack justifyContent="flex-end" columnGap="$4" p="$4">
-          <JoinClassModal />
-          <CreateClassModal onCreate={refetch} />
-        </XStack>
-        <ClassList isLoading={isLoading} data={data?.classes} />
-      </YStack>
-    </>
+    <YStack p="$4" f={1}>
+      <XStack justifyContent="flex-end" columnGap="$4" p="$4">
+        <JoinClassModal />
+        <CreateClassModal onCreate={refetch} />
+      </XStack>
+      <ClassList isLoading={isLoading} data={data?.classes} />
+    </YStack>
   );
 }

@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import { PropsWithChildren } from 'react';
 import { XStack } from 'ui';
 import useIsAuth from 'app/hooks/isAuth';
-import Drawer, { DrawerProvider } from 'app/components/drawer/Drawer';
 import UserInformationModal from 'app/components/userInformationModal/UserInformationModal';
 
 export default function AuthLayout({ children }: PropsWithChildren) {
@@ -16,12 +15,9 @@ export default function AuthLayout({ children }: PropsWithChildren) {
   }
 
   return (
-    <DrawerProvider>
-      <XStack>
-        <Drawer />
-        {children}
-      </XStack>
+    <>
+      <XStack>{children}</XStack>
       <UserInformationModal />
-    </DrawerProvider>
+    </>
   );
 }

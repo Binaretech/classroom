@@ -1,7 +1,8 @@
 import { useClass } from 'app/services/classService';
-import PostList from 'app/components/postList/PostList';
 import { Spinner, YStack } from 'ui';
 import AppBar from 'app/components/AppBar';
+import ClassTabs from './ClassTabs';
+import ClassCover from './ClassCover';
 
 export default function ClassScreen({ id }: { id: string }) {
   const { isLoading, data, refetch } = useClass(id);
@@ -12,7 +13,8 @@ export default function ClassScreen({ id }: { id: string }) {
       {data && (
         <YStack w="100%" flex={1}>
           <AppBar title={data.name} />
-          <PostList classId={id} />
+          <ClassCover />
+          <ClassTabs classId={id} />
         </YStack>
       )}
     </YStack>

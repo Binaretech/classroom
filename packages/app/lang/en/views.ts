@@ -42,4 +42,7 @@ export default {
     },
   },
   loadMore: 'Load More',
+  delete: 'Delete',
+  options: 'Options',
+  posts: 'Posts',
 };

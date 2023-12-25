@@ -12,24 +12,24 @@ PODS:
     - ExpoModulesCore
   - EXConstants (14.4.2):
     - ExpoModulesCore
-  - EXFileSystem (15.4.4):
+  - EXFileSystem (15.4.5):
     - ExpoModulesCore
   - EXFont (11.4.0):
     - ExpoModulesCore
   - EXJSONUtils (0.7.1)
   - EXManifests (0.7.2):
     - ExpoModulesCore
-  - Expo (49.0.16):
+  - Expo (49.0.21):
     - ExpoModulesCore
-  - expo-dev-client (2.4.11):
+  - expo-dev-client (2.4.12):
     - EXManifests
     - expo-dev-launcher
     - expo-dev-menu
     - expo-dev-menu-interface
     - EXUpdatesInterface
-  - expo-dev-launcher (2.4.13):
+  - expo-dev-launcher (2.4.14):
     - EXManifests
-    - expo-dev-launcher/Main (= 2.4.13)
+    - expo-dev-launcher/Main (= 2.4.14)
     - expo-dev-menu
     - expo-dev-menu-interface
     - ExpoModulesCore
@@ -37,7 +37,7 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-RCTAppDelegate
-  - expo-dev-launcher/Main (2.4.13):
+  - expo-dev-launcher/Main (2.4.14):
     - EXManifests
     - expo-dev-launcher/Unsafe
     - expo-dev-menu
@@ -47,7 +47,7 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-RCTAppDelegate
-  - expo-dev-launcher/Unsafe (2.4.13):
+  - expo-dev-launcher/Unsafe (2.4.14):
     - EXManifests
     - expo-dev-menu
     - expo-dev-menu-interface
@@ -56,33 +56,33 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-RCTAppDelegate
-  - expo-dev-menu (3.2.1):
-    - expo-dev-menu/Main (= 3.2.1)
+  - expo-dev-menu (3.2.2):
+    - expo-dev-menu/Main (= 3.2.2)
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - expo-dev-menu-interface (1.3.0)
-  - expo-dev-menu/Main (3.2.1):
+  - expo-dev-menu/Main (3.2.2):
     - EXManifests
     - expo-dev-menu-interface
     - expo-dev-menu/Vendored
     - ExpoModulesCore
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - expo-dev-menu/SafeAreaView (3.2.1):
+  - expo-dev-menu/SafeAreaView (3.2.2):
     - ExpoModulesCore
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - expo-dev-menu/Vendored (3.2.1):
+  - expo-dev-menu/Vendored (3.2.2):
     - expo-dev-menu/SafeAreaView
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - ExpoHead (0.0.17):
+  - ExpoHead (0.0.20):
     - ExpoModulesCore
   - ExpoKeepAwake (12.3.0):
     - ExpoModulesCore
   - ExpoLinearGradient (12.3.0):
     - ExpoModulesCore
-  - ExpoModulesCore (1.5.11):
+  - ExpoModulesCore (1.5.12):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-NativeModulesApple
@@ -112,24 +112,24 @@ PODS:
     - React-Core (= 0.72.5)
     - React-jsi (= 0.72.5)
     - ReactCommon/turbomodule/core (= 0.72.5)
-  - Firebase/Auth (10.17.0):
+  - Firebase/Auth (10.19.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 10.17.0)
-  - Firebase/CoreOnly (10.17.0):
-    - FirebaseCore (= 10.17.0)
-  - FirebaseAppCheckInterop (10.17.0)
-  - FirebaseAuth (10.17.0):
+    - FirebaseAuth (~> 10.19.0)
+  - Firebase/CoreOnly (10.19.0):
+    - FirebaseCore (= 10.19.0)
+  - FirebaseAppCheckInterop (10.19.0)
+  - FirebaseAuth (10.19.0):
     - FirebaseAppCheckInterop (~> 10.17)
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/Environment (~> 7.8)
     - GTMSessionFetcher/Core (< 4.0, >= 2.1)
     - RecaptchaInterop (~> 100.0)
-  - FirebaseCore (10.17.0):
+  - FirebaseCore (10.19.0):
     - FirebaseCoreInternal (~> 10.0)
-    - GoogleUtilities/Environment (~> 7.8)
-    - GoogleUtilities/Logger (~> 7.8)
-  - FirebaseCoreInternal (10.17.0):
+    - GoogleUtilities/Environment (~> 7.12)
+    - GoogleUtilities/Logger (~> 7.12)
+  - FirebaseCoreInternal (10.19.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
   - fmt (6.2.1)
   - glog (0.3.5)
@@ -148,7 +148,7 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.12.0)"
   - GoogleUtilities/Reachability (7.12.0):
     - GoogleUtilities/Logger
-  - GTMSessionFetcher/Core (3.1.1)
+  - GTMSessionFetcher/Core (3.2.0)
   - hermes-engine (0.72.5):
     - hermes-engine/Pre-built (= 0.72.5)
   - hermes-engine/Pre-built (0.72.5)
@@ -572,19 +572,23 @@ PODS:
     - React-logger (= 0.72.5)
     - React-perflogger (= 0.72.5)
   - RecaptchaInterop (100.0.0)
-  - RNFBApp (18.6.1):
-    - Firebase/CoreOnly (= 10.17.0)
+  - RNFBApp (18.7.3):
+    - Firebase/CoreOnly (= 10.19.0)
     - React-Core
-  - RNFBAuth (18.6.1):
-    - Firebase/Auth (= 10.17.0)
+  - RNFBAuth (18.7.3):
+    - Firebase/Auth (= 10.19.0)
     - React-Core
     - RNFBApp
   - RNGestureHandler (2.12.1):
     - React-Core
+  - RNReanimated (3.6.1):
+    - RCT-Folly (= 2021.07.22.00)
+    - React-Core
+    - ReactCommon/turbomodule/core
   - RNScreens (3.22.1):
     - React-Core
     - React-RCTImage
-  - RNSVG (13.4.0):
+  - RNSVG (14.1.0):
     - React-Core
   - SocketRocket (0.6.1)
   - SPAlert (4.2.0)
@@ -657,6 +661,7 @@ DEPENDENCIES:
   - "RNFBApp (from `../../../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../../../node_modules/@react-native-firebase/auth`)"
   - RNGestureHandler (from `../../../node_modules/react-native-gesture-handler`)
+  - RNReanimated (from `../../../node_modules/react-native-reanimated`)
   - RNScreens (from `../../../node_modules/react-native-screens`)
   - RNSVG (from `../../../node_modules/react-native-svg`)
   - Yoga (from `../../../node_modules/react-native/ReactCommon/yoga`)
@@ -808,6 +813,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@react-native-firebase/auth"
   RNGestureHandler:
     :path: "../../../node_modules/react-native-gesture-handler"
+  RNReanimated:
+    :path: "../../../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../../../node_modules/react-native-screens"
   RNSVG:
@@ -823,34 +830,34 @@ SPEC CHECKSUMS:
   EASClient: 49f8ea858204eb4844d9fb386e5fb7920aee2e30
   EXApplication: 042aa2e3f05258a16962ea1a9914bf288db9c9a1
   EXConstants: ce5bbea779da8031ac818c36bea41b10e14d04e1
-  EXFileSystem: 2b826a3bf1071a4b80a8457e97124783d1ac860e
+  EXFileSystem: f8b838a880254de42a5a7da20ed5ce12e2697c1b
   EXFont: 738c44c390953ebcbab075a4848bfbef025fd9ee
   EXJSONUtils: 6802be4282d42b97c51682468ddc1026a06f8276
   EXManifests: cf66451b11b2c2f6464917528d792759f7fd6ce0
-  Expo: fcfd60c1ed6806dee5103b210335ae0c72f675ed
-  expo-dev-client: a97a68508a6104ad99f4b2613fd808cda7a4186c
-  expo-dev-launcher: 0b4a7ae150c57ac3d4e6e9a434145443cf6637d4
-  expo-dev-menu: 69bfd444d546c407a1a7074adefddf606a1afa7a
+  Expo: 61a8e1aa94311557c137c0a4dfd4fe78281cfbb4
+  expo-dev-client: 1e20e0d67534fd63da37604747a60e7d69fc46f5
+  expo-dev-launcher: 4abaa5997c1063e77432bb23ca05da364803e297
+  expo-dev-menu: 7cc0b6c9ed9fc99740e5d3ba1335bcd1537da9e8
   expo-dev-menu-interface: bda969497e73dadc2663c479e0fa726ca79a306e
-  ExpoHead: 67984a995423b36cb09d45782695ac700a1c95ef
+  ExpoHead: ac95331e2a45cb94f6aee8ba6b8cb3d0a2cc6817
   ExpoKeepAwake: be4cbd52d9b177cde0fd66daa1913afa3161fc1d
   ExpoLinearGradient: 5966dd5d49872cc9c104fedc8bbc298b6049b2e8
-  ExpoModulesCore: 81037d28453615c4206a6a2ca7556a0f364a0a0a
+  ExpoModulesCore: e5b041c20cee64b4f2d8c49b0bcdd757d152109f
   EXSplashScreen: 2c80621e4bc952f5bea328304c2436f5fe21c2a0
   EXStructuredHeaders: 324cc3130571d2696357fafd8be7fd9a0b5fdf6e
   EXUpdates: 8f03b362414e8f9f0998f8a6d6c9fc00f2a9d2f2
   EXUpdatesInterface: 82ed48d417cdcd376c12ca1c2ce390d35500bed6
   FBLazyVector: 71803c074f6325f10b5ec891c443b6bbabef0ca7
   FBReactNativeSpec: 1ef128673f0143c7da246957f2c0d1f6df8e0a21
-  Firebase: f4ac0b02927af9253ae094d23deecf0890da7374
-  FirebaseAppCheckInterop: 534d033d8d0436b4ab066a8205013d271e18a2b9
-  FirebaseAuth: 8d285d9f6e39cc8e23be53a4edd83a923ea629d8
-  FirebaseCore: 534544dd98cabcf4bf8598d88ec683b02319a528
-  FirebaseCoreInternal: 2cf9202e226e3f78d2bf6d56c472686b935bfb7f
+  Firebase: 63ce8ece0d43743dc28eacac0c6867a2d7fd5a9d
+  FirebaseAppCheckInterop: 37884781f3e16a1ba47e7ec80a1e805f987788e3
+  FirebaseAuth: 2492acdcd1245d841fabdf58a050d6aa07dfce3f
+  FirebaseCore: dc5c7badf99d47613c52b2e3a57a64cd187f8554
+  FirebaseCoreInternal: b444828ea7cfd594fca83046b95db98a2be4f290
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
-  GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
+  GTMSessionFetcher: 41b9ef0b4c08a6db4b7eb51a21ae5183ec99a2c8
   hermes-engine: f6cf92a471053245614d9d8097736f6337d5b86c
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
@@ -889,11 +896,12 @@ SPEC CHECKSUMS:
   React-utils: 40cdd9acee23230df5b78bf78a64ce8a2084c2d0
   ReactCommon: 4ec7cc40d091eed0a510755619940b6a03cb507b
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
-  RNFBApp: 5a16a735bad57ca29ee44757bde7e654c5bc8f60
-  RNFBAuth: afec283a83131aef9ea13e51dc32e157ad57d455
+  RNFBApp: c21258de1485419a845efbba9c09ec946c89891d
+  RNFBAuth: 079bb1bc37a912a277aedf366fe5bf4632b069c9
   RNGestureHandler: c0d04458598fcb26052494ae23dda8f8f5162b13
+  RNReanimated: e344c997ed41952a84f2642f93e30c8997dbadea
   RNScreens: 50ffe2fa2342eabb2d0afbe19f7c1af286bc7fb3
-  RNSVG: 07dbd870b0dcdecc99b3a202fa37c8ca163caec2
+  RNSVG: ba3e7232f45e34b7b47e74472386cf4e1a676d0a
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   SPAlert: 735da1f16a887e294719217572ce1f936d8c8782
   SPIndicator: 93e0a4fb23de51294ac48e874c0f081a5e293e4f

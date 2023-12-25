@@ -31,7 +31,6 @@ export default function PostList({ classId }: PostListProps) {
       ListEmptyComponent={() => !loading && <ListEmptyComponent />}
       ListHeaderComponent={
         <YStack w="100%" pb="$4">
-          <ClassCover />
           <CreatePostButton classId={classId} />
         </YStack>
       }

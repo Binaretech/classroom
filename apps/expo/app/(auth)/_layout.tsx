@@ -1,8 +1,6 @@
-import Drawer, { DrawerProvider } from 'app/components/drawer/Drawer';
 import UserInformationModal from 'app/components/userInformationModal/UserInformationModal';
 import useIsAuth from 'app/hooks/isAuth';
 import { Slot, useRouter } from 'expo-router';
-import { PropsWithChildren } from 'react';
 import { XStack } from 'ui';
 
 export default function AuthLayout() {
@@ -15,12 +13,9 @@ export default function AuthLayout() {
   }
 
   return (
-    <DrawerProvider>
-      <XStack flex={1}>
-        <Drawer />
-        <Slot />
-      </XStack>
+    <XStack flex={1}>
+      <Slot />
       <UserInformationModal />
-    </DrawerProvider>
+    </XStack>
   );
 }

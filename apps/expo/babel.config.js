@@ -11,13 +11,13 @@ module.exports = function (api) {
           alias: {
             // define aliases to shorten the import paths
             app: '../../packages/app',
-            'ui': '../../packages/ui',
+            ui: '../../packages/ui',
           },
           extensions: ['.js', '.jsx', '.tsx', '.ios.js', '.android.js'],
         },
       ],
       // if you want reanimated support
-      // 'react-native-reanimated/plugin',
+      'react-native-reanimated/plugin',
       ...(process.env.EAS_BUILD_PLATFORM === 'android'
         ? []
         : [

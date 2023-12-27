@@ -45,4 +45,5 @@ export default {
   delete: 'Delete',
   options: 'Options',
   posts: 'Posts',
+  members: 'Members',
 };

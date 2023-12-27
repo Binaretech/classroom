@@ -1,15 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import ClassRepository from '../database/repository/class.repository';
 import JoinClassDTO from './dto/join-class.dto';
 import { CreateClassDTO } from './dto/create-class.dto';
 import PostRepository from '../database/repository/post.repository';
 import admin from 'firebase-admin';
+import StudentRepository from '../database/repository/student.repository';
 
 @Injectable()
 export class ClassService {
   constructor(
     private readonly classRepository: ClassRepository,
     private readonly postRepository: PostRepository,
+    private readonly studentRepository: StudentRepository,
   ) {}
 
   async list(userId: string, page: number = 1, limit: number = 10) {
@@ -44,9 +46,19 @@ export class ClassService {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  join(request: JoinClassDTO, userId: string) {
-    // TODO
+  async join(request: JoinClassDTO, userId: string) {
+    const classEntity = await this.classRepository.findOne({
+      code: request.code,
+    });
+
+    if (!classEntity) {
+      throw new NotFoundException();
+    }
+
+    return await this.studentRepository.insert({
+      userId: userId,
+      class: classEntity,
+    });
   }
 
   async getPosts(classId: number, page: number = 1, limit: number = 10) {
@@ -116,9 +128,20 @@ export class ClassService {
     return !!classEntity;
   }
 
+  async isClassStudent(id: number, userId: string) {
+    const student = await this.studentRepository.findOne({
+      class: id,
+      userId: userId,
+    });
+
+    return !!student;
+  }
+
   async isClassMember(id: number, userId: string) {
     const isOwner = await this.isClassOwner(id, userId);
 
-    return isOwner;
+    const isStudent = await this.isClassStudent(id, userId);
+
+    return isOwner || isStudent;
   }
 }

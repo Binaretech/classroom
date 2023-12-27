@@ -8,6 +8,7 @@ import {
 } from '@mikro-orm/core';
 import ClassRepository from '../repository/class.repository';
 import { Post } from './post';
+import { Student } from './student';
 
 @Entity({ customRepository: () => ClassRepository })
 export class Class {
@@ -44,6 +45,9 @@ export class Class {
 
   @OneToMany(() => Post, (post) => post.class)
   posts = new Collection<Post>(this);
+
+  @OneToMany(() => Student, (student) => student.class)
+  students = new Collection<Student>(this);
 
   [EntityRepositoryType]?: ClassRepository;
 }

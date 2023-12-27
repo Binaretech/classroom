@@ -1,12 +1,19 @@
 import PostList from 'app/components/postList/PostList';
 import { useTranslation } from 'react-i18next';
 import { Separator, SizableText, Tabs } from 'ui';
+import PostsView from './PostsView';
+import MembersView from './MembersView';
 
 const tabs = [
   {
     value: 'posts',
     label: 'views.class.tabs.posts',
-    render: (classId: string | number) => <PostList classId={classId} />,
+    render: (classId: string | number) => <PostsView classId={classId} />,
+  },
+  {
+    value: 'members',
+    label: 'views.class.tabs.members',
+    render: (classId: string | number) => <MembersView classId={classId} />,
   },
 ];
 

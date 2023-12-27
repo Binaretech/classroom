@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  ForbiddenException,
   Get,
   Param,
   Post,
@@ -61,25 +62,35 @@ export class ClassController {
   @ApiParam({ name: 'id', required: true, example: 1 })
   @ApiQuery({ name: 'page', required: false, example: 1 })
   @ApiQuery({ name: 'limit', required: false, example: 10 })
-  getPosts(
+  async getPosts(
     @Request() req: AuthRequest,
     @Param('id') id: number,
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
   ) {
-    // TODO check if user is in class
+    const isMember = await this.classService.isClassMember(id, req.user.uid);
+
+    if (!isMember) {
+      throw new ForbiddenException();
+    }
 
     return this.classService.getPosts(id, page, limit);
   }
 
   @Post(':id/posts')
   @ApiParam({ name: 'id', required: true, example: 1 })
-  createPost(
+  async createPost(
     @Request() req: AuthRequest,
     @Param('id') id: number,
     @Body() body: CreatePostDTO,
   ) {
     const userId = req.user.uid;
+
+    const isMember = await this.classService.isClassMember(id, userId);
+
+    if (!isMember) {
+      throw new ForbiddenException();
+    }
 
     return this.classService.createPost(id, userId, body.content);
   }

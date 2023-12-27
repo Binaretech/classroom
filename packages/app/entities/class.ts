@@ -1,7 +1,7 @@
 export type Class = {
   id: string;
   name: string;
-  uniqueSection: boolean;
+  ownerId: string;
   description: string;
   createdAt: string;
   updatedAt: string;

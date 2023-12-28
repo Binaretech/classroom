@@ -9,27 +9,23 @@ export default function UserInformationModal() {
   const [isLoading, setIsLoading] = useState(false);
 
   const user = useUser();
-  const isAuth = useIsAuth();
+  const { isAuth, isReady } = useIsAuth();
 
   const onSubmit = async (data: UserInformationInputs) => {
     const { currentUser } = auth;
+
     setIsLoading(true);
+
     try {
       await updateProfile(currentUser as User, data);
       await auth.currentUser?.getIdToken(true);
       setIsLoading(false);
-    } catch (e) {
+    } catch {
       setIsLoading(false);
     }
   };
 
-  if (!isAuth || Boolean(user?.displayName)) return null;
+  const open = !Boolean(user?.displayName) && isReady && isAuth;
 
-  return (
-    <UserInformationModalUI
-      onSubmit={onSubmit}
-      loading={isLoading}
-      open={Boolean(user?.displayName)}
-    />
-  );
+  return <UserInformationModalUI onSubmit={onSubmit} loading={isLoading} open={open} />;
 }

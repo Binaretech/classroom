@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import useUser from 'app/hooks/user';
 
 import { Adapt, Button, Dialog, Fieldset, Input, Sheet, Unspaced, XStack, Form, Spinner } from 'ui';
+import ProfileImagePicker from '../ProfileImagePicker';
 
 export type UserInformationInputs = {
   displayName: string;
@@ -70,6 +71,7 @@ export default function UserInformationModalUI({
 
           <Dialog.Description>{t('views.UserInformationModal.body')}</Dialog.Description>
           <Form onSubmit={handleSubmit(onSubmit)} jc="center" ai="center">
+            <ProfileImagePicker />
             <Fieldset gap="$4" horizontal>
               <Controller
                 control={control}

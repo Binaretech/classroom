@@ -4,9 +4,9 @@ import { Redirect, Stack } from 'expo-router';
 import { ScrollView } from 'react-native';
 
 export default function Register() {
-  const isAuth = useIsAuth();
+  const { isAuth, isReady } = useIsAuth();
 
-  if (isAuth) return <Redirect href="/dashboard" />;
+  if (isAuth && isReady) return <Redirect href="/dashboard" />;
 
   return (
     <>

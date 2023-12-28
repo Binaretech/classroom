@@ -12,16 +12,24 @@ export default function Screen() {
   const { control, handleSubmit } = useLoginForm();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const { email, password } = data;
+
     setIsLoading(true);
     try {
-      await auth().signInWithEmailAndPassword(data.email, data.password);
+      await auth().signInWithEmailAndPassword(email, password);
       replace('dashboard', {
         experimental: {
           nativeBehavior: 'stack-replace',
           isNestedNavigator: true,
         },
       });
-    } catch {
+    } catch (e) {
+      if (e.code.startsWith('auth/')) {
+        control.setError('email', {
+          type: 'manual',
+          message: `errors.${e.code}`,
+        });
+      }
       setIsLoading(false);
     }
   };

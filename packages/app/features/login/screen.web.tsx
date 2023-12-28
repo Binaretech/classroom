@@ -14,9 +14,12 @@ export default function Screen() {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setIsLoading(true);
+
+    const { email, password } = data;
+
     try {
       await setPersistence(auth, browserLocalPersistence);
-      await signInWithEmailAndPassword(auth, data.email, data.password);
+      await signInWithEmailAndPassword(auth, email, password);
 
       replace('/dashboard');
     } catch (e) {

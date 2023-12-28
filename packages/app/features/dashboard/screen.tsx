@@ -3,7 +3,6 @@ import ClassList from './classlist/ClassList';
 import CreateClassModal from './CreateClassModal';
 import JoinClassModal from './JoinClassModal';
 import { useClassList } from 'app/services/classService';
-import AppBar from 'app/components/AppBar';
 import { useTranslation } from 'react-i18next';
 
 export default function DashboardScreen() {

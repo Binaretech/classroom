@@ -6,13 +6,13 @@ import useIsAuth from './isAuth';
 export default function useUser() {
   const [hasData, setHasData] = useState<User | null>(auth.currentUser);
 
-  const isAuth = useIsAuth();
+  const { isAuth, isReady } = useIsAuth();
 
   useEffect(() => {
-    if (isAuth) {
+    if (isAuth && isReady) {
       setHasData(auth.currentUser);
     }
-  }, [isAuth]);
+  }, [isAuth, isReady]);
 
   return hasData;
 }

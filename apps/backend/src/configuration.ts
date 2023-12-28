@@ -8,6 +8,11 @@ export default () => ({
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
   },
+  storage: {
+    url: process.env.STORAGE_URL,
+    accessKey: process.env.STORAGE_ACCESS_KEY,
+    secretKey: process.env.STORAGE_SECRET_KEY,
+  },
 });
 
 export const validationSchema = Joi.object({
@@ -18,4 +23,8 @@ export const validationSchema = Joi.object({
   DB_PASSWORD: Joi.string().required(),
 
   GOOGLE_APPLICATION_CREDENTIALS: Joi.string().required(),
+
+  STORAGE_URL: Joi.string().required(),
+  STORAGE_ACCESS_KEY: Joi.string().required(),
+  STORAGE_SECRET_KEY: Joi.string().required(),
 });

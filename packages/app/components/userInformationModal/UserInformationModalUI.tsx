@@ -1,13 +1,14 @@
 import { X } from '@tamagui/lucide-icons';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import useUser from 'app/hooks/user';
-
+import { ImagePickerAsset } from 'expo-image-picker';
 import { Adapt, Button, Dialog, Fieldset, Input, Sheet, Unspaced, XStack, Form, Spinner } from 'ui';
 import ProfileImagePicker from '../ProfileImagePicker';
+import useUser from 'app/hooks/user';
 
 export type UserInformationInputs = {
   displayName: string;
+  profileImage?: ImagePickerAsset | null;
 };
 
 export type UserInformationModalProps = {
@@ -23,9 +24,10 @@ export default function UserInformationModalUI({
 }: UserInformationModalProps) {
   const user = useUser();
 
-  const { control, handleSubmit } = useForm<UserInformationInputs>({
+  const { control, handleSubmit, setValue } = useForm<UserInformationInputs>({
     defaultValues: {
       displayName: user?.displayName || '',
+      profileImage: null,
     },
   });
 
@@ -71,7 +73,11 @@ export default function UserInformationModalUI({
 
           <Dialog.Description>{t('views.UserInformationModal.body')}</Dialog.Description>
           <Form onSubmit={handleSubmit(onSubmit)} jc="center" ai="center">
-            <ProfileImagePicker />
+            <ProfileImagePicker
+              onChange={(image) => {
+                setValue('profileImage', image);
+              }}
+            />
             <Fieldset gap="$4" horizontal>
               <Controller
                 control={control}

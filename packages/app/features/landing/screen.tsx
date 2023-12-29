@@ -1,5 +1,6 @@
 import { Card, Button } from 'tamagui';
-import { useLink, useRouter } from 'solito/navigation';
+import { useLink } from 'solito/navigation';
+import { SafeAreaView } from 'react-native';
 
 export default function LandingScreen() {
   const login = useLink({

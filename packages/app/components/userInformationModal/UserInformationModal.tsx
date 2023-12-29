@@ -1,29 +1,20 @@
 import useUser from 'app/hooks/user';
 import UserInformationModalUI, { UserInformationInputs } from './UserInformationModalUI';
-import auth from '@react-native-firebase/auth';
-import { useState } from 'react';
 import useIsAuth from 'app/hooks/isAuth';
+import { useUpdateUser } from 'app/services/userService';
 
 export default function UserInformationModal() {
-  const [isLoading, setIsLoading] = useState(false);
+  const { mutateAsync, isPending, error, data } = useUpdateUser();
 
   const user = useUser();
-  console.log(user?.displayName);
 
   const { isAuth, isReady } = useIsAuth();
 
   const onSubmit = async (data: UserInformationInputs) => {
-    setIsLoading(true);
-    try {
-      await auth().currentUser?.updateProfile({
-        displayName: data.displayName,
-      });
-    } catch {
-      setIsLoading(false);
-    }
+    await mutateAsync(data);
   };
-
+  console.log(JSON.stringify(error));
   const open = !Boolean(user?.displayName) && isReady && isAuth;
 
-  return <UserInformationModalUI onSubmit={onSubmit} loading={isLoading} open={open} />;
+  return <UserInformationModalUI onSubmit={onSubmit} loading={isPending} open={open} />;
 }

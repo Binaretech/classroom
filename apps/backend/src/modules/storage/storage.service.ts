@@ -46,4 +46,8 @@ export class StorageService {
 
     return `${url}/users/${newFilename}`;
   }
+
+  async deleteFile(bucketName: BucketName, filename: string) {
+    await this.client.removeObject(bucketName, filename);
+  }
 }

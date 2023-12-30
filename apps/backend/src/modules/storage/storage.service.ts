@@ -26,20 +26,28 @@ export class StorageService {
     file: Express.Multer.File,
     filename: string,
   ): Promise<string> {
-    const { buffer, mimetype } = file;
+    const { buffer, mimetype, size, originalname } = file;
 
-    const ext = mime.extension(mimetype);
-
+    const ext = originalname.split('.').pop() || mime.extension(mimetype);
     const newFilename = `${filename}.${ext}`;
 
     await new Promise((resolve, reject) => {
-      this.client.putObject(bucketName, newFilename, buffer, (err, obj) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(obj);
-        }
-      });
+      this.client.putObject(
+        bucketName,
+        newFilename,
+        buffer,
+        size,
+        {
+          'Content-Type': 'image/jpg',
+        },
+        (err, obj) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(obj);
+          }
+        },
+      );
     });
 
     const url = this.configService.get('storage.url');

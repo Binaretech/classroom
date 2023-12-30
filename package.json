@@ -9,6 +9,7 @@
     "dev": "turbo dev",
     "native": "cd apps/expo && yarn start",
     "ios": "cd apps/expo && yarn ios",
+    "android": "cd apps/expo && yarn android",
     "watch": "yarn workspaces foreach -pi run watch",
     "backend": "cd apps/backend && yarn dev",
     "vercel:install": "yarn set version 3.5 && yarn install",

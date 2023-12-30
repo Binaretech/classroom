@@ -74,6 +74,7 @@ export default function UserInformationModalUI({
           <Dialog.Description>{t('views.UserInformationModal.body')}</Dialog.Description>
           <Form onSubmit={handleSubmit(onSubmit)} jc="center" ai="center">
             <ProfileImagePicker
+              defaultUrl={user?.photoURL}
               onChange={(image) => {
                 setValue('profileImage', image);
               }}

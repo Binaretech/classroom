@@ -24,11 +24,14 @@ async function updateUser(data: UpdateUserData) {
   if (data.profileImage) {
     const uriParts = data.profileImage.uri.split('.');
     const fileType = uriParts[uriParts.length - 1];
+    const fileName = data.profileImage.uri.split('/').pop() || '';
+
+    const correctedFileType = fileType === 'jpeg' ? 'jpg' : fileType;
 
     formData.append('profileImage', {
       uri: data.profileImage.uri,
-      name: data.profileImage.fileName,
-      type: `image/${fileType}`,
+      name: fileName,
+      type: `image/${correctedFileType}`,
     } as any);
   }
 

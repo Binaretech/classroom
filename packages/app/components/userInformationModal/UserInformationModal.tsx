@@ -13,8 +13,7 @@ export default function UserInformationModal() {
   const onSubmit = async (data: UserInformationInputs) => {
     await mutateAsync(data);
   };
-  console.log(JSON.stringify(error));
   const open = !Boolean(user?.displayName) && isReady && isAuth;
 
-  return <UserInformationModalUI onSubmit={onSubmit} loading={isPending} open={open} />;
+  return <UserInformationModalUI onSubmit={onSubmit} loading={isPending} open={!open} />;
 }

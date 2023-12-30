@@ -39,6 +39,7 @@ export class UserService {
       );
 
       await this.storageService.deleteFile(BucketName.USERS, path);
+
       return null;
     }
 
@@ -47,6 +48,8 @@ export class UserService {
       image,
       userId,
     );
+
+    console.log(url);
 
     return url;
   }

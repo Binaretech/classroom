@@ -1,8 +1,8 @@
 import { useClassId } from 'app/provider/ClassIdProvider';
-import PostsView from 'app/features/class/PostsView';
+import MembersView from 'app/features/class/MembersView';
 
 export default function Posts() {
   const classId = useClassId();
 
-  return <PostsView classId={classId} />;
+  return <MembersView classId={classId} />;
 }

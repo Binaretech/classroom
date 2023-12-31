@@ -17,6 +17,9 @@ export class Student {
   @PrimaryKey({ type: 'bigint', autoincrement: true })
   id!: number;
 
+  @Property({ persist: false })
+  user?: User;
+
   @Property({ length: 64 })
   userId!: string;
 

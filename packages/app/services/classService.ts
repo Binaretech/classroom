@@ -1,8 +1,10 @@
 import { Class } from 'app/entities/class';
 import { UrlFormatter } from 'app/utils/http';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
 
 import axios from 'axios';
+import { Student } from 'app/entities/student';
+import { Member } from 'app/entities/members';
 
 export type ClassesResponse = {
   classes: Class[];
@@ -74,6 +76,31 @@ async function joinClass(body: JoinClassBody) {
   const url = UrlFormatter.formatUrl('class/join');
 
   const response = await axios.post<ClassResponse>(url, body);
+
+  return response.data;
+}
+
+export type MembersResponse = {
+  members: Member[];
+  count: number;
+};
+
+export function useMembersList(id: number | string) {
+  const query = useInfiniteQuery({
+    queryKey: ['class', id, 'members'],
+    queryFn: ({ pageParam }) => fetchMembersList(id, pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages, page) =>
+      lastPage.count / 10 > page ? page + 1 : undefined,
+  });
+
+  return query;
+}
+
+async function fetchMembersList(id: number | string, page = 1) {
+  const url = UrlFormatter.formatUrl(`class/${id}/members`);
+
+  const response = await axios.get<MembersResponse>(url);
 
   return response.data;
 }

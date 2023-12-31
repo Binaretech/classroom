@@ -1,7 +1,7 @@
 import { Drawer } from 'expo-router/drawer';
-import { DrawerContent, DrawerContentScrollView } from '@react-navigation/drawer';
+import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { useClassList } from 'app/services/classService';
-import { ListItem, YGroup, YStack } from 'ui';
+import { ListItem, YGroup } from 'ui';
 import { Link } from 'expo-router';
 import { Home } from '@tamagui/lucide-icons';
 

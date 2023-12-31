@@ -5,9 +5,9 @@ export type UserAvatarProps = {
   user: User | null;
 };
 
-export default function UserAvatar({ user, size }: UserAvatarProps & Pick<AvatarProps, 'size'>) {
+export default function UserAvatar({ user, size, ...props }: UserAvatarProps & AvatarProps) {
   return (
-    <Avatar circular size={size}>
+    <Avatar circular size={size} {...props}>
       <Avatar.Image src={user?.photoURL ?? undefined} />
       <Avatar.Fallback
         backgroundColor={stringToHexColor(user?.email ?? '')}

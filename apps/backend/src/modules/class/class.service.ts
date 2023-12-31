@@ -5,6 +5,7 @@ import { CreateClassDTO } from './dto/create-class.dto';
 import PostRepository from '../database/repository/post.repository';
 import admin from 'firebase-admin';
 import StudentRepository from '../database/repository/student.repository';
+import MemberRepository from '../database/repository/member.repository';
 
 @Injectable()
 export class ClassService {
@@ -12,6 +13,7 @@ export class ClassService {
     private readonly classRepository: ClassRepository,
     private readonly postRepository: PostRepository,
     private readonly studentRepository: StudentRepository,
+    private readonly memberRepository: MemberRepository,
   ) {}
 
   async list(userId: string, page: number = 1, limit: number = 10) {
@@ -143,5 +145,37 @@ export class ClassService {
     const isStudent = await this.isClassStudent(id, userId);
 
     return isOwner || isStudent;
+  }
+
+  async getMembers(classId: number, page: number = 1, limit: number = 10) {
+    const offset = (page - 1) * limit;
+
+    const [members, count] = await this.memberRepository.findAndCount(
+      { classId: classId },
+      { limit: limit, offset: offset },
+    );
+
+    const ids = members.map((member) => ({
+      uid: member.userId,
+    }));
+
+    const { users } = await admin.auth().getUsers(ids);
+
+    const userMap = users.reduce((acc, user) => {
+      acc[user.uid] = user;
+      return acc;
+    }, {});
+
+    members.forEach((member) => {
+      const user = userMap[member.userId];
+      member.user = {
+        uid: user.uid,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        email: user.email,
+      };
+    });
+
+    return { members, count };
   }
 }

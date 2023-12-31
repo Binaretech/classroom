@@ -6,7 +6,6 @@ import {
   Param,
   Post,
   Query,
-  Request,
   UseGuards,
 } from '@nestjs/common';
 import { ClassService } from './class.service';
@@ -15,6 +14,7 @@ import { ApiBearerAuth, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { FirebaseGuard } from 'src/guards/firebase/firebase.guard';
 import JoinClassDTO from './dto/join-class.dto';
 import { CreatePostDTO } from './dto/create-post.dto';
+import { User } from 'src/decorators/user.decorator';
 
 @ApiTags('Class')
 @UseGuards(FirebaseGuard)
@@ -27,35 +27,27 @@ export class ClassController {
   @ApiQuery({ name: 'page', required: false, example: 1 })
   @ApiQuery({ name: 'limit', required: false, example: 10 })
   list(
-    @Request() req: AuthRequest,
+    @User() user: User,
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
   ) {
-    const userId = req.user.uid;
-
-    return this.classService.list(userId, page, limit);
+    return this.classService.list(user.uid, page, limit);
   }
 
   @Get(':id')
   @ApiParam({ name: 'id', required: true, example: 1 })
-  get(@Request() req: AuthRequest, @Param('id') id: number) {
-    const userId = req.user.uid;
-
-    return this.classService.get(id, userId);
+  get(@User() user: User, @Param('id') id: number) {
+    return this.classService.get(id, user.uid);
   }
 
   @Post()
-  create(@Request() req: AuthRequest, @Body() dto: CreateClassDTO) {
-    const userId = req.user.uid;
-
-    return this.classService.create(dto, userId);
+  create(@User() user: User, @Body() dto: CreateClassDTO) {
+    return this.classService.create(dto, user.uid);
   }
 
   @Post('join')
-  join(@Request() req: AuthRequest, @Body() dto: JoinClassDTO) {
-    const userId = req.user.uid;
-
-    return this.classService.join(dto, userId);
+  join(@User() user: User, @Body() dto: JoinClassDTO) {
+    return this.classService.join(dto, user.uid);
   }
 
   @Get(':id/posts')
@@ -63,12 +55,12 @@ export class ClassController {
   @ApiQuery({ name: 'page', required: false, example: 1 })
   @ApiQuery({ name: 'limit', required: false, example: 10 })
   async getPosts(
-    @Request() req: AuthRequest,
+    @User() user: User,
     @Param('id') id: number,
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
   ) {
-    const isMember = await this.classService.isClassMember(id, req.user.uid);
+    const isMember = await this.classService.isClassMember(id, user.uid);
 
     if (!isMember) {
       throw new ForbiddenException();
@@ -80,18 +72,35 @@ export class ClassController {
   @Post(':id/posts')
   @ApiParam({ name: 'id', required: true, example: 1 })
   async createPost(
-    @Request() req: AuthRequest,
+    @User() user: User,
     @Param('id') id: number,
     @Body() body: CreatePostDTO,
   ) {
-    const userId = req.user.uid;
-
-    const isMember = await this.classService.isClassMember(id, userId);
+    const isMember = await this.classService.isClassMember(id, user.uid);
 
     if (!isMember) {
       throw new ForbiddenException();
     }
 
-    return this.classService.createPost(id, userId, body.content);
+    return this.classService.createPost(id, user.uid, body.content);
+  }
+
+  @Get(':id/members')
+  @ApiParam({ name: 'id', required: true, example: 1 })
+  @ApiQuery({ name: 'page', required: false, example: 1 })
+  @ApiQuery({ name: 'limit', required: false, example: 10 })
+  async getMembers(
+    @User() user: User,
+    @Param('id') id: number,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
+    const isMember = await this.classService.isClassMember(id, user.uid);
+
+    if (!isMember) {
+      throw new ForbiddenException();
+    }
+
+    return this.classService.getMembers(id, page, limit);
   }
 }

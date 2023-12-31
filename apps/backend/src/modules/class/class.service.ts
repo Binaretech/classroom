@@ -18,15 +18,26 @@ export class ClassService {
 
   async list(userId: string, page: number = 1, limit: number = 10) {
     const offset = (page - 1) * limit;
-    const [classes, count] = await this.classRepository.findAndCount(
+
+    const [ids, count] = await this.memberRepository.findAndCount(
       {
-        ownerId: userId,
+        userId,
+      },
+      {
+        populate: ['classId'],
+      },
+    );
+
+    const classes = await this.classRepository.find(
+      {
+        id: { $in: ids.map((member) => member.classId) },
       },
       {
         limit: limit,
         offset: offset,
       },
     );
+
     return { classes, count };
   }
 

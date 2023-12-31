@@ -1,14 +1,13 @@
-import { YStack, H2, XStack } from 'ui';
+import { YStack, XStack } from 'ui';
 import ClassList from './classlist/ClassList';
 import CreateClassModal from './CreateClassModal';
 import JoinClassModal from './JoinClassModal';
 import { useClassList } from 'app/services/classService';
-import { useTranslation } from 'react-i18next';
 
 export default function DashboardScreen() {
-  const { isLoading, data, refetch } = useClassList();
+  const { isLoading, data, refetch, error } = useClassList();
 
-  const { t } = useTranslation();
+  console.log(data, isLoading, error);
 
   return (
     <YStack p="$4" f={1}>

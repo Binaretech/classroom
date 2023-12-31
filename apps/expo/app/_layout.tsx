@@ -5,8 +5,9 @@ import { Stack } from 'expo-router';
 import { useColorScheme } from 'react-native';
 import { initializeLang } from 'app/lang';
 import { initializeDayjsPlugins } from 'app/utils/date';
-
+import auth from '@react-native-firebase/auth';
 initializeDayjsPlugins();
+
 initializeLang();
 
 export default function HomeLayout() {

@@ -4,7 +4,7 @@ import useIsAuth from 'app/hooks/isAuth';
 import { useUpdateUser } from 'app/services/userService';
 
 export default function UserInformationModal() {
-  const { mutateAsync, isPending, error, data } = useUpdateUser();
+  const { mutateAsync, isPending } = useUpdateUser();
 
   const user = useUser();
 
@@ -12,8 +12,10 @@ export default function UserInformationModal() {
 
   const onSubmit = async (data: UserInformationInputs) => {
     await mutateAsync(data);
+    user?.reload?.();
   };
+
   const open = !Boolean(user?.displayName) && isReady && isAuth;
 
-  return <UserInformationModalUI onSubmit={onSubmit} loading={isPending} open={!open} />;
+  return <UserInformationModalUI onSubmit={onSubmit} loading={isPending} open={open} />;
 }

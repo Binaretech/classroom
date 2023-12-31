@@ -7,7 +7,6 @@ import { initializeLang } from 'app/lang';
 import { initializeDayjsPlugins } from 'app/utils/date';
 
 initializeDayjsPlugins();
-
 initializeLang();
 
 export default function HomeLayout() {

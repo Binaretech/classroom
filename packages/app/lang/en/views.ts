@@ -33,6 +33,7 @@ export default {
   class: {
     tabs: {
       posts: 'Posts',
+      members: 'Members',
     },
     noPosts: 'There are no posts yet',
     createPost: 'Create Post',

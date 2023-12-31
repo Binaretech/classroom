@@ -11,7 +11,7 @@ export default function useIsAuth() {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         const token = await user.getIdToken();
-
+        console.log(token);
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       } else {
         delete axios.defaults.headers.common['Authorization'];

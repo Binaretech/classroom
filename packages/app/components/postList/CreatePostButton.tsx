@@ -1,11 +1,12 @@
 import useUser from 'app/hooks/user';
 import { useCreatePost } from 'app/services/postService';
-import { stringToHexColor } from 'app/utils/functions';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Avatar, Button, Form, Spinner, Text, TextArea, XStack, YStack } from 'ui';
+import { Button, Form, Spinner, Text, TextArea, XStack, YStack } from 'ui';
 import UserAvatar from '../UserAvatar';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 export type CreatePostButtonProps = {
   classId: string | number;
@@ -41,8 +42,21 @@ type Inputs = {
   content: string;
 };
 
+const schema = yup.object().shape({
+  content: yup.string().required(),
+});
+
 function CreatePostForm({ classId, onCreate }: CreatePostFormProps) {
-  const { control, handleSubmit } = useForm<Inputs>();
+  const {
+    control,
+    handleSubmit,
+    formState: { isValid },
+  } = useForm<Inputs>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      content: '',
+    },
+  });
 
   const { mutateAsync, isPending } = useCreatePost(classId);
 
@@ -61,11 +75,17 @@ function CreatePostForm({ classId, onCreate }: CreatePostFormProps) {
           name="content"
           disabled={isPending}
           render={({ field }) => (
-            <TextArea {...field} placeholder={t('views.class.posts.create')} size="$4" autoFocus />
+            <TextArea
+              {...field}
+              onChangeText={field.onChange}
+              placeholder={t('views.class.posts.create')}
+              size="$4"
+              autoFocus
+            />
           )}
         />
         <Form.Trigger asChild>
-          <Button disabled={isPending} aria-label="submit" mt="$4" px="$5">
+          <Button disabled={isPending || !isValid} aria-label="submit" mt="$4" px="$5">
             {isPending ? <Spinner /> : t('views.class.posts.button')}
           </Button>
         </Form.Trigger>

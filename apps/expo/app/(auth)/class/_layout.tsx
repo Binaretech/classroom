@@ -22,7 +22,7 @@ export default function ClassLayout() {
             </YGroup.Item>
           </YGroup>
           {data?.classes?.map((classItem) => (
-            <Link href={`/class/${classItem.id}`}>
+            <Link key={classItem.id} href={`/class/${classItem.id}`}>
               <ListItem>{classItem.name}</ListItem>
             </Link>
           ))}

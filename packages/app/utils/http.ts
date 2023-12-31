@@ -1,11 +1,10 @@
-import { baseUrl } from 'app/config/env';
-
 interface UrlOptions {
   queryParams?: Record<string, string | number | boolean>;
 }
 
 export class UrlFormatter {
   static formatUrl(path: string, options?: UrlOptions): string {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || process.env.EXPO_PUBLIC_BASE_URL;
     let url = `${baseUrl}/${path}`;
 
     if (options?.queryParams) {

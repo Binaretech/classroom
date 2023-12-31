@@ -32,14 +32,14 @@ export default function ClassLayout() {
         <Tabs.Screen
           name="posts"
           options={{
-            tabBarLabel: t('views.posts'),
+            tabBarLabel: t('views.class.tabs.posts'),
             tabBarIcon: ({ color, size }) => <MessagesSquare color={color} size={size} />,
           }}
         />
         <Tabs.Screen
           name="members"
           options={{
-            tabBarLabel: t('views.members'),
+            tabBarLabel: t('views.class.tabs.members'),
             tabBarIcon: ({ color, size }) => <Users color={color} size={size} />,
           }}
         />

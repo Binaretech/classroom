@@ -97,6 +97,8 @@ export function useCreatePost(classId: number | string) {
 async function createPost(data: CreatePostData, classId: number | string) {
   const url = UrlFormatter.formatUrl(`class/${classId}/posts`);
 
+  console.log(url);
+
   const response = await axios.post<PostResponse>(url, data);
 
   return response.data;

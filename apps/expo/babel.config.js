@@ -10,6 +10,7 @@ module.exports = function (api) {
           root: ['../..'],
           alias: {
             // define aliases to shorten the import paths
+            '@': '.',
             app: '../../packages/app',
             ui: '../../packages/ui',
           },

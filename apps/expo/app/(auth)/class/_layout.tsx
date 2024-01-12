@@ -21,11 +21,11 @@ export default function ClassLayout() {
               </Link>
             </YGroup.Item>
           </YGroup>
-          {data?.classes?.map((classItem) => (
+          {/* {data?.classes?.map((classItem) => (
             <Link key={classItem.id} href={`/class/${classItem.id}`}>
               <ListItem>{classItem.name}</ListItem>
             </Link>
-          ))}
+          ))} */}
         </DrawerContentScrollView>
       )}
     >

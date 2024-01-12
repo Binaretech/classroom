@@ -1,6 +1,7 @@
-import i18n from 'i18next'
-import { initReactI18next } from 'react-i18next'
-import en from './en'
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import en from './en';
+import es from './es';
 
 export function initializeLang() {
   i18n.use(initReactI18next).init({
@@ -10,13 +11,13 @@ export function initializeLang() {
         translation: en,
       },
       es: {
-        translation: en,
+        translation: es,
       },
     },
-    lng: 'en',
+    lng: 'es',
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false,
     },
-  })
+  });
 }

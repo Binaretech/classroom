@@ -1,4 +1,5 @@
 export default {
+  'auth/invalid-credential': 'The supplied email or password is invalid.',
   'auth/invalid-email': 'The email address is badly formatted.',
   'auth/user-disabled': 'The user corresponding to the given email has been disabled.',
   'auth/user-not-found': 'There is no user corresponding to the given email.',

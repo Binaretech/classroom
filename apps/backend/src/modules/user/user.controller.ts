@@ -20,6 +20,7 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Put()
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     schema: {
@@ -36,7 +37,6 @@ export class UserController {
     },
   })
   @UseInterceptors(FileInterceptor('profileImage'))
-  @Put()
   async update(
     @Request() req: AuthRequest,
     @Body() dto: UpdateUserDto,

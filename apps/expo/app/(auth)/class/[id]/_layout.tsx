@@ -3,10 +3,10 @@ import { Tabs } from 'expo-router';
 import { ClassIdProvider } from 'app/provider/ClassIdProvider';
 import { useTranslation } from 'app/hooks/translation';
 import { useClass } from 'app/services/classService';
-import { MessagesSquare, Users, Settings } from '@tamagui/lucide-icons';
-import { Button, YStack } from 'ui';
+import { MessagesSquare, Users } from '@tamagui/lucide-icons';
 import { DrawerToggleButton } from '@react-navigation/drawer';
 import useUser from 'app/hooks/user';
+import SettingsButton from 'app/components/SettingsButton';
 
 export default function ClassLayout() {
   const route = useRoute<RouteProp<RootStackParamList, 'class/[id]'>>();
@@ -23,9 +23,7 @@ export default function ClassLayout() {
           headerShown: true,
           title: data?.name ?? '',
           headerRight: () =>
-            data?.ownerId === user?.uid && (
-              <Button scaleIcon={1.2} icon={Settings} circular chromeless />
-            ),
+            data?.ownerId === user?.uid && <SettingsButton classId={route.params.id} />,
           headerLeft: () => <DrawerToggleButton />,
         }}
       >
@@ -41,6 +39,14 @@ export default function ClassLayout() {
           options={{
             tabBarLabel: t('views.class.tabs.members'),
             tabBarIcon: ({ color, size }) => <Users color={color} size={size} />,
+          }}
+        />
+
+        <Tabs.Screen
+          name="settings"
+          options={{
+            title: t('views.class.tabs.settings'),
+            href: null,
           }}
         />
       </Tabs>

@@ -6,6 +6,8 @@ import PostRepository from '../database/repository/post.repository';
 import admin from 'firebase-admin';
 import StudentRepository from '../database/repository/student.repository';
 import MemberRepository from '../database/repository/member.repository';
+import { EntityData } from '@mikro-orm/core';
+import { Class } from '../database/entities/class';
 
 @Injectable()
 export class ClassService {
@@ -57,6 +59,23 @@ export class ClassService {
       ownerId: userId,
       section: request.section,
     });
+  }
+
+  update(id: number, request: Partial<CreateClassDTO>) {
+    const data = Object.entries(request).reduce((acc, [key, value]) => {
+      if (value) {
+        acc[key] = value;
+      }
+
+      return acc;
+    }, {} as EntityData<Class>);
+
+    return this.classRepository.nativeUpdate(
+      {
+        id,
+      },
+      data,
+    );
   }
 
   async join(request: JoinClassDTO, userId: string) {

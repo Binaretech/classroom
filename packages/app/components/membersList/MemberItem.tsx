@@ -9,9 +9,9 @@ export type MemberItemProps = {
 export default function MemberItem({ member }: MemberItemProps) {
   return (
     <Card p="$4" ai="center">
-      <XStack ai="center">
+      <XStack ai="center" w="100%">
         <UserAvatar user={member.user} size="$3" />
-        <YStack ml="$-7" flex={1} pl="$3" ai="center">
+        <YStack pl="$4">
           <Text fontWeight="bold">{member.user?.displayName}</Text>
           <Text>{member.user?.email}</Text>
         </YStack>

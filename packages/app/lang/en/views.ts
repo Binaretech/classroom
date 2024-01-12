@@ -34,6 +34,7 @@ export default {
     tabs: {
       posts: 'Posts',
       members: 'Members',
+      settings: 'Settings',
     },
     noPosts: 'There are no posts yet',
     createPost: 'Create Post',

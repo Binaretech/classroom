@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -43,6 +44,22 @@ export class ClassController {
   @Post()
   create(@User() user: User, @Body() dto: CreateClassDTO) {
     return this.classService.create(dto, user.uid);
+  }
+
+  @Put(':id')
+  @ApiParam({ name: 'id', required: true, example: 1 })
+  async update(
+    @User() user: User,
+    @Param('id') id: number,
+    @Body() dto: Partial<CreateClassDTO>,
+  ) {
+    const isClassOwner = await this.classService.isClassOwner(id, user.uid);
+
+    if (!isClassOwner) {
+      throw new ForbiddenException();
+    }
+
+    return this.classService.update(id, dto);
   }
 
   @Post('join')

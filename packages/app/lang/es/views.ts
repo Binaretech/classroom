@@ -43,9 +43,18 @@ export default {
       button: 'Crear',
     },
   },
+  ClassInfoForm: {
+    button: 'Guardar',
+  },
+  ShareableClassCode: {
+    title: 'Código de clase',
+    reset: 'Restablecer código de clase',
+  },
   loadMore: 'Cargar más',
   delete: 'Eliminar',
   options: 'Opciones',
   posts: 'Publicaciones',
   members: 'Miembros',
+  save: 'Guardar',
+  copiedToClipboard: 'Copiado al portapapeles',
 };

@@ -10,7 +10,6 @@ export type ProfileImagePickerProps = {
 
 export default function ProfileImagePicker({ onChange, defaultUrl }: ProfileImagePickerProps) {
   const [image, setImage] = useState<ImagePicker.ImagePickerAsset | null>(null);
-  console.log(defaultUrl);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({

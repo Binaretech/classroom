@@ -4,12 +4,13 @@ import { useLink } from 'solito/navigation';
 
 export type SettingsButtonProps = {
   classId: string | number;
+  scaleIcon?: number;
 };
 
-export default function SettingsButton({ classId }: SettingsButtonProps) {
+export default function SettingsButton({ classId, scaleIcon = 1.2 }: SettingsButtonProps) {
   const link = useLink({
     href: `/class/${classId}/settings`,
   });
 
-  return <Button scaleIcon={1.2} icon={Settings} circular chromeless {...link} />;
+  return <Button scaleIcon={scaleIcon} icon={Settings} circular chromeless {...link} />;
 }

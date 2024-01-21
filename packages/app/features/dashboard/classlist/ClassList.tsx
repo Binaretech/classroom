@@ -22,7 +22,6 @@ export default function ClassList({ isLoading, data = [] }: ClassListProps) {
       data={data}
       renderItem={({ item }) => <ClassItem data={item} />}
       keyExtractor={(item) => item.id}
-      numColumns={2}
     />
   );
 }

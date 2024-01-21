@@ -1,11 +1,10 @@
-import { DarkTheme, DefaultTheme, ThemeProvider, useRoute } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Provider } from 'app/provider';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { useColorScheme } from 'react-native';
 import { initializeLang } from 'app/lang';
 import { initializeDayjsPlugins } from 'app/utils/date';
-import auth from '@react-native-firebase/auth';
 initializeDayjsPlugins();
 
 initializeLang();

@@ -1,9 +1,8 @@
 import { Class } from 'app/entities/class';
 import { UrlFormatter } from 'app/utils/http';
-import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import axios from 'axios';
-import { Student } from 'app/entities/student';
 import { Member } from 'app/entities/members';
 
 export type ClassesResponse = {
@@ -101,6 +100,47 @@ async function fetchMembersList(id: number | string, page = 1) {
   const url = UrlFormatter.formatUrl(`class/${id}/members`);
 
   const response = await axios.get<MembersResponse>(url);
+
+  return response.data;
+}
+
+export function useUpdateClass(id: number | string) {
+  const mutation = useMutation({ mutationFn: (body: UpdateClassBody) => updateClass(id, body) });
+
+  return mutation;
+}
+
+export type UpdateClassBody = {
+  name?: string;
+  description?: string;
+  section?: string;
+};
+
+async function updateClass(id: number | string, body: UpdateClassBody) {
+  const url = UrlFormatter.formatUrl(`class/${id}`);
+
+  const response = await axios.put<ClassResponse>(url, body);
+
+  return response.data;
+}
+
+export function useResetClassCode(id: number | string) {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: () => resetClassCode(id),
+    onSuccess: (data: Class) => {
+      queryClient.setQueryData(['class', id], data);
+    },
+  });
+
+  return mutation;
+}
+
+async function resetClassCode(id: number | string) {
+  const url = UrlFormatter.formatUrl(`class/${id}/reset-code`);
+
+  const response = await axios.post<Class>(url);
 
   return response.data;
 }

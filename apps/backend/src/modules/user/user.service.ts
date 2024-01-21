@@ -49,8 +49,6 @@ export class UserService {
       userId,
     );
 
-    console.log(url);
-
     return url;
   }
 }

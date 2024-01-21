@@ -208,4 +208,22 @@ export class ClassService {
 
     return { members, count };
   }
+
+  async resetCode(id: number) {
+    const entity = await this.classRepository.findOne({
+      id: id,
+    });
+
+    if (!entity) {
+      throw new Error('Class not found');
+    }
+
+    const em = this.classRepository.getEntityManager();
+
+    entity.code = Math.random().toString(36).substr(2, 6);
+
+    await em.flush();
+
+    return entity;
+  }
 }

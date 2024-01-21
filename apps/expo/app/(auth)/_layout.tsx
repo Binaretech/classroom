@@ -1,4 +1,3 @@
-import { useRoute } from '@react-navigation/native';
 import UserInformationModal from 'app/components/userInformationModal/UserInformationModal';
 import useIsAuth from 'app/hooks/isAuth';
 import { Redirect, Slot, useRouter } from 'expo-router';

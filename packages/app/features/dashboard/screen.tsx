@@ -7,8 +7,6 @@ import { useClassList } from 'app/services/classService';
 export default function DashboardScreen() {
   const { isLoading, data, refetch, error } = useClassList();
 
-  console.log(data, isLoading, error);
-
   return (
     <YStack p="$4" f={1}>
       <XStack justifyContent="flex-end" columnGap="$4" p="$4">

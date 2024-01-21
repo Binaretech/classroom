@@ -3,6 +3,8 @@ import {
   Controller,
   ForbiddenException,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Post,
   Put,
@@ -119,5 +121,18 @@ export class ClassController {
     }
 
     return this.classService.getMembers(id, page, limit);
+  }
+
+  @Post(':id/reset-code')
+  @HttpCode(HttpStatus.OK)
+  @ApiParam({ name: 'id', required: true, example: 1 })
+  async resetCode(@User() user: User, @Param('id') id: number) {
+    const isClassOwner = await this.classService.isClassOwner(id, user.uid);
+
+    if (!isClassOwner) {
+      throw new ForbiddenException();
+    }
+
+    return this.classService.resetCode(id);
   }
 }

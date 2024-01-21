@@ -2,7 +2,7 @@ import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { X } from '@tamagui/lucide-icons';
 import { Adapt, Dialog, Fieldset, Sheet, Form, XStack, Button, Spinner, Unspaced, Input } from 'ui';
-import { useCreateClassForm, useJoinClassForm } from './hooks';
+import { useJoinClassForm } from './hooks';
 import { useEffect, useState } from 'react';
 
 export default function JoinClassModal() {

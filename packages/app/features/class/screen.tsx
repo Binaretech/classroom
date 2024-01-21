@@ -12,7 +12,7 @@ export default function ClassScreen({ id }: { id: string }) {
       {isLoading && <Spinner />}
       {data && (
         <YStack w="100%" flex={1}>
-          <AppBar title={data.name} />
+          <AppBar title={data.name} classId={data.id} />
           <ClassCover />
           <ClassTabs classId={id} />
         </YStack>

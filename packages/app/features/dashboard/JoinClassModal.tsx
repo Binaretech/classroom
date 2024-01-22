@@ -1,14 +1,35 @@
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { X } from '@tamagui/lucide-icons';
-import { Adapt, Dialog, Fieldset, Sheet, Form, XStack, Button, Spinner, Unspaced, Input } from 'ui';
+import {
+  Adapt,
+  Dialog,
+  Fieldset,
+  Sheet,
+  Form,
+  XStack,
+  Button,
+  Spinner,
+  Unspaced,
+  Input,
+  useToastController,
+} from 'ui';
 import { useJoinClassForm } from './hooks';
 import { useEffect, useState } from 'react';
 
 export default function JoinClassModal() {
   const [open, setOpen] = useState(false);
 
-  const { isPending, control, onSubmit, reset } = useJoinClassForm();
+  const { show } = useToastController();
+
+  const { isPending, control, onSubmit, reset } = useJoinClassForm({
+    onSuccess: () => {
+      show('views.joinClassModal.success', {
+        type: 'success',
+      });
+      setOpen(false);
+    },
+  });
 
   const { t } = useTranslation();
 
@@ -69,6 +90,7 @@ export default function JoinClassModal() {
                   <Input
                     w="100%"
                     placeholder={t('fields.code')}
+                    autoCapitalize="none"
                     my="$2"
                     onBlur={onBlur}
                     onChangeText={(value) => onChange(value)}

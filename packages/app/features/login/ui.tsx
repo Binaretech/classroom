@@ -44,6 +44,7 @@ export default function LoginScreenUI({ onSubmit, loading, control }: LoginScree
               <Input
                 placeholder={t('fields.email')}
                 my="$2"
+                keyboardType="email-address"
                 autoCapitalize="none"
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}

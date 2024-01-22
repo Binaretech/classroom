@@ -34,7 +34,13 @@ const joinClassSchema = yup.object().shape({
   code: yup.string().required('validation.required'),
 });
 
-export function useJoinClassForm() {
+export function useJoinClassForm({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: () => void;
+  onError?: () => void;
+}) {
   const { isPending, mutateAsync } = useJoinClass();
 
   const { control, handleSubmit, reset } = useForm<JoinClassBody>({
@@ -44,5 +50,7 @@ export function useJoinClassForm() {
     },
   });
 
-  return { reset, control, onSubmit: handleSubmit((data) => mutateAsync(data)), isPending };
+  const onSubmit = handleSubmit((data) => mutateAsync(data).then(onSuccess).catch(onError));
+
+  return { reset, control, onSubmit, isPending };
 }

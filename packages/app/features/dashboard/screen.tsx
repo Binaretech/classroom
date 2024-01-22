@@ -8,7 +8,7 @@ export default function DashboardScreen() {
   const { isLoading, data, refetch, error } = useClassList();
 
   return (
-    <YStack p="$4" f={1}>
+    <YStack px="$4" f={1}>
       <XStack justifyContent="flex-end" columnGap="$4" p="$4">
         <JoinClassModal />
         <CreateClassModal onCreate={refetch} />

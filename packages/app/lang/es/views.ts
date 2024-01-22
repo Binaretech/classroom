@@ -16,6 +16,8 @@ export default {
     button: 'Guardar',
   },
   dashboard: {
+    title: 'Clases',
+    logout: 'Cerrar sesión',
     joinClass: 'Unirse a la clase',
     createClass: 'Crear clase',
     myClasses: 'Mis clases',
@@ -29,6 +31,7 @@ export default {
     title: 'Unirse a la clase',
     body: 'Completa la siguiente información para unirte a una clase',
     button: 'Unirse',
+    success: 'Te has unido a la clase exitosamente',
   },
   class: {
     tabs: {

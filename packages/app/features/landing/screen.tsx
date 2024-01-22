@@ -23,8 +23,12 @@ export default function LandingScreen() {
         maxWidth: '500px',
       }}
     >
-      <Button {...login}>login</Button>
-      <Button {...register}>register</Button>
+      <Button my="$2" {...login}>
+        login
+      </Button>
+      <Button my="$2" {...register}>
+        register
+      </Button>
     </Card>
   );
 }

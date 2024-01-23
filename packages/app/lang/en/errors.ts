@@ -10,4 +10,6 @@ export default {
   'auth/too-many-requests':
     'We have blocked all requests from this device due to unusual activity. Try again later.',
   'auth/missing-email': 'The provided email is not registered.',
+
+  alreadyJoined: 'You are already a member of this class',
 };

@@ -14,4 +14,6 @@ export default {
   'auth/too-many-requests':
     'Hemos bloqueado todas las solicitudes de este dispositivo debido a actividad inusual. Inténtalo de nuevo más tarde.',
   'auth/missing-email': 'El correo electrónico proporcionado no está registrado.',
+
+  alreadyJoined: 'Ya eres miembro de esta clase',
 };

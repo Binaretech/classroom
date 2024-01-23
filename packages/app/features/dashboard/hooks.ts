@@ -5,6 +5,7 @@ import {
   useCreateClass,
   useJoinClass,
 } from 'app/services/classService';
+import { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
@@ -39,7 +40,7 @@ export function useJoinClassForm({
   onError,
 }: {
   onSuccess: () => void;
-  onError?: () => void;
+  onError: (e: { message: string; code: number }) => void;
 }) {
   const { isPending, mutateAsync } = useJoinClass();
 
@@ -50,7 +51,13 @@ export function useJoinClassForm({
     },
   });
 
-  const onSubmit = handleSubmit((data) => mutateAsync(data).then(onSuccess).catch(onError));
+  const onSubmit = handleSubmit((data) =>
+    mutateAsync(data)
+      .then(onSuccess)
+      .catch((e: AxiosError<{ message: string; code: number }>) => {
+        onError(e.response?.data ?? { message: 'error.unknown', code: 500 });
+      })
+  );
 
   return { reset, control, onSubmit, isPending };
 }

@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import ClassRepository from '../database/repository/class.repository';
 import JoinClassDTO from './dto/join-class.dto';
 import { CreateClassDTO } from './dto/create-class.dto';
@@ -85,6 +89,12 @@ export class ClassService {
 
     if (!classEntity) {
       throw new NotFoundException();
+    }
+
+    const isMember = await this.isClassMember(classEntity.id, userId);
+
+    if (isMember) {
+      throw new BadRequestException('errors.alreadyJoined');
     }
 
     return await this.studentRepository.insert({
@@ -220,7 +230,7 @@ export class ClassService {
 
     const em = this.classRepository.getEntityManager();
 
-    entity.code = Math.random().toString(36).substr(2, 6);
+    entity.code = this.classRepository.generateCode();
 
     await em.flush();
 

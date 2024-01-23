@@ -20,18 +20,22 @@ import { useEffect, useState } from 'react';
 export default function JoinClassModal() {
   const [open, setOpen] = useState(false);
 
+  const { t } = useTranslation();
+
   const { show } = useToastController();
 
   const { isPending, control, onSubmit, reset } = useJoinClassForm({
     onSuccess: () => {
-      show('views.joinClassModal.success', {
+      show(t('views.joinClassModal.success'), {
         type: 'success',
       });
       setOpen(false);
+      reset();
+    },
+    onError: ({ message }) => {
+      show(t(message));
     },
   });
-
-  const { t } = useTranslation();
 
   useEffect(() => {
     if (open) {

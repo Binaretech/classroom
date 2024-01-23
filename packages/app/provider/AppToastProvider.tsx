@@ -9,7 +9,14 @@ export const AppToastProvider: React.FC<{ children: ReactNode }> = ({ children }
     <ToastProvider>
       {children}
       <AppToast />
-      <ToastViewport flexDirection="column-reverse" top={top} left={left} right={right} />
+      <ToastViewport
+        multipleToasts
+        flexDirection="column-reverse"
+        top={top}
+        left={left}
+        right={right}
+        portalToRoot
+      />
     </ToastProvider>
   );
 };
@@ -18,10 +25,11 @@ function AppToast() {
   const currentToast = useToastState();
 
   if (!currentToast || currentToast.isHandledNatively) return null;
+
   return (
     <Toast
       key={currentToast.id}
-      duration={currentToast.duration}
+      duration={currentToast.duration ?? 3000}
       y={0}
       opacity={1}
       scale={1}

@@ -1,10 +1,10 @@
-import { FlatList, Platform, SafeAreaView } from 'react-native';
+import { FlatList, Platform } from 'react-native';
 import { Button, Spinner, Text, YStack } from 'ui';
 import { useTranslation } from 'react-i18next';
 import CreatePostButton from './CreatePostButton';
-import { PostsResponse, usePostList } from 'app/services/postService';
+import { usePostList } from 'app/services/postService';
 import PostItem from './PostItem';
-import ClassCover from 'app/features/class/ClassCover';
+import { flatPaginatedData } from 'app/utils/functions';
 
 export type PostListProps = {
   classId: number | string;
@@ -16,7 +16,7 @@ export default function PostList({ classId }: PostListProps) {
 
   const { t } = useTranslation();
 
-  const posts = flatPosts(data?.pages ?? []);
+  const posts = flatPaginatedData(data?.pages ?? [], (page) => page.posts);
 
   const loading = isLoading || isFetchingNextPage;
 
@@ -45,26 +45,6 @@ export default function PostList({ classId }: PostListProps) {
       keyExtractor={(item) => item.id.toString()}
     />
   );
-}
-
-function flatPosts(data: PostsResponse[]) {
-  const { ids, posts } = data.reduce(
-    (acc, curr) => {
-      acc.ids.push(...curr.posts.map((post) => post.id));
-
-      const map = curr.posts.reduce((acc, curr) => {
-        acc[curr.id] = curr;
-        return acc;
-      }, {});
-
-      acc.posts = { ...acc.posts, ...map };
-
-      return acc;
-    },
-    { ids: [] as number[], posts: {} }
-  );
-
-  return Array.from(new Set(ids)).map((id: number) => posts[id]);
 }
 
 function ListEmptyComponent() {

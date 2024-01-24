@@ -3,9 +3,12 @@ import ClassList from './classlist/ClassList';
 import CreateClassModal from './CreateClassModal';
 import JoinClassModal from './JoinClassModal';
 import { useClassList } from 'app/services/classService';
+import { flatPaginatedData } from 'app/utils/functions';
 
 export default function DashboardScreen() {
-  const { isLoading, data, refetch, error } = useClassList();
+  const { isLoading, data, refetch } = useClassList();
+
+  const classes = flatPaginatedData(data?.pages ?? [], (page) => page.classes);
 
   return (
     <YStack px="$4" f={1}>
@@ -13,7 +16,7 @@ export default function DashboardScreen() {
         <JoinClassModal />
         <CreateClassModal onCreate={refetch} />
       </XStack>
-      <ClassList isLoading={isLoading} data={data?.classes} />
+      <ClassList isLoading={isLoading} data={classes} />
     </YStack>
   );
 }

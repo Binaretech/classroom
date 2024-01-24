@@ -2,28 +2,24 @@ import { FlatList, Platform } from 'react-native';
 import { Button, Spinner, YStack } from 'ui';
 import { useTranslation } from 'react-i18next';
 import MemberItem from './MemberItem';
-import { MembersResponse, useMembersList } from 'app/services/classService';
-import { Member } from 'app/entities/members';
+import { useMembersList } from 'app/services/classService';
+import { flatPaginatedData } from 'app/utils/functions';
 
 export type PostListProps = {
   classId: number | string;
 };
 
 export default function MembersList({ classId }: PostListProps) {
-  const {
-    isLoading,
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    refetch,
-    isRefetching,
-    isFetchingNextPage,
-  } = useMembersList(classId);
+  const { isLoading, data, fetchNextPage, hasNextPage, refetch, isRefetching, isFetchingNextPage } =
+    useMembersList(classId);
 
   const { t } = useTranslation();
 
-  const members = flatMembers(data?.pages ?? []);
+  const members = flatPaginatedData(
+    data?.pages ?? [],
+    (page) => page.members,
+    (item) => item.userId
+  );
 
   const loading = isLoading || isFetchingNextPage;
 
@@ -46,24 +42,4 @@ export default function MembersList({ classId }: PostListProps) {
       keyExtractor={(item) => item.userId.toString()}
     />
   );
-}
-
-function flatMembers(data: MembersResponse[]) {
-  const { ids, members } = data.reduce(
-    (acc, curr) => {
-      acc.ids.push(...curr.members.map((member) => member.userId));
-
-      const map = curr.members.reduce((acc, curr) => {
-        acc[curr.userId] = curr;
-        return acc;
-      }, {});
-
-      acc.members = { ...acc.members, ...map };
-
-      return acc;
-    },
-    { ids: [] as string[], members: {} }
-  );
-
-  return Array.from(new Set(ids)).map<Member>((id: string) => members[id]);
 }

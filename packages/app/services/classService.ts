@@ -7,6 +7,7 @@ import { Member } from 'app/entities/members';
 
 export type ClassesResponse = {
   classes: Class[];
+  count: number;
 };
 
 export type ClassResponse = {
@@ -14,13 +15,21 @@ export type ClassResponse = {
 };
 
 export function useClassList() {
-  const query = useQuery({ queryKey: ['class'], queryFn: fetchClassList });
+  const query = useInfiniteQuery({
+    queryKey: ['classes'],
+    queryFn: ({ pageParam }) => fetchClassList(pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages, page) =>
+      lastPage.count / 10 > page ? page + 1 : undefined,
+  });
 
   return query;
 }
 
-async function fetchClassList() {
-  const url = UrlFormatter.formatUrl('class');
+async function fetchClassList(page: number = 1) {
+  const url = UrlFormatter.formatUrl('class', {
+    queryParams: { page },
+  });
 
   const response = await axios.get<ClassesResponse>(url);
 
@@ -62,7 +71,9 @@ async function createClass(body: CreateClassBody) {
 }
 
 export function useJoinClass() {
-  const mutation = useMutation({ mutationFn: joinClass });
+  const mutation = useMutation({
+    mutationFn: joinClass,
+  });
 
   return mutation;
 }
@@ -97,7 +108,9 @@ export function useMembersList(id: number | string) {
 }
 
 async function fetchMembersList(id: number | string, page = 1) {
-  const url = UrlFormatter.formatUrl(`class/${id}/members`);
+  const url = UrlFormatter.formatUrl(`class/${id}/members`, {
+    queryParams: { page },
+  });
 
   const response = await axios.get<MembersResponse>(url);
 

@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from './modules/database/database.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration, { validationSchema } from './configuration';
 import { FirebaseModule } from './modules/firebase/firebase.module';
 import { ClassModule } from './modules/class/class.module';
 import { UserModule } from './modules/user/user.module';
-import { StorageService } from './modules/storage/storage.service';
 import { StorageModule } from './modules/storage/storage.module';
+import { BullModule } from '@nestjs/bull';
+import { EmailModule } from './modules/email/email.module';
+import { LanguageModule } from './modules/language/language.module';
 
 @Module({
   imports: [
@@ -15,12 +17,24 @@ import { StorageModule } from './modules/storage/storage.module';
       load: [configuration],
       validationSchema,
     }),
+    BullModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        redis: {
+          host: configService.get('redis.host'),
+          port: configService.get('redis.port'),
+        },
+      }),
+    }),
+    LanguageModule,
+    EmailModule,
     DatabaseModule,
     FirebaseModule,
     ClassModule,
     UserModule,
     StorageModule,
   ],
-  providers: [StorageService],
+  providers: [],
 })
 export class AppModule {}

@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   ForbiddenException,
@@ -18,13 +19,18 @@ import { FirebaseGuard } from 'src/guards/firebase/firebase.guard';
 import JoinClassDTO from './dto/join-class.dto';
 import { CreatePostDTO } from './dto/create-post.dto';
 import { User } from 'src/decorators/user.decorator';
+import { ClassInviteDto } from './dto/class-invite.dto';
+import { EmailService } from '../email/email.service';
 
 @ApiTags('Class')
 @UseGuards(FirebaseGuard)
 @ApiBearerAuth()
 @Controller('class')
 export class ClassController {
-  constructor(private readonly classService: ClassService) {}
+  constructor(
+    private readonly classService: ClassService,
+    private readonly emailService: EmailService,
+  ) {}
 
   @Get()
   @ApiQuery({ name: 'page', required: false, example: 1 })
@@ -134,5 +140,35 @@ export class ClassController {
     }
 
     return this.classService.resetCode(id);
+  }
+
+  @Post(':id/invite')
+  @HttpCode(HttpStatus.OK)
+  @ApiParam({ name: 'id', required: true, example: 1 })
+  async invite(
+    @User() user: User,
+    @Param('id') id: number,
+    @Body() { email, callbackUrl }: ClassInviteDto,
+  ) {
+    const isClassOwner = await this.classService.isClassOwner(id, user.uid);
+
+    if (!isClassOwner) {
+      throw new ForbiddenException('errors.forbidden');
+    }
+
+    const canInvite = await this.classService.canSendInvitation(id, email);
+
+    if (!canInvite) {
+      throw new BadRequestException('errors.alreadyMember');
+    }
+
+    const code = await this.classService.invite(id, email);
+
+    this.emailService.sendEmail(email, 'Invitation', 'classInvite', {
+      callbackUrl,
+      code,
+    });
+
+    return { success: true };
   }
 }

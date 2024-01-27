@@ -157,3 +157,26 @@ async function resetClassCode(id: number | string) {
 
   return response.data;
 }
+
+export type ClassInviteBody = {
+  email: string;
+};
+
+export function useSendClassInvite(id: number | string) {
+  const mutation = useMutation({
+    mutationFn: (body: ClassInviteBody) => inviteToClass(id, body),
+  });
+
+  return mutation;
+}
+
+async function inviteToClass(id: number | string, body: ClassInviteBody) {
+  const url = UrlFormatter.formatUrl(`class/${id}/invite`);
+
+  const response = await axios.post(url, {
+    ...body,
+    callbackUrl: 'http://localhost:3000/invite',
+  });
+
+  return response.data;
+}

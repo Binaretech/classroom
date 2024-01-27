@@ -53,6 +53,11 @@ export default {
     title: 'Código de clase',
     reset: 'Restablecer código de clase',
   },
+  InviteToClass: {
+    button: 'Invitar a la clase',
+    title: 'Invitar a la clase',
+    body: 'Ingresa la dirección de correo electrónico para invitar a la clase',
+  },
   loadMore: 'Cargar más',
   delete: 'Eliminar',
   options: 'Opciones',

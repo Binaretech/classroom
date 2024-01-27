@@ -9,6 +9,7 @@ import {
 import ClassRepository from '../repository/class.repository';
 import { Post } from './post';
 import { Student } from './student';
+import { Invitation } from './invitations';
 
 @Entity({ customRepository: () => ClassRepository })
 export class Class {
@@ -48,6 +49,9 @@ export class Class {
 
   @OneToMany(() => Student, (student) => student.class)
   students = new Collection<Student>(this);
+
+  @OneToMany(() => Invitation, (invitation) => invitation.class)
+  invitations = new Collection<Invitation>(this);
 
   [EntityRepositoryType]?: ClassRepository;
 }

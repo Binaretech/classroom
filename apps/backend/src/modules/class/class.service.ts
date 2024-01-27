@@ -12,6 +12,9 @@ import StudentRepository from '../database/repository/student.repository';
 import MemberRepository from '../database/repository/member.repository';
 import { EntityData } from '@mikro-orm/core';
 import { Class } from '../database/entities/class';
+import { Invitation, InvitationStatus } from '../database/entities/invitations';
+import { nanoid } from 'nanoid';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class ClassService {
@@ -20,6 +23,7 @@ export class ClassService {
     private readonly postRepository: PostRepository,
     private readonly studentRepository: StudentRepository,
     private readonly memberRepository: MemberRepository,
+    private readonly userService: UserService,
   ) {}
 
   async list(userId: string, page: number = 1, limit: number = 10) {
@@ -225,7 +229,7 @@ export class ClassService {
     });
 
     if (!entity) {
-      throw new Error('Class not found');
+      throw new NotFoundException('errors.classNotFound');
     }
 
     const em = this.classRepository.getEntityManager();
@@ -235,5 +239,41 @@ export class ClassService {
     await em.flush();
 
     return entity;
+  }
+
+  async invite(id: number, email: string) {
+    const entity = await this.classRepository.findOne({
+      id: id,
+    });
+
+    if (!entity) {
+      throw new NotFoundException('errors.classNotFound');
+    }
+
+    const invitation = new Invitation({
+      invitedEmail: email,
+      status: InvitationStatus.Pending,
+      code: nanoid(),
+    });
+
+    entity.invitations.add(invitation);
+
+    const em = this.classRepository.getEntityManager();
+
+    await em.flush();
+
+    return entity.code;
+  }
+
+  async canSendInvitation(classId: number, email: string) {
+    const user = await this.userService.findByEmail(email);
+
+    if (!user) {
+      return true;
+    }
+
+    const isMember = await this.isClassMember(classId, user.uid);
+
+    return !isMember;
   }
 }

@@ -35,6 +35,17 @@ services:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: secret123
 
+  redis: 
+    image: redis:7.2-alpine
+    ports:
+      - 6379:6379
+
+  mailhog: 
+    platform: linux/amd64
+    image: mailhog/mailhog
+    ports:
+      - 8025:8025
+      - 1025:1025
 volumes:
   postgres-data: {}
   minio-volume: {}

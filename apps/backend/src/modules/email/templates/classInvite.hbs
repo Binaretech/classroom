@@ -1,0 +1,67 @@
+<html>
+
+<head>
+  <meta charset='utf-8' />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #333;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size:
+        24px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    p {
+      margin-bottom: 20px;
+    }
+
+    a {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    a:hover {
+      background-color: #0069d9;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class='container'>
+    <h1>{{trans 'email.classInvite.title'}}</h1>
+    <p>{{trans 'email.classInvite.description'}}</p>
+    <p>{{trans 'email.classInvite.buttonDescription'}}</p>
+    <p>
+      <a href='{{callbackUrl}}?code={{code}}'>{{trans
+        'email.classInvite.button'
+        }}
+      </a>
+    </p>
+    <p>{{trans 'email.classInvite.altLink'}}</p>
+    <p>{{callbackUrl}}?code={{code}}</p>
+  </div>
+</body>
+
+</html>

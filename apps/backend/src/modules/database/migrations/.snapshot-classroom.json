@@ -121,6 +121,83 @@
           "nullable": false,
           "mappedType": "integer"
         },
+        "invited_email": {
+          "name": "invited_email",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "code": {
+          "name": "code",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "status": {
+          "name": "status",
+          "type": "smallint",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "enum"
+        },
+        "class_id": {
+          "name": "class_id",
+          "type": "bigint",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "bigint"
+        }
+      },
+      "name": "invitation",
+      "schema": "public",
+      "indexes": [
+        {
+          "keyName": "invitation_pkey",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "invitation_class_id_foreign": {
+          "constraintName": "invitation_class_id_foreign",
+          "columnNames": [
+            "class_id"
+          ],
+          "localTableName": "public.invitation",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "public.class",
+          "updateRule": "cascade"
+        }
+      }
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "mappedType": "integer"
+        },
         "content": {
           "name": "content",
           "type": "text",

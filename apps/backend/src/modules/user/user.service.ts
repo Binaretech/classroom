@@ -11,6 +11,12 @@ export class UserService {
     private readonly configService: ConfigService,
   ) {}
 
+  async findByEmail(email: string) {
+    const user = await admin.auth().getUserByEmail(email);
+
+    return user;
+  }
+
   async update(
     userId: string,
     dto: UpdateUserDto & { image?: Express.Multer.File },

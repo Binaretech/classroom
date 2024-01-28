@@ -5,14 +5,13 @@ import ClassTabs from './ClassTabs';
 import ClassCover from './ClassCover';
 
 export default function ClassScreen({ id }: { id: string }) {
-  const { isLoading, data, refetch } = useClass(id);
-
+  const { isLoading, isSuccess, data } = useClass(id);
   return (
     <YStack w="100%" flex={1}>
       {isLoading && <Spinner />}
-      {data && (
+      {isSuccess && (
         <YStack w="100%" flex={1}>
-          <AppBar title={data.name} classId={data.id} />
+          <AppBar title={data.name} classId={id} />
           <ClassCover />
           <ClassTabs classId={id} />
         </YStack>

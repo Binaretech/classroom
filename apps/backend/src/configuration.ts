@@ -1,6 +1,9 @@
 import * as Joi from 'joi';
 
 export default () => ({
+  app: {
+    url: process.env.APP_URL,
+  },
   database: {
     host: process.env.DB_HOST,
     port: parseInt(process.env.DB_PORT, 10) || 5432,
@@ -30,6 +33,8 @@ export default () => ({
 });
 
 export const validationSchema = Joi.object({
+  APP_URL: Joi.string().required(),
+
   DB_HOST: Joi.string().required(),
   DB_PORT: Joi.number().required(),
   DB_NAME: Joi.string().required(),

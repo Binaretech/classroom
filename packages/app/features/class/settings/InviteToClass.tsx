@@ -1,7 +1,19 @@
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { X } from '@tamagui/lucide-icons';
-import { Adapt, Dialog, Fieldset, Sheet, Form, XStack, Button, Spinner, Unspaced, Input } from 'ui';
+import {
+  Adapt,
+  Dialog,
+  Fieldset,
+  Sheet,
+  Form,
+  XStack,
+  Button,
+  Spinner,
+  Unspaced,
+  Input,
+  useToastController,
+} from 'ui';
 import { useState } from 'react';
 import { useSendClassInvite } from 'app/services/classService';
 import * as yup from 'yup';
@@ -18,6 +30,8 @@ const schema = yup.object().shape({
 export default function InviteToClass({ classId }: InviteToClassProps) {
   const [open, setOpen] = useState(false);
 
+  const { show } = useToastController();
+
   const { control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -30,8 +44,14 @@ export default function InviteToClass({ classId }: InviteToClassProps) {
   const { t } = useTranslation();
 
   const onSubmit = handleSubmit(async ({ email }) => {
-    await mutateAsync({ email });
-    setOpen(false);
+    try {
+      await mutateAsync({ email });
+      setOpen(false);
+    } catch (e) {
+      if (e.response.data.message) {
+        show(t(e.response.data.message), { type: 'error' });
+      }
+    }
   });
 
   return (
@@ -88,6 +108,7 @@ export default function InviteToClass({ classId }: InviteToClassProps) {
                     placeholder={t('fields.email')}
                     my="$2"
                     keyboardType="email-address"
+                    autoCapitalize="none"
                     onBlur={onBlur}
                     onChangeText={(value) => onChange(value)}
                     value={value}

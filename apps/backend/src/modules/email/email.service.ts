@@ -25,6 +25,10 @@ export class EmailService {
     handlebars.registerHelper('trans', (key: string, context: any) => {
       return languageService.translate(key, context.data.root);
     });
+
+    handlebars.registerHelper('config', (key: string) => {
+      return configService.get(key);
+    });
   }
 
   async sendEmail<T>(

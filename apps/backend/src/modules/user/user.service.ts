@@ -12,7 +12,10 @@ export class UserService {
   ) {}
 
   async findByEmail(email: string) {
-    const user = await admin.auth().getUserByEmail(email);
+    const user = await admin
+      .auth()
+      .getUserByEmail(email)
+      .catch(() => null);
 
     return user;
   }

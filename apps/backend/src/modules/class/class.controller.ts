@@ -45,8 +45,14 @@ export class ClassController {
 
   @Get(':id')
   @ApiParam({ name: 'id', required: true, example: 1 })
-  get(@User() user: User, @Param('id') id: number) {
-    return this.classService.get(id, user.uid);
+  async get(@User() user: User, @Param('id') id: number) {
+    const isMember = await this.classService.isClassMember(id, user.uid);
+
+    if (!isMember) {
+      throw new ForbiddenException('errors.forbidden');
+    }
+
+    return this.classService.get(id);
   }
 
   @Post()
@@ -148,7 +154,7 @@ export class ClassController {
   async invite(
     @User() user: User,
     @Param('id') id: number,
-    @Body() { email, callbackUrl }: ClassInviteDto,
+    @Body() { email }: ClassInviteDto,
   ) {
     const isClassOwner = await this.classService.isClassOwner(id, user.uid);
 
@@ -156,16 +162,24 @@ export class ClassController {
       throw new ForbiddenException('errors.forbidden');
     }
 
-    const canInvite = await this.classService.canSendInvitation(id, email);
+    const isMember = await this.classService.canSendInvitation(id, email);
 
-    if (!canInvite) {
+    if (!isMember) {
       throw new BadRequestException('errors.alreadyMember');
+    }
+
+    const isAlreadyInvited = await this.classService.isAlreadyInvited(
+      id,
+      email,
+    );
+
+    if (isAlreadyInvited) {
+      throw new BadRequestException('errors.alreadyInvited');
     }
 
     const code = await this.classService.invite(id, email);
 
     this.emailService.sendEmail(email, 'Invitation', 'classInvite', {
-      callbackUrl,
       code,
     });
 

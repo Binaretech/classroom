@@ -173,10 +173,7 @@ export function useSendClassInvite(id: number | string) {
 async function inviteToClass(id: number | string, body: ClassInviteBody) {
   const url = UrlFormatter.formatUrl(`class/${id}/invite`);
 
-  const response = await axios.post(url, {
-    ...body,
-    callbackUrl: 'http://localhost:3000/invite',
-  });
+  const response = await axios.post(url, body);
 
   return response.data;
 }

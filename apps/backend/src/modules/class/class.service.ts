@@ -51,11 +51,17 @@ export class ClassService {
     return { classes, count };
   }
 
-  async get(id: number, userId: string) {
-    const classEntity = await this.classRepository.findOne({
-      id: id,
-      ownerId: userId,
-    });
+  async get(id: number, isOwner: boolean = false) {
+    const classEntity = await this.classRepository.findOne(
+      {
+        id: id,
+      },
+      {
+        fields: isOwner
+          ? ['*']
+          : ['id', 'name', 'description', 'section', 'ownerId'],
+      },
+    );
 
     return classEntity;
   }
@@ -263,6 +269,18 @@ export class ClassService {
     await em.flush();
 
     return entity.code;
+  }
+
+  async isAlreadyInvited(classId: number, email: string) {
+    const user = await this.userService.findByEmail(email);
+
+    if (!user) {
+      return false;
+    }
+
+    const isMember = await this.isClassMember(classId, user.uid);
+
+    return isMember;
   }
 
   async canSendInvitation(classId: number, email: string) {

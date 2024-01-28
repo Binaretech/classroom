@@ -16,4 +16,7 @@ export default {
   'auth/missing-email': 'El correo electrónico proporcionado no está registrado.',
 
   alreadyJoined: 'Ya eres miembro de esta clase',
+  alreadyMember: 'Usuario ya invitado o miembro de la clase',
+  alreadyInvited: 'Ya has enviado una invitación a este correo electrónico',
+  forbidden: 'No tienes permiso para realizar esta acción',
 };

@@ -54,13 +54,13 @@
     <p>{{trans 'email.classInvite.description'}}</p>
     <p>{{trans 'email.classInvite.buttonDescription'}}</p>
     <p>
-      <a href='{{callbackUrl}}?code={{code}}'>{{trans
+      <a href='{{config ' app.url'}}/class/join?code={{code}}'>{{trans
         'email.classInvite.button'
         }}
       </a>
     </p>
     <p>{{trans 'email.classInvite.altLink'}}</p>
-    <p>{{callbackUrl}}?code={{code}}</p>
+    <p>{{config ' app.url'}}?code={{code}}</p>
   </div>
 </body>
 

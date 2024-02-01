@@ -177,3 +177,19 @@ async function inviteToClass(id: number | string, body: ClassInviteBody) {
 
   return response.data;
 }
+
+export function useJoinByInvitation(classId: string | number) {
+  const mutation = useMutation({
+    mutationFn: (code: string) => joinByInvitation(classId, code),
+  });
+
+  return mutation;
+}
+
+async function joinByInvitation(classId: string | number, code: string) {
+  const url = UrlFormatter.formatUrl(`class/join/${code}`);
+
+  const response = await axios.post<ClassResponse>(url);
+
+  return response.data;
+}

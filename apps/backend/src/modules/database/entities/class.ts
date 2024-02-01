@@ -29,7 +29,7 @@ export class Class {
   @Property()
   section?: string;
 
-  @Property({ length: 6 })
+  @Property({ length: 7 })
   code?: string;
 
   @Property({ type: 'varchar' })

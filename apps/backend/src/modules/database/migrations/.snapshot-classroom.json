@@ -46,12 +46,12 @@
         },
         "code": {
           "name": "code",
-          "type": "varchar(6)",
+          "type": "varchar(7)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": true,
-          "length": 6,
+          "length": 7,
           "mappedType": "string"
         },
         "owner_id": {

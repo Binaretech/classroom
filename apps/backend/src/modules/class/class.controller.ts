@@ -2,10 +2,12 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   ForbiddenException,
   Get,
   HttpCode,
   HttpStatus,
+  NotFoundException,
   Param,
   Post,
   Put,
@@ -46,6 +48,11 @@ export class ClassController {
   @Get(':id')
   @ApiParam({ name: 'id', required: true, example: 1 })
   async get(@User() user: User, @Param('id') id: number) {
+    const exists = await this.classService.exists(id);
+    if (!exists) {
+      throw new NotFoundException('errors.notFound');
+    }
+
     const isMember = await this.classService.isClassMember(id, user.uid);
 
     if (!isMember) {
@@ -67,6 +74,11 @@ export class ClassController {
     @Param('id') id: number,
     @Body() dto: Partial<CreateClassDTO>,
   ) {
+    const exists = await this.classService.exists(id);
+    if (!exists) {
+      throw new NotFoundException('errors.notFound');
+    }
+
     const isClassOwner = await this.classService.isClassOwner(id, user.uid);
 
     if (!isClassOwner) {
@@ -81,6 +93,24 @@ export class ClassController {
     return this.classService.join(dto, user.uid);
   }
 
+  @Post(':id/leave')
+  @HttpCode(HttpStatus.OK)
+  @ApiParam({ name: 'id', required: true, example: 1 })
+  async leave(@User() user: User, @Param('id') id: number) {
+    const exists = await this.classService.exists(id);
+    if (!exists) {
+      throw new NotFoundException('errors.notFound');
+    }
+
+    const isMember = await this.classService.isClassMember(id, user.uid);
+
+    if (!isMember) {
+      throw new ForbiddenException();
+    }
+
+    return this.classService.leave(id, user.uid);
+  }
+
   @Get(':id/posts')
   @ApiParam({ name: 'id', required: true, example: 1 })
   @ApiQuery({ name: 'page', required: false, example: 1 })
@@ -91,6 +121,11 @@ export class ClassController {
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
   ) {
+    const exists = await this.classService.exists(id);
+    if (!exists) {
+      throw new NotFoundException('errors.notFound');
+    }
+
     const isMember = await this.classService.isClassMember(id, user.uid);
 
     if (!isMember) {
@@ -126,6 +161,11 @@ export class ClassController {
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
   ) {
+    const exists = await this.classService.exists(id);
+    if (!exists) {
+      throw new NotFoundException('errors.notFound');
+    }
+
     const isMember = await this.classService.isClassMember(id, user.uid);
 
     if (!isMember) {
@@ -139,6 +179,11 @@ export class ClassController {
   @HttpCode(HttpStatus.OK)
   @ApiParam({ name: 'id', required: true, example: 1 })
   async resetCode(@User() user: User, @Param('id') id: number) {
+    const exists = await this.classService.exists(id);
+    if (!exists) {
+      throw new NotFoundException('errors.notFound');
+    }
+
     const isClassOwner = await this.classService.isClassOwner(id, user.uid);
 
     if (!isClassOwner) {
@@ -156,6 +201,11 @@ export class ClassController {
     @Param('id') id: number,
     @Body() { email }: ClassInviteDto,
   ) {
+    const exists = await this.classService.exists(id);
+    if (!exists) {
+      throw new NotFoundException('errors.notFound');
+    }
+
     const isClassOwner = await this.classService.isClassOwner(id, user.uid);
 
     if (!isClassOwner) {
@@ -181,8 +231,80 @@ export class ClassController {
 
     this.emailService.sendEmail(email, 'Invitation', 'classInvite', {
       code,
+      classId: id,
     });
 
     return { success: true };
+  }
+
+  @Post(':id/join')
+  @HttpCode(HttpStatus.OK)
+  @ApiParam({ name: 'id', required: true, example: 1 })
+  async joinInvite(
+    @User() user: User,
+    @Param('id') id: number,
+    @Body() { code }: { code: string },
+  ) {
+    const isValid = await this.classService.isValidInvitation(id, code);
+
+    if (!isValid) {
+      throw new BadRequestException('errors.invalidCode');
+    }
+
+    return this.classService.joinByInvitation(id, code, user.uid);
+  }
+
+  @Post(':id/archive')
+  @HttpCode(HttpStatus.OK)
+  @ApiParam({ name: 'id', required: true, example: 1 })
+  async archive(@User() user: User, @Param('id') id: number) {
+    const exists = await this.classService.exists(id);
+    if (!exists) {
+      throw new NotFoundException('errors.notFound');
+    }
+
+    const isClassOwner = await this.classService.isClassOwner(id, user.uid);
+
+    if (!isClassOwner) {
+      throw new ForbiddenException();
+    }
+
+    return this.classService.archive(id);
+  }
+
+  @Post(':id/unarchive')
+  @HttpCode(HttpStatus.OK)
+  @ApiParam({ name: 'id', required: true, example: 1 })
+  async unarchive(@User() user: User, @Param('id') id: number) {
+    const exists = await this.classService.exists(id);
+    if (!exists) {
+      throw new NotFoundException('errors.notFound');
+    }
+
+    const isClassOwner = await this.classService.isClassOwner(id, user.uid);
+
+    if (!isClassOwner) {
+      throw new ForbiddenException();
+    }
+
+    return this.classService.unarchive(id);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.OK)
+  @ApiParam({ name: 'id', required: true, example: 1 })
+  async delete(@User() user: User, @Param('id') id: number) {
+    const exists = await this.classService.exists(id);
+    if (!exists) {
+      throw new NotFoundException('errors.notFound');
+    }
+
+    const isClassOwner = await this.classService.isClassOwner(id, user.uid);
+
+    if (!isClassOwner) {
+      throw new ForbiddenException();
+    }
+
+    return this.classService.delete(id);
   }
 }

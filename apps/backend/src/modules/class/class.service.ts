@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -15,16 +16,23 @@ import { Class } from '../database/entities/class';
 import { Invitation, InvitationStatus } from '../database/entities/invitations';
 import { nanoid } from 'nanoid';
 import { UserService } from '../user/user.service';
+import InvitationRepository from '../database/repository/invitation.repository';
 
 @Injectable()
 export class ClassService {
   constructor(
+    private readonly userService: UserService,
     private readonly classRepository: ClassRepository,
     private readonly postRepository: PostRepository,
     private readonly studentRepository: StudentRepository,
     private readonly memberRepository: MemberRepository,
-    private readonly userService: UserService,
+    private readonly invitationRepository: InvitationRepository,
   ) {}
+
+  async exists(id: number): Promise<boolean> {
+    const entity = await this.classRepository.findOne(id);
+    return !!entity;
+  }
 
   async list(userId: string, page: number = 1, limit: number = 10) {
     const offset = (page - 1) * limit;
@@ -75,6 +83,66 @@ export class ClassService {
     });
   }
 
+  async generateCode(classId: number) {
+    const entity = await this.classRepository.findOne({
+      id: classId,
+    });
+
+    if (!entity) {
+      throw new NotFoundException('errors.notFound');
+    }
+
+    const em = this.classRepository.getEntityManager();
+
+    entity.code = this.classRepository.generateCode();
+
+    await em.flush();
+
+    return entity;
+  }
+
+  async removeCode(classId: number) {
+    const entity = await this.classRepository.findOne({
+      id: classId,
+    });
+
+    const em = this.classRepository.getEntityManager();
+
+    entity.code = null;
+
+    await em.flush();
+
+    return entity;
+  }
+
+  archive(id: number) {
+    return this.classRepository.nativeUpdate(
+      {
+        id,
+      },
+      {
+        archived: true,
+      },
+    );
+  }
+
+  unarchive(id: number) {
+    return this.classRepository.nativeUpdate(
+      {
+        id,
+      },
+      {
+        archived: false,
+      },
+    );
+  }
+
+  delete(id: number) {
+    return this.classRepository.nativeDelete({
+      id,
+    });
+  }
+
   update(id: number, request: Partial<CreateClassDTO>) {
     const data = Object.entries(request).reduce((acc, [key, value]) => {
       if (value) {
@@ -96,10 +164,6 @@ export class ClassService {
     const classEntity = await this.classRepository.findOne({
       code: request.code,
     });
-
-    if (!classEntity) {
-      throw new NotFoundException();
-    }
 
     const isMember = await this.isClassMember(classEntity.id, userId);
 
@@ -252,14 +316,10 @@ export class ClassService {
       id: id,
     });
 
-    if (!entity) {
-      throw new NotFoundException('errors.classNotFound');
-    }
-
     const invitation = new Invitation({
       invitedEmail: email,
       status: InvitationStatus.Pending,
-      code: nanoid(),
+      code: nanoid(16),
     });
 
     entity.invitations.add(invitation);
@@ -268,7 +328,54 @@ export class ClassService {
 
     await em.flush();
 
-    return entity.code;
+    return invitation.code;
+  }
+
+  async isValidInvitation(classId: number, code: string) {
+    const invitation = await this.invitationRepository.findOne({
+      code: code,
+      class: { id: classId },
+    });
+
+    if (!invitation) {
+      return false;
+    }
+
+    return invitation.status === InvitationStatus.Pending;
+  }
+
+  async joinByInvitation(classId: number, code: string, userId: string) {
+    const invitation = await this.invitationRepository.findOne({
+      code: code,
+      class: { id: classId },
+    });
+
+    if (!invitation) {
+      throw new NotFoundException('errors.notFound');
+    }
+
+    if (invitation.status !== InvitationStatus.Pending) {
+      throw new BadRequestException('errors.invitationExpired');
+    }
+
+    const isMember = await this.isClassMember(classId, userId);
+
+    if (isMember) {
+      throw new BadRequestException('errors.alreadyJoined');
+    }
+
+    invitation.status = InvitationStatus.Accepted;
+
+    const em = this.invitationRepository.getEntityManager();
+
+    await em.flush();
+
+    const classEntity = await this.classRepository.findOne(classId); // Retrieve the Class entity using the classId
+
+    return this.studentRepository.insert({
+      userId,
+      class: classEntity,
+    });
   }
 
   async isAlreadyInvited(classId: number, email: string) {
@@ -293,5 +400,18 @@ export class ClassService {
     const isMember = await this.isClassMember(classId, user.uid);
 
     return !isMember;
+  }
+
+  async leave(classId: number, userId: string) {
+    const isOwner = await this.isClassStudent(classId, userId);
+
+    if (isOwner) {
+      throw new ForbiddenException('errors.forbidden');
+    }
+
+    return this.studentRepository.nativeDelete({
+      userId,
+      class: classId,
+    });
   }
 }

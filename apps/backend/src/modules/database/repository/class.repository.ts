@@ -1,5 +1,6 @@
 import { EntityRepository } from '@mikro-orm/postgresql';
 import { Class } from '../entities/class';
+import { customAlphabet } from 'nanoid';
 
 export default class ClassRepository extends EntityRepository<Class> {
   findById(id: number) {
@@ -11,14 +12,27 @@ export default class ClassRepository extends EntityRepository<Class> {
   ) {
     const record = new Class(data);
 
-    record.code = this.generateCode();
-
     await this.em.persistAndFlush(record);
 
     return record;
   }
 
-  generateCode() {
-    return Math.random().toString(36).substring(7);
+  async generateCode() {
+    const nanoid = customAlphabet(
+      '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+      7,
+    );
+
+    for (let i = 0; i < 5; i++) {
+      const code = nanoid();
+
+      const exists = await this.findOne({ code });
+
+      if (!exists) {
+        return code;
+      }
+    }
+
+    return this.generateCode();
   }
 }

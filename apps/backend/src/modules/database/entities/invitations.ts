@@ -1,7 +1,15 @@
-import { Entity, Enum, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import {
+  Entity,
+  EntityRepositoryType,
+  Enum,
+  ManyToOne,
+  PrimaryKey,
+  Property,
+} from '@mikro-orm/core';
 import { Class } from './class';
+import InvitationRepository from '../repository/invitation.repository';
 
-@Entity()
+@Entity({ customRepository: () => InvitationRepository })
 export class Invitation {
   constructor(data: Partial<Invitation>) {
     Object.assign(this, data);
@@ -22,9 +30,7 @@ export class Invitation {
   @ManyToOne(() => Class)
   class!: Class;
 
-  getInvitationUrl(baseUrl: string) {
-    return `${baseUrl}/invitation/${this.code}`;
-  }
+  [EntityRepositoryType]?: InvitationRepository;
 }
 
 export enum InvitationStatus {

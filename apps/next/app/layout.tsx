@@ -6,32 +6,50 @@ import QueryProvider from 'app/provider/QueryProvider';
 import { initializeDayjsPlugins } from 'app/utils/date';
 import { AppToastProvider } from 'app/provider/AppToastProvider';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import useIsAuth from 'app/hooks/isAuth';
+import {
+  redirect,
+  useSelectedLayoutSegments,
+  useSearchParams,
+  useRouter,
+  usePathname,
+} from 'next/navigation';
+import { useEffect } from 'react';
 
 import '@tamagui/core/reset.css';
 import '@tamagui/polyfill-dev';
 
 import './global.css';
-import useIsAuth from 'app/hooks/isAuth';
-import { redirect, useSearchParams } from 'next/navigation';
 
 initializeDayjsPlugins();
 
 initializeLang();
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const { isAuth } = useIsAuth();
+  const { isAuth, isReady } = useIsAuth();
 
   const params = useSearchParams();
 
-  if (isAuth) {
-    const rediectTo = params.get('redirectTo');
+  const pathname = usePathname();
 
-    if (rediectTo) {
-      return redirect(rediectTo);
+  const router = useRouter();
+
+  const segments = useSelectedLayoutSegments();
+
+  useEffect(() => {
+    if (isReady && isAuth && !segments.includes('(auth)')) {
+      const path = params.get('redirect') || '/dashboard';
+
+      router.replace(path);
     }
+  }, [isAuth, isReady, params, router, segments]);
 
-    return redirect('/dashboard');
-  }
+  useEffect(() => {
+    if (isReady && !isAuth && segments.includes('(auth)')) {
+      redirect(`/login?redirect=${pathname}`);
+    }
+  }, [isAuth, isReady, segments, pathname]);
+
   return (
     <html lang="en">
       <body>

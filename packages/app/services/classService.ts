@@ -2,7 +2,7 @@ import { Class } from 'app/entities/class';
 import { UrlFormatter } from 'app/utils/http';
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { Member } from 'app/entities/members';
 
 export type ClassesResponse = {
@@ -181,15 +181,18 @@ async function inviteToClass(id: number | string, body: ClassInviteBody) {
 export function useJoinByInvitation(classId: string | number) {
   const mutation = useMutation({
     mutationFn: (code: string) => joinByInvitation(classId, code),
+    onError: (error: AxiosError<{ message: string }>) => {
+      return error.response?.data?.message;
+    },
   });
 
   return mutation;
 }
 
 async function joinByInvitation(classId: string | number, code: string) {
-  const url = UrlFormatter.formatUrl(`class/join/${code}`);
+  const url = UrlFormatter.formatUrl(`class/${classId}/join`);
 
-  const response = await axios.post<ClassResponse>(url);
+  const response = await axios.post<ClassResponse>(url, { code });
 
   return response.data;
 }

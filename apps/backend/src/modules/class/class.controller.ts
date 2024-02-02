@@ -248,7 +248,7 @@ export class ClassController {
     const isValid = await this.classService.isValidInvitation(id, code);
 
     if (!isValid) {
-      throw new BadRequestException('errors.invalidCode');
+      throw new BadRequestException('errors.invalidJoinCode');
     }
 
     return this.classService.joinByInvitation(id, code, user.uid);

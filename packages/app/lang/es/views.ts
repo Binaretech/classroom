@@ -58,6 +58,9 @@ export default {
     title: 'Invitar a la clase',
     body: 'Ingresa la dirección de correo electrónico para invitar a la clase',
   },
+  JoinClass: {
+    goToDashboard: 'Ir al menú principal',
+  },
   loadMore: 'Cargar más',
   delete: 'Eliminar',
   options: 'Opciones',

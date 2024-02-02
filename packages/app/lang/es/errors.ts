@@ -20,4 +20,5 @@ export default {
   alreadyInvited: 'Ya has enviado una invitación a este correo electrónico',
   forbidden: 'No tienes permiso para realizar esta acción',
   cannotLeave: 'No puedes abandonar la clase si eres el propietario',
+  invalidJoinCode: 'El código de unión proporcionado no es válido o ha expirado',
 };

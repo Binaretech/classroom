@@ -3,7 +3,7 @@ import { Tabs } from 'expo-router';
 import { ClassIdProvider } from 'app/provider/ClassIdProvider';
 import { useTranslation } from 'app/hooks/translation';
 import { useClass } from 'app/services/classService';
-import { MessagesSquare, Users } from '@tamagui/lucide-icons';
+import { MessagesSquare, Users, ClipboardPenLine } from '@tamagui/lucide-icons';
 import { DrawerToggleButton } from '@react-navigation/drawer';
 import useUser from 'app/hooks/user';
 import SettingsButton from 'app/components/SettingsButton';
@@ -34,6 +34,15 @@ export default function ClassLayout() {
             tabBarIcon: ({ color, size }) => <MessagesSquare color={color} size={size} />,
           }}
         />
+
+        <Tabs.Screen
+          name="classwork"
+          options={{
+            tabBarLabel: t('views.class.tabs.classwork'),
+            tabBarIcon: ({ color, size }) => <ClipboardPenLine color={color} size={size} />,
+          }}
+        />
+
         <Tabs.Screen
           name="members"
           options={{

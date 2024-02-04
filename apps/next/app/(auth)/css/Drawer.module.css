@@ -1,0 +1,15 @@
+.drawer {
+    width: 0; 
+    height: 100vh; 
+    z-index: 1000;
+    transition: width 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+.drawer.open {
+    width: 250px;
+}
+
+.content {
+    transition: width 0.3s ease-in-out;
+}

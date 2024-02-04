@@ -6,7 +6,7 @@ export default function MoreMenu() {
   const { t } = useTranslation();
 
   return (
-    <Popover placement="bottom">
+    <Popover allowFlip>
       <Popover.Trigger asChild>
         <Button icon={MoreVertical} chromeless circular p="$0.75" />
       </Popover.Trigger>

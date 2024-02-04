@@ -38,6 +38,7 @@ export default {
       posts: 'Publicaciones',
       members: 'Miembros',
       settings: 'Configuraciones',
+      classwork: 'Trabajos',
     },
     noPosts: 'Aún no hay publicaciones',
     createPost: 'Crear publicación',

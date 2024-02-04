@@ -4,7 +4,7 @@ interface UrlOptions {
 
 export class UrlFormatter {
   static formatUrl(path: string, options?: UrlOptions): string {
-    const baseUrl = 'http://192.168.0.200:5000'; //process.env.NEXT_PUBLIC_API_URL || process.env.EXPO_PUBLIC_BASE_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || process.env.EXPO_PUBLIC_BASE_URL;
     let url = `${baseUrl}/${path}`;
 
     if (options?.queryParams) {

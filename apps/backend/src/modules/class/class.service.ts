@@ -304,7 +304,21 @@ export class ClassService {
 
     const em = this.classRepository.getEntityManager();
 
-    entity.code = this.classRepository.generateCode();
+    entity.code = await this.classRepository.generateCode();
+
+    await em.flush();
+
+    return entity;
+  }
+
+  async deleteCode(id: number) {
+    const entity = await this.classRepository.findOne({
+      id: id,
+    });
+
+    const em = this.classRepository.getEntityManager();
+
+    entity.code = null;
 
     await em.flush();
 

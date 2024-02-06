@@ -1,6 +1,6 @@
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import UserInformationModal from 'app/components/userInformationModal/UserInformationModal';
-import useIsAuth from 'app/hooks/isAuth';
+import { useAuth } from 'app/provider/AuthProvider';
 import { Redirect, useRouter } from 'expo-router';
 import { Drawer } from 'expo-router/drawer';
 import { Home } from '@tamagui/lucide-icons';
@@ -8,9 +8,10 @@ import { useClassList } from 'app/services/classService';
 import { useTranslation } from 'app/hooks/translation';
 import { YStack } from 'ui';
 import auth from '@react-native-firebase/auth';
+import { flatPaginatedData } from 'app/utils/functions';
 
 export default function AuthLayout() {
-  const { isAuth, isReady } = useIsAuth();
+  const { isAuth, isReady } = useAuth();
 
   const router = useRouter();
 
@@ -21,6 +22,12 @@ export default function AuthLayout() {
   if (!isAuth && isReady) {
     return <Redirect href="/login" />;
   }
+
+  const classes = flatPaginatedData(
+    data?.pages ?? [],
+    (page) => page.classes,
+    (item) => item.id
+  );
 
   return (
     <>
@@ -35,7 +42,7 @@ export default function AuthLayout() {
                   router.push('/dashboard');
                 }}
               />
-              {data?.classes?.map?.((classItem) => (
+              {classes?.map?.((classItem) => (
                 <DrawerItem
                   key={classItem.id}
                   label={classItem.name}

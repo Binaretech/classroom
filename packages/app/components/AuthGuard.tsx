@@ -1,8 +1,8 @@
-import useIsAuth from 'app/hooks/isAuth';
+import { useAuth } from 'app/provider/AuthProvider';
 import { PropsWithChildren } from 'react';
 
 function AuthGuard({ children }: PropsWithChildren) {
-  const isAuth = useIsAuth();
+  const isAuth = useAuth();
 
   // if (!isAuth) {
   //   return <Redirect to="/" />;

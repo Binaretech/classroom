@@ -1,10 +1,10 @@
 'use client';
 
 import ClassSettings from 'app/features/class/settings/ClassSettings';
-import useIsAuth from 'app/hooks/isAuth';
+import { useAuth } from 'app/provider/AuthProvider';
 
 export default function SettingsPage({ params }: { params: { id: string } }) {
-  const { isReady } = useIsAuth();
+  const { isReady } = useAuth();
 
   if (!isReady) return null;
 

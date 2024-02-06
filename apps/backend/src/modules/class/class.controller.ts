@@ -193,6 +193,24 @@ export class ClassController {
     return this.classService.resetCode(id);
   }
 
+  @Post(':id/delete-code')
+  @HttpCode(HttpStatus.OK)
+  @ApiParam({ name: 'id', required: true, example: 1 })
+  async deleteCode(@User() user: User, @Param('id') id: number) {
+    const exists = await this.classService.exists(id);
+    if (!exists) {
+      throw new NotFoundException('errors.notFound');
+    }
+
+    const isClassOwner = await this.classService.isClassOwner(id, user.uid);
+
+    if (!isClassOwner) {
+      throw new ForbiddenException();
+    }
+
+    return this.classService.deleteCode(id);
+  }
+
   @Post(':id/invite')
   @HttpCode(HttpStatus.OK)
   @ApiParam({ name: 'id', required: true, example: 1 })

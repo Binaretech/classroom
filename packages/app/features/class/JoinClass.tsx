@@ -1,14 +1,14 @@
 import { Button, Spinner, Text, YStack } from 'ui';
 import { useSearchParams, useParams, useLink } from 'solito/navigation';
 import { useJoinByInvitation } from 'app/services/classService';
-import useIsAuth from 'app/hooks/isAuth';
+import { useAuth } from 'app/provider/AuthProvider';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type SearchParams = { code: string };
 
 export default function JoinClass() {
-  const { isAuth, isReady } = useIsAuth();
+  const { isAuth, isReady } = useAuth();
 
   const { id } = useParams<{ id: string }>();
 

@@ -5,6 +5,7 @@ import { Stack } from 'expo-router';
 import { useColorScheme } from 'react-native';
 import { initializeLang } from 'app/lang';
 import { initializeDayjsPlugins } from 'app/utils/date';
+import { AuthProvider } from 'app/provider/AuthProvider';
 initializeDayjsPlugins();
 
 initializeLang();
@@ -24,11 +25,13 @@ export default function HomeLayout() {
   return (
     <Provider>
       <ThemeProvider value={scheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-          }}
-        />
+        <AuthProvider>
+          <Stack
+            screenOptions={{
+              headerShown: false,
+            }}
+          />
+        </AuthProvider>
       </ThemeProvider>
     </Provider>
   );

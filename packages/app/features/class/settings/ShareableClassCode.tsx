@@ -1,5 +1,5 @@
 import ClipboardButton from 'app/components/ClipboardButton';
-import { useClass, useResetClassCode } from 'app/services/classService';
+import { useClass, useDeleteClassCode, useResetClassCode } from 'app/services/classService';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Card, H2, Spinner, Text, XStack, YStack } from 'ui';
@@ -14,8 +14,14 @@ const ShareableClassCode: React.FC<ShareableClassCodeProps> = ({ classId }) => {
 
   const { mutateAsync, isPending } = useResetClassCode(classId);
 
+  const { mutateAsync: deleteAsync, isPending: isDeletePending } = useDeleteClassCode(classId);
+
   const onReset = async () => {
     await mutateAsync();
+  };
+
+  const onDelete = async () => {
+    await deleteAsync();
   };
 
   return (
@@ -24,17 +30,28 @@ const ShareableClassCode: React.FC<ShareableClassCodeProps> = ({ classId }) => {
         {isLoading && <Spinner />}
         {isSuccess && (
           <YStack>
-            <XStack py="$4" alignItems="center">
-              <YStack f={1}>
-                <Text>{t('views.ShareableClassCode.title')}</Text>
-                <H2>{data.code}</H2>
-              </YStack>
-              <ClipboardButton text={data.code} />
-            </XStack>
-            <Button onPress={onReset}>
+            {data.code && (
+              <XStack py="$4" alignItems="center">
+                <YStack f={1}>
+                  <Text>{t('views.ShareableClassCode.title')}</Text>
+                  <H2>{data.code}</H2>
+                </YStack>
+                <ClipboardButton text={data.code} />
+              </XStack>
+            )}
+
+            <Button my="$2" onPress={onReset}>
               {isPending && <Spinner />}
-              {!isPending && t('views.ShareableClassCode.reset')}
+              {!isPending && data.code && t('views.ShareableClassCode.reset')}
+              {!isPending && !data.code && t('views.ShareableClassCode.generate')}
             </Button>
+
+            {data.code && (
+              <Button my="$2" onPress={onDelete}>
+                {isDeletePending && <Spinner />}
+                {!isDeletePending && t('views.ShareableClassCode.delete')}
+              </Button>
+            )}
           </YStack>
         )}
       </Card>

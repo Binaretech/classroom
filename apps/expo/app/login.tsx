@@ -1,10 +1,10 @@
 import LoginScreen from 'app/features/login/screen';
-import useIsAuth from 'app/hooks/isAuth';
+import { useAuth } from 'app/provider/AuthProvider';
 import { Redirect, Stack, useRouter } from 'expo-router';
 import { ScrollView } from 'react-native';
 
 export default function Login() {
-  const { isAuth, isReady } = useIsAuth();
+  const { isAuth, isReady } = useAuth();
 
   const router = useRouter();
 

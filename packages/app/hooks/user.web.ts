@@ -1,12 +1,12 @@
 import { auth } from 'app/utils/firebase/firebase';
 import { User } from 'firebase/auth';
 import { useEffect, useState } from 'react';
-import useIsAuth from './isAuth';
+import { useAuth } from '../provider/AuthProvider';
 
 export default function useUser() {
   const [hasData, setHasData] = useState<User | null>(auth.currentUser);
 
-  const { isAuth, isReady } = useIsAuth();
+  const { isAuth, isReady } = useAuth();
 
   useEffect(() => {
     if (isAuth && isReady) {

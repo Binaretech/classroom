@@ -158,6 +158,27 @@ async function resetClassCode(id: number | string) {
   return response.data;
 }
 
+export function useDeleteClassCode(id: number | string) {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: () => deleteClassCode(id),
+    onSuccess: (data: Class) => {
+      queryClient.setQueryData(['class', id], data);
+    },
+  });
+
+  return mutation;
+}
+
+async function deleteClassCode(id: number | string) {
+  const url = UrlFormatter.formatUrl(`class/${id}/delete-code`);
+
+  const response = await axios.post<Class>(url);
+
+  return response.data;
+}
+
 export type ClassInviteBody = {
   email: string;
 };

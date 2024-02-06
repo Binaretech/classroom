@@ -6,15 +6,15 @@ import QueryProvider from 'app/provider/QueryProvider';
 import { initializeDayjsPlugins } from 'app/utils/date';
 import { AppToastProvider } from 'app/provider/AppToastProvider';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import useIsAuth from 'app/hooks/isAuth';
+import { AuthProvider, useAuth } from 'app/provider/AuthProvider';
 import {
-  redirect,
   useSelectedLayoutSegments,
   useSearchParams,
   useRouter,
+  redirect,
   usePathname,
 } from 'next/navigation';
-import { useEffect } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 
 import '@tamagui/core/reset.css';
 import '@tamagui/polyfill-dev';
@@ -26,11 +26,29 @@ initializeDayjsPlugins();
 initializeLang();
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const { isAuth, isReady } = useIsAuth();
+  return (
+    <html lang="en">
+      <body>
+        <SafeAreaProvider>
+          <QueryProvider>
+            <TamaguiProvider>
+              <AuthProvider>
+                <AppToastProvider>
+                  <RedirectOnAuth>{children}</RedirectOnAuth>
+                </AppToastProvider>
+              </AuthProvider>
+            </TamaguiProvider>
+          </QueryProvider>
+        </SafeAreaProvider>
+      </body>
+    </html>
+  );
+}
+
+function RedirectOnAuth({ children }: PropsWithChildren<{}>) {
+  const { isAuth, isReady } = useAuth();
 
   const params = useSearchParams();
-
-  const pathname = usePathname();
 
   const router = useRouter();
 
@@ -44,23 +62,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     }
   }, [isAuth, isReady, params, router, segments]);
 
-  useEffect(() => {
-    if (isReady && !isAuth && segments.includes('(auth)')) {
-      redirect(`/login?redirect=${pathname}`);
-    }
-  }, [isAuth, isReady, segments, pathname]);
-
-  return (
-    <html lang="en">
-      <body>
-        <SafeAreaProvider>
-          <QueryProvider>
-            <TamaguiProvider>
-              <AppToastProvider>{children}</AppToastProvider>
-            </TamaguiProvider>
-          </QueryProvider>
-        </SafeAreaProvider>
-      </body>
-    </html>
-  );
+  return <>{children}</>;
 }

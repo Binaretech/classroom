@@ -1,14 +1,20 @@
 import { MoreVertical, Trash } from '@tamagui/lucide-icons';
 import { useTranslation } from 'react-i18next';
-import { Adapt, Button, Text, ListItem, Popover, YGroup, YStack } from 'ui';
+import { Adapt, Button, Text, ListItem, Popover, YGroup, YStack, View } from 'ui';
 
 export default function MoreMenu() {
   const { t } = useTranslation();
 
   return (
-    <Popover allowFlip>
+    <Popover allowFlip strategy="absolute" placement="bottom">
       <Popover.Trigger asChild>
-        <Button icon={MoreVertical} chromeless circular p="$0.75" />
+        <View
+          $platform-web={{
+            position: 'relative',
+          }}
+        >
+          <Button icon={MoreVertical} chromeless circular p="$0.75" />
+        </View>
       </Popover.Trigger>
 
       <Adapt when="sm" platform="touch">
@@ -32,6 +38,7 @@ export default function MoreMenu() {
       <Popover.Content
         borderWidth={1}
         borderColor="$borderColor"
+        padding="0"
         enterStyle={{ y: -10, opacity: 0 }}
         exitStyle={{ y: -10, opacity: 0 }}
         elevate
@@ -46,8 +53,8 @@ export default function MoreMenu() {
       >
         <Popover.Arrow borderWidth={1} borderColor="$borderColor" />
 
-        <YStack space="$3">
-          <YGroup alignSelf="center" bordered width={240} size="$4">
+        <YStack gap="$3">
+          <YGroup alignSelf="center" width={240} radiused size="$4">
             <YGroup.Item>
               <ListItem hoverTheme icon={Trash} title={t('views.delete')} />
             </YGroup.Item>

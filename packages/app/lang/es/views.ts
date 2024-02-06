@@ -10,6 +10,9 @@ export default {
     button: 'Registrarse',
     haveAccount: '¿Ya tienes una cuenta?',
   },
+  profile: {
+    title: 'Perfil',
+  },
   UserInformationModal: {
     title: 'Información del usuario',
     body: 'Completa la siguiente información para continuar',
@@ -53,6 +56,8 @@ export default {
   ShareableClassCode: {
     title: 'Código de clase',
     reset: 'Restablecer código de clase',
+    generate: 'Generar nuevo código de clase',
+    delete: 'Eliminar código de clase',
   },
   InviteToClass: {
     button: 'Invitar a la clase',
@@ -69,4 +74,5 @@ export default {
   members: 'Miembros',
   save: 'Guardar',
   copiedToClipboard: 'Copiado al portapapeles',
+  logout: 'Cerrar sesión',
 };

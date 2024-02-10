@@ -6,7 +6,6 @@ import { cls } from 'utils/styles';
 import useUser from 'app/hooks/user';
 import UserAvatar from 'app/components/UserAvatar';
 import { useTranslation } from 'app/hooks/translation';
-import { auth } from 'app/utils/firebase/firebase';
 
 import styles from './css/Drawer.module.css';
 import { useClassList } from 'app/services/classService';

@@ -43,6 +43,12 @@ export default {
       settings: 'Configuraciones',
       classwork: 'Trabajos',
     },
+    classwork: {
+      create: 'Crear trabajo de clase',
+    },
+    material: 'Material',
+    assignment: 'Tarea',
+    quiz: 'Examen',
     noPosts: 'Aún no hay publicaciones',
     createPost: 'Crear publicación',
     posts: {

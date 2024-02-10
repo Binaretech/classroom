@@ -7,6 +7,7 @@ import { AppToastProvider } from './AppToastProvider';
 
 export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
   const scheme = useColorScheme();
+
   return (
     <QueryProvider>
       <TamaguiProvider

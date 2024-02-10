@@ -3,12 +3,18 @@ import { useTranslation } from 'react-i18next';
 import { Separator, SizableText, Tabs } from 'ui';
 import PostsView from './PostsView';
 import MembersView from './MembersView';
+import Classwork from './Classwork/Classwork';
 
 const tabs = [
   {
     value: 'posts',
     label: 'views.class.tabs.posts',
     render: (classId: string | number) => <PostsView classId={classId} />,
+  },
+  {
+    value: 'classwork',
+    label: 'views.class.tabs.classwork',
+    render: (classId: string | number) => <Classwork classId={classId} />,
   },
   {
     value: 'members',

@@ -1,14 +1,14 @@
-import { MoreVertical, Trash } from '@tamagui/lucide-icons';
+import { Book, BookMarked, ClipboardList } from '@tamagui/lucide-icons';
 import { useTranslation } from 'react-i18next';
-import { Adapt, Button, Text, ListItem, Popover, YGroup, YStack, View } from 'ui';
+import { Adapt, Button, ListItem, Popover, Text, View, YGroup, YStack } from 'ui';
 
-export default function MoreMenu() {
+export default function CreateClassworkButton() {
   const { t } = useTranslation();
 
   return (
     <Popover placement="bottom">
       <Popover.Trigger asChild>
-        <Button icon={MoreVertical} chromeless circular p="$0.75" />
+        <Button w="100%">{t('views.class.classwork.create')}</Button>
       </Popover.Trigger>
 
       <Adapt platform="touch">
@@ -50,7 +50,13 @@ export default function MoreMenu() {
         <YStack gap="$3">
           <YGroup alignSelf="center" width={240} radiused size="$4">
             <YGroup.Item>
-              <ListItem hoverTheme icon={Trash} title={t('views.delete')} />
+              <ListItem hoverTheme icon={BookMarked} title={t('views.class.material')} />
+            </YGroup.Item>
+            <YGroup.Item>
+              <ListItem hoverTheme icon={Book} title={t('views.class.assignment')} />
+            </YGroup.Item>
+            <YGroup.Item>
+              <ListItem hoverTheme icon={ClipboardList} title={t('views.class.quiz')} />
             </YGroup.Item>
           </YGroup>
         </YStack>

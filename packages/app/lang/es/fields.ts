@@ -7,4 +7,6 @@ export default {
   description: 'Descripción',
   code: 'Código',
   section: 'Sección',
+  title: 'Título',
+  attachments: 'Archivos adjuntos',
 };

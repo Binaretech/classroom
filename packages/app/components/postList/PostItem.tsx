@@ -1,5 +1,5 @@
 import { Post } from 'app/entities/post';
-import { Card, Text, XStack, YStack, styled } from 'ui';
+import { Card, Text, XStack, YStack } from 'ui';
 import dayjs from 'dayjs';
 import UserAvatar from '../UserAvatar';
 import { capitalize } from 'app/utils/functions';

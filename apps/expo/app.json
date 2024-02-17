@@ -39,6 +39,7 @@
       "@react-native-firebase/app",
       "@react-native-firebase/auth",
       "expo-image-picker",
+      "expo-document-picker",
       [
         "expo-build-properties",
         {

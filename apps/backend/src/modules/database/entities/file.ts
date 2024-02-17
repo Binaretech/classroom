@@ -4,6 +4,10 @@ import { Post } from './post';
 
 @Entity()
 export class File {
+  constructor(data: Partial<File>) {
+    Object.assign(this, data);
+  }
+
   @PrimaryKey()
   id!: number;
 
@@ -13,12 +17,9 @@ export class File {
   @Property()
   mimetype!: string;
 
-  @Property()
-  type!: string;
-
   @ManyToOne(() => Classwork)
-  classwork!: Classwork;
+  classwork?: Classwork;
 
   @ManyToOne(() => Post)
-  post!: Post;
+  post?: Post;
 }

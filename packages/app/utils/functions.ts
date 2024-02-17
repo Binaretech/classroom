@@ -1,3 +1,6 @@
+import { DocumentPickerAsset } from 'expo-document-picker';
+import { ImagePickerAsset } from 'expo-image-picker';
+
 export function stringToHexColor(string: string) {
   const hash = string
     .split('')
@@ -36,4 +39,14 @@ export function flatPaginatedData<T, K extends {}>(
   );
 
   return Array.from(new Set(ids)).map((id) => items[id]);
+}
+
+export function expoAssetToFile(file: ImagePickerAsset | DocumentPickerAsset) {
+  const fileName = (file as ImagePickerAsset).fileName ?? (file as DocumentPickerAsset).name;
+
+  return {
+    uri: file.uri,
+    name: fileName,
+    type: file.mimeType,
+  } as any;
 }

@@ -8,7 +8,7 @@ export type ClassworkProps = {
 export default function Classwork({ classId }: ClassworkProps) {
   return (
     <YStack>
-      <CreateClassworkButton />
+      <CreateClassworkButton classId={classId} />
     </YStack>
   );
 }

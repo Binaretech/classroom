@@ -47,17 +47,19 @@ export class UserService {
         '',
       );
 
-      await this.storageService.deleteFile(BucketName.USERS, path);
+      await this.storageService.delete(BucketName.USERS, path);
 
       return null;
     }
 
-    const url = await this.storageService.uploadFile(
+    const { path } = await this.storageService.store(
       BucketName.USERS,
       image,
       userId,
     );
 
-    return url;
+    const url = this.configService.get('storage.url');
+
+    return `${url}/${path}`;
   }
 }

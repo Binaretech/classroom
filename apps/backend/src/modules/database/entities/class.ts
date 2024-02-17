@@ -10,6 +10,7 @@ import ClassRepository from '../repository/class.repository';
 import { Post } from './post';
 import { Student } from './student';
 import { Invitation } from './invitations';
+import { Classwork } from './classwork';
 
 @Entity({ customRepository: () => ClassRepository })
 export class Class {
@@ -52,6 +53,9 @@ export class Class {
 
   @OneToMany(() => Invitation, (invitation) => invitation.class)
   invitations = new Collection<Invitation>(this);
+
+  @OneToMany(() => Classwork, (classwork) => classwork.class)
+  classworks = new Collection<Classwork>(this);
 
   [EntityRepositoryType]?: ClassRepository;
 }

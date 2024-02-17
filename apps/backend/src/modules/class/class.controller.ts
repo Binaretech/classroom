@@ -12,7 +12,9 @@ import {
   Post,
   Put,
   Query,
+  UploadedFiles,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ClassService } from './class.service';
 import { CreateClassDTO } from './dto/create-class.dto';
@@ -23,6 +25,8 @@ import { CreatePostDTO } from './dto/create-post.dto';
 import { User } from 'src/decorators/user.decorator';
 import { ClassInviteDto } from './dto/class-invite.dto';
 import { EmailService } from '../email/email.service';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import CreateMaterialDTO from './dto/create-material.dto';
 
 @ApiTags('Class')
 @UseGuards(FirebaseGuard)
@@ -324,5 +328,29 @@ export class ClassController {
     }
 
     return this.classService.delete(id);
+  }
+
+  @Post(':id/classwork/material')
+  @UseInterceptors(FilesInterceptor('attachments'))
+  @HttpCode(HttpStatus.CREATED)
+  @ApiParam({ name: 'id', required: true, example: 1 })
+  async createMaterial(
+    @Param('id') id: number,
+    @Body() body: CreateMaterialDTO,
+    @User() user: User,
+    @UploadedFiles() files: Array<Express.Multer.File>,
+  ) {
+    const exists = await this.classService.exists(id);
+    if (!exists) {
+      throw new NotFoundException('errors.notFound');
+    }
+
+    const isClassOwner = await this.classService.isClassOwner(id, user.uid);
+
+    if (!isClassOwner) {
+      throw new ForbiddenException();
+    }
+
+    return this.classService.createMaterial(id, body, files);
   }
 }

@@ -5,13 +5,19 @@ import { ConfigService } from '@nestjs/config';
 
 export enum BucketName {
   USERS = 'users',
+  CLASSES = 'classes',
 }
+
+type StoreResult = {
+  path: string;
+  mimetype: string;
+};
 
 @Injectable()
 export class StorageService {
   private readonly client: minio.Client;
 
-  constructor(private readonly configService: ConfigService) {
+  constructor(configService: ConfigService) {
     this.client = new minio.Client({
       endPoint: 'minio',
       port: 9000,
@@ -21,11 +27,11 @@ export class StorageService {
     });
   }
 
-  async uploadFile(
+  async store(
     bucketName: BucketName,
     file: Express.Multer.File,
     filename: string,
-  ): Promise<string> {
+  ): Promise<StoreResult> {
     const { buffer, mimetype, size, originalname } = file;
 
     const ext = originalname.split('.').pop() || mime.extension(mimetype);
@@ -38,7 +44,7 @@ export class StorageService {
         buffer,
         size,
         {
-          'Content-Type': 'image/jpg',
+          'Content-Type': mimetype.replace('jpeg', 'jpg'),
         },
         (err, obj) => {
           if (err) {
@@ -50,12 +56,24 @@ export class StorageService {
       );
     });
 
-    const url = this.configService.get('storage.url');
-
-    return `${url}/users/${newFilename}`;
+    return { path: `${bucketName}/${newFilename}`, mimetype };
   }
 
-  async deleteFile(bucketName: BucketName, filename: string) {
+  async storeMany(
+    bucketName: BucketName,
+    files: Express.Multer.File[],
+    folderName: string,
+  ): Promise<StoreResult[]> {
+    const results = await Promise.all(
+      files.map((file) =>
+        this.store(bucketName, file, `${folderName}/${file.originalname}`),
+      ),
+    );
+
+    return results;
+  }
+
+  async delete(bucketName: BucketName, filename: string) {
     await this.client.removeObject(bucketName, filename);
   }
 }

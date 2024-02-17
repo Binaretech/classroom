@@ -17,6 +17,11 @@ import { Invitation, InvitationStatus } from '../database/entities/invitations';
 import { nanoid } from 'nanoid';
 import { UserService } from '../user/user.service';
 import InvitationRepository from '../database/repository/invitation.repository';
+import ClassworkRepository from '../database/repository/classwork.repository';
+import CreateMaterialDTO from './dto/create-material.dto';
+import { BucketName, StorageService } from '../storage/storage.service';
+import { File } from '../database/entities/file';
+import { ClassworkType } from '../database/entities/classwork';
 
 @Injectable()
 export class ClassService {
@@ -27,6 +32,8 @@ export class ClassService {
     private readonly studentRepository: StudentRepository,
     private readonly memberRepository: MemberRepository,
     private readonly invitationRepository: InvitationRepository,
+    private readonly classworkRepository: ClassworkRepository,
+    private readonly storageService: StorageService,
   ) {}
 
   async exists(id: number): Promise<boolean> {
@@ -427,5 +434,44 @@ export class ClassService {
       userId,
       class: classId,
     });
+  }
+
+  async createMaterial(
+    classId: number,
+    body: CreateMaterialDTO,
+    attachments: Array<Express.Multer.File>,
+  ) {
+    const em = this.classRepository.getEntityManager();
+
+    const classEntity = await this.classRepository.findOne({
+      id: classId,
+    });
+
+    const results = await this.storageService.storeMany(
+      BucketName.CLASSES,
+      attachments,
+      `class/${classId}/materials`,
+    );
+
+    const classwork = this.classworkRepository.create({
+      title: body.title,
+      description: body.description,
+      type: ClassworkType.Material,
+      class: classEntity,
+    });
+
+    const files = results.map(
+      (result) =>
+        new File({
+          path: result.path,
+          mimetype: result.mimetype,
+        }),
+    );
+
+    classwork.attachments.add(files);
+
+    await em.flush();
+
+    return classwork;
   }
 }

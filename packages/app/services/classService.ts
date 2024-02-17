@@ -4,6 +4,8 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tansta
 
 import axios, { AxiosError } from 'axios';
 import { Member } from 'app/entities/members';
+import { DocumentPickerAsset } from 'expo-document-picker';
+import { expoAssetToFile } from 'app/utils/functions';
 
 export type ClassesResponse = {
   classes: Class[];
@@ -216,4 +218,44 @@ async function joinByInvitation(classId: string | number, code: string) {
   const response = await axios.post<ClassResponse>(url, { code });
 
   return response.data;
+}
+
+export type CreateClassMaterialBody = {
+  title?: string;
+  description?: string;
+  attachments: DocumentPickerAsset[];
+};
+
+async function createClassMaterial(classId: string | number, body: CreateClassMaterialBody) {
+  const formData = new FormData();
+
+  if (body.title) {
+    formData.append('title', body.title);
+  }
+
+  if (body.description) {
+    formData.append('description', body.description);
+  }
+
+  body.attachments.forEach((attachment) => {
+    formData.append(`attachments`, attachment.file!, attachment.name!);
+  });
+
+  const url = UrlFormatter.formatUrl(`class/${classId}/classwork/material`);
+
+  const response = await axios.post(url, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+
+  return response.data;
+}
+
+export function useCreateClassMaterial(classId: string | number) {
+  const mutation = useMutation({
+    mutationFn: (body: CreateClassMaterialBody) => createClassMaterial(classId, body),
+  });
+
+  return mutation;
 }

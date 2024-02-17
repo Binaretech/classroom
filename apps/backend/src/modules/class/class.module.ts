@@ -9,13 +9,23 @@ import { Member } from '../database/entities/member';
 import { Invitation } from '../database/entities/invitations';
 import { EmailModule } from '../email/email.module';
 import { UserModule } from '../user/user.module';
+import { Classwork } from '../database/entities/classwork';
+import { StorageModule } from '../storage/storage.module';
 
 @Module({
   providers: [ClassService],
   imports: [
-    MikroOrmModule.forFeature([Class, Post, Student, Member, Invitation]),
+    MikroOrmModule.forFeature([
+      Class,
+      Post,
+      Student,
+      Member,
+      Invitation,
+      Classwork,
+    ]),
     EmailModule,
     UserModule,
+    StorageModule,
   ],
   controllers: [ClassController],
 })

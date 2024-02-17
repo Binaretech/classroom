@@ -73,6 +73,13 @@ export default {
   JoinClass: {
     goToDashboard: 'Ir al menú principal',
   },
+  classwork: {
+    material: {
+      title: 'Crear material',
+      body: 'Completa la siguiente información para crear un material',
+      created: 'Material creado exitosamente',
+    },
+  },
   loadMore: 'Cargar más',
   delete: 'Eliminar',
   options: 'Opciones',

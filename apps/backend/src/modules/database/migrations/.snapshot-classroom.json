@@ -127,7 +127,7 @@
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
+          "nullable": true,
           "mappedType": "string"
         },
         "description": {
@@ -136,7 +136,7 @@
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
+          "nullable": true,
           "mappedType": "string"
         },
         "type": {
@@ -385,22 +385,13 @@
           "nullable": false,
           "mappedType": "string"
         },
-        "type": {
-          "name": "type",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "string"
-        },
         "classwork_id": {
           "name": "classwork_id",
           "type": "int",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
+          "nullable": true,
           "mappedType": "integer"
         },
         "post_id": {
@@ -409,7 +400,7 @@
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
+          "nullable": true,
           "mappedType": "integer"
         }
       },
@@ -438,6 +429,7 @@
             "id"
           ],
           "referencedTableName": "public.classwork",
+          "deleteRule": "set null",
           "updateRule": "cascade"
         },
         "file_post_id_foreign": {
@@ -450,6 +442,7 @@
             "id"
           ],
           "referencedTableName": "public.post",
+          "deleteRule": "set null",
           "updateRule": "cascade"
         }
       }

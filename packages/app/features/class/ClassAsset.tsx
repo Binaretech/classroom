@@ -12,7 +12,7 @@ export default function ClassAsset({ file }: ClassAssetProps) {
     <>
       {!isImage && (
         <XStack>
-          <Text>{file.mimetype}</Text>
+          <Text>{file.mimetype.split('/')[1]}</Text>
         </XStack>
       )}
       {isImage && <Image source={{ uri: file.url }} width={150} height={150} alt={file.path} />}

@@ -13,6 +13,7 @@ import {
   Text,
   Spinner,
   useToastController,
+  YStack,
 } from 'ui';
 import { Controller, useWatch } from 'react-hook-form';
 import FilePicker from 'app/components/FilePicker';
@@ -142,7 +143,7 @@ export default function CreateMaterialModal({
                   disabled={isPending}
                   render={({ field: { onChange, value, disabled } }) => (
                     <XStack ai="center">
-                      <Text>{t('fields.attachments')}</Text>
+                      <Text px="$2">{t('fields.attachments')}</Text>
                       <FilePicker
                         disabled={disabled}
                         onChange={(files) => {
@@ -154,13 +155,15 @@ export default function CreateMaterialModal({
                   name="attachments"
                 />
               </Fieldset>
-              {attachments.map((attachment) => (
-                <FilePreview
-                  key={attachment.uri}
-                  file={attachment}
-                  onRemove={onRemove(attachment)}
-                />
-              ))}
+              <YStack w="100%">
+                {attachments.map((attachment) => (
+                  <FilePreview
+                    key={attachment.uri}
+                    file={attachment}
+                    onRemove={onRemove(attachment)}
+                  />
+                ))}
+              </YStack>
               <XStack width="100%" pt="$4" jc="center">
                 <Form.Trigger asChild>
                   <Button disabled={isPending} w="100%">

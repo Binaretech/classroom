@@ -8371,6 +8371,7 @@ __metadata:
     expo-document-picker: ~11.5.4
     expo-image-picker: ^14.5.0
     expo-linking: ~5.0.2
+    filesize: ^10.1.0
     firebase: ^10.5.0
     i18next: ^23.6.0
     react-hook-form: ^7.47.0
@@ -12891,6 +12892,13 @@ __metadata:
   version: 1.0.0
   resolution: "file-uri-to-path@npm:1.0.0"
   checksum: b648580bdd893a008c92c7ecc96c3ee57a5e7b6c4c18a9a09b44fb5d36d79146f8e442578bc0e173dc027adf3987e254ba1dfd6e3ec998b7c282873010502144
+  languageName: node
+  linkType: hard
+
+"filesize@npm:^10.1.0":
+  version: 10.1.0
+  resolution: "filesize@npm:10.1.0"
+  checksum: 8dd35fe85ebc56e9ee99b6814a854f5d5ee12d09a05cf38ebc1865b5efca128a2bb7480d3c2e841a3d20d45c756fc669efecbf65b6842afd75b7f20648306654
   languageName: node
   linkType: hard
 

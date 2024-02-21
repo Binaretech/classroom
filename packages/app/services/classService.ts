@@ -1,11 +1,18 @@
 import { Class } from 'app/entities/class';
 import { UrlFormatter } from 'app/utils/http';
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  InfiniteData,
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 import axios, { AxiosError } from 'axios';
 import { Member } from 'app/entities/members';
 import { DocumentPickerAsset } from 'expo-document-picker';
 import { expoAssetToFile } from 'app/utils/functions';
+import { Classwork } from 'app/entities/classwork';
 
 export type ClassesResponse = {
   classes: Class[];
@@ -220,6 +227,32 @@ async function joinByInvitation(classId: string | number, code: string) {
   return response.data;
 }
 
+export type GetClassworksResponse = {
+  classworks: Classwork[];
+  count: number;
+};
+
+export function useGetClasswork(classId: string | number) {
+  const query = useInfiniteQuery({
+    queryKey: ['class', classId, 'classwork'],
+    queryFn: ({ pageParam }) => fetchClasswork(classId, pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages, page) =>
+      lastPage.count / 10 > page ? page + 1 : undefined,
+  });
+
+  return query;
+}
+
+async function fetchClasswork(classId: string | number, page = 1) {
+  const url = UrlFormatter.formatUrl(`class/${classId}/classwork`, {
+    queryParams: { page },
+  });
+
+  const response = await axios.get<GetClassworksResponse>(url);
+  return response.data;
+}
+
 export type CreateClassMaterialBody = {
   title?: string;
   description?: string;
@@ -253,9 +286,58 @@ async function createClassMaterial(classId: string | number, body: CreateClassMa
 }
 
 export function useCreateClassMaterial(classId: string | number) {
+  const queryClient = useQueryClient();
+
   const mutation = useMutation({
     mutationFn: (body: CreateClassMaterialBody) => createClassMaterial(classId, body),
+    onSuccess: (data) => {
+      queryClient.setQueryData(
+        ['class', classId, 'classwork'],
+        (oldData: InfiniteData<GetClassworksResponse, unknown>) => {
+          const [page = [], ...rest] = oldData.pages;
+
+          const firstPage = (page as GetClassworksResponse) ?? { classworks: [], count: 0 };
+
+          return {
+            pages: [
+              {
+                classworks: [data, ...firstPage.classworks],
+                count: firstPage.count + 1,
+              },
+              ...rest,
+            ],
+            pageParams: [...oldData.pageParams],
+          };
+        }
+      );
+    },
   });
 
   return mutation;
+}
+
+export function useGetClassworkFile(
+  classId: string | number,
+  classworkId: string | number,
+  fileId: string | number
+) {
+  const query = useQuery({
+    queryKey: ['class', classId, 'classwork', classworkId, 'file', fileId],
+    queryFn: () => fetchClassworkFile(classId, classworkId, fileId),
+    enabled: false,
+  });
+
+  return query;
+}
+
+async function fetchClassworkFile(
+  classId: string | number,
+  classworkId: string | number,
+  fileId: string | number
+) {
+  const url = UrlFormatter.formatUrl(`class/${classId}/classwork/${classworkId}/files/${fileId}`);
+
+  const response = await axios.get<File>(url);
+
+  return response.data;
 }

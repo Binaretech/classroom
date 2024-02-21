@@ -14,7 +14,7 @@ export function capitalize(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export function flatPaginatedData<T, K extends {}>(
+export function flatPaginatedData<T, K>(
   data: T[],
   getArrayData: (item: T) => K[],
   getId: (item: K) => number | string = (item) => item['id']!

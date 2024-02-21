@@ -35,11 +35,23 @@ export class Classwork {
   @Enum(() => ClassworkType)
   type: ClassworkType;
 
+  @Property()
+  userId: string;
+
+  @Property({ persist: false })
+  user?: User;
+
   @ManyToOne(() => Class)
   class: Class;
 
   @OneToMany(() => File, (file) => file.classwork)
   attachments = new Collection<File>(this);
+
+  @Property()
+  createdAt: Date = new Date();
+
+  @Property({ onUpdate: () => new Date() })
+  updatedAt: Date = new Date();
 
   [EntityRepositoryType]?: ClassworkRepository;
 }

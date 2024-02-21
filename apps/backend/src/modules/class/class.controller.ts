@@ -27,6 +27,7 @@ import { ClassInviteDto } from './dto/class-invite.dto';
 import { EmailService } from '../email/email.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import CreateMaterialDTO from './dto/create-material.dto';
+import { ClassworkService } from './classwork.service';
 
 @ApiTags('Class')
 @UseGuards(FirebaseGuard)
@@ -36,6 +37,7 @@ export class ClassController {
   constructor(
     private readonly classService: ClassService,
     private readonly emailService: EmailService,
+    private readonly classworkService: ClassworkService,
   ) {}
 
   @Get()
@@ -330,6 +332,30 @@ export class ClassController {
     return this.classService.delete(id);
   }
 
+  @Get(':id/classwork')
+  @ApiParam({ name: 'id', required: true, example: 1 })
+  @ApiQuery({ name: 'page', required: false, example: 1 })
+  @ApiQuery({ name: 'limit', required: false, example: 10 })
+  async getClasswork(
+    @User() user: User,
+    @Param('id') id: number,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
+    const exists = await this.classService.exists(id);
+    if (!exists) {
+      throw new NotFoundException('errors.notFound');
+    }
+
+    const isMember = await this.classService.isClassMember(id, user.uid);
+
+    if (!isMember) {
+      throw new ForbiddenException();
+    }
+
+    return this.classworkService.getForClass(id, page, limit);
+  }
+
   @Post(':id/classwork/material')
   @UseInterceptors(FilesInterceptor('attachments'))
   @HttpCode(HttpStatus.CREATED)
@@ -351,6 +377,6 @@ export class ClassController {
       throw new ForbiddenException();
     }
 
-    return this.classService.createMaterial(id, body, files);
+    return this.classworkService.createMaterial(id, user.uid, body, files);
   }
 }

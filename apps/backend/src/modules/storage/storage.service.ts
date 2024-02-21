@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import * as minio from 'minio';
-import * as mime from 'mime-types';
 import { ConfigService } from '@nestjs/config';
 
 export enum BucketName {
@@ -16,6 +15,7 @@ type StoreResult = {
 @Injectable()
 export class StorageService {
   private readonly client: minio.Client;
+  private readonly publicHost: string;
 
   constructor(configService: ConfigService) {
     this.client = new minio.Client({
@@ -25,6 +25,29 @@ export class StorageService {
       accessKey: configService.get('storage.accessKey'),
       secretKey: configService.get('storage.secretKey'),
     });
+
+    this.publicHost = configService.get('storage.publicHost');
+  }
+
+  async get(bucketName: BucketName, filename: string) {
+    const file = await this.client.getObject(bucketName, filename);
+    return file;
+  }
+
+  async getPresignedUrl(bucketName: BucketName, filename: string) {
+    const url = await this.client.presignedUrl(
+      'GET',
+      bucketName,
+      filename,
+      24 * 60 * 60,
+    );
+
+    const parsedUrl = new URL(url);
+
+    parsedUrl.host = this.publicHost;
+    parsedUrl.port = '80';
+
+    return parsedUrl.toString();
   }
 
   async store(
@@ -32,15 +55,12 @@ export class StorageService {
     file: Express.Multer.File,
     filename: string,
   ): Promise<StoreResult> {
-    const { buffer, mimetype, size, originalname } = file;
-
-    const ext = originalname.split('.').pop() || mime.extension(mimetype);
-    const newFilename = `${filename}.${ext}`;
+    const { buffer, mimetype, size } = file;
 
     await new Promise((resolve, reject) => {
       this.client.putObject(
         bucketName,
-        newFilename,
+        filename,
         buffer,
         size,
         {
@@ -56,7 +76,7 @@ export class StorageService {
       );
     });
 
-    return { path: `${bucketName}/${newFilename}`, mimetype };
+    return { path: filename, mimetype };
   }
 
   async storeMany(

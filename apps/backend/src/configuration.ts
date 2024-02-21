@@ -15,6 +15,7 @@ export default () => ({
     url: process.env.STORAGE_URL,
     accessKey: process.env.STORAGE_ACCESS_KEY,
     secretKey: process.env.STORAGE_SECRET_KEY,
+    publicHost: process.env.PUBLIC_STORAGE_HOST,
   },
   redis: {
     host: process.env.REDIS_HOST,
@@ -46,6 +47,7 @@ export const validationSchema = Joi.object({
   STORAGE_URL: Joi.string().required(),
   STORAGE_ACCESS_KEY: Joi.string().required(),
   STORAGE_SECRET_KEY: Joi.string().required(),
+  PUBLIC_STORAGE_HOST: Joi.string().default('localhost'),
 
   REDIS_HOST: Joi.string().required(),
   REDIS_PORT: Joi.number().required(),

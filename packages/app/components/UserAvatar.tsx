@@ -8,7 +8,7 @@ export type UserAvatarProps = {
 export default function UserAvatar({ user, size, ...props }: UserAvatarProps & AvatarProps) {
   return (
     <Avatar circular size={size} {...props}>
-      <Avatar.Image src={user?.photoURL ?? undefined} />
+      {/* <Avatar.Image src={user?.photoURL ?? undefined} /> */}
       <Avatar.Fallback
         backgroundColor={stringToHexColor(user?.email ?? '')}
         jc="center"

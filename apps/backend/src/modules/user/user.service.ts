@@ -34,6 +34,23 @@ export class UserService {
     return record;
   }
 
+  async getUserMap(ids: { uid: string }[]) {
+    const users = await admin.auth().getUsers(ids);
+
+    const userMap = users.users.reduce((acc, user) => {
+      acc[user.uid] = {
+        uid: user.uid,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        email: user.email,
+      };
+
+      return acc;
+    }, {});
+
+    return userMap;
+  }
+
   private async updateProfileImage(userId: string, image: Express.Multer.File) {
     if (image === undefined) {
       return;
@@ -60,6 +77,6 @@ export class UserService {
 
     const url = this.configService.get('storage.url');
 
-    return `${url}/${path}`;
+    return `${url}/${BucketName.USERS}/${path}`;
   }
 }

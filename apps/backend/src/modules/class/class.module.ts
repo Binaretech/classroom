@@ -11,9 +11,11 @@ import { EmailModule } from '../email/email.module';
 import { UserModule } from '../user/user.module';
 import { Classwork } from '../database/entities/classwork';
 import { StorageModule } from '../storage/storage.module';
+import { ClassworkService } from './classwork.service';
+import { File } from '../database/entities/file';
 
 @Module({
-  providers: [ClassService],
+  providers: [ClassService, ClassworkService],
   imports: [
     MikroOrmModule.forFeature([
       Class,
@@ -22,6 +24,7 @@ import { StorageModule } from '../storage/storage.module';
       Member,
       Invitation,
       Classwork,
+      File,
     ]),
     EmailModule,
     UserModule,
